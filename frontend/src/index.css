@@ -16,7 +16,7 @@
   --shadow-lg: 0 8px 24px rgba(26, 25, 23, 0.08);
   --radius: 12px;
   --radius-sm: 8px;
-  --font: 'DM Sans', system-ui, sans-serif;
+  --font: "DM Sans", system-ui, sans-serif;
 }
 
 * {
@@ -36,7 +36,10 @@ body {
   min-height: 100vh;
 }
 
-input, button, select, textarea {
+input,
+button,
+select,
+textarea {
   font-family: inherit;
   font-size: 1rem;
 }
@@ -56,7 +59,9 @@ button:disabled {
   border-radius: var(--radius-sm);
   font-weight: 500;
   border: none;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .btn-primary {
