@@ -5,7 +5,11 @@ from flask_cors import CORS
 import logging
 
 app = Flask(__name__)
+# TODO:
+# DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
+# ADD WHITELIST
 CORS(app)
+
 
 @app.route("/scan", methods=["POST"])
 def check_url():
@@ -22,7 +26,7 @@ def check_url():
 
     if not isinstance(url, str) or url is None:
         return jsonify({"error": "url is not valid"}), 400
-    
+
     app.logger.info(type(request_data))
     if url == "realwebsite.com":
         return jsonify(True), 200
