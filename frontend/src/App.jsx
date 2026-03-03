@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { scanURL } from "./api";
 import "./App.css";
 

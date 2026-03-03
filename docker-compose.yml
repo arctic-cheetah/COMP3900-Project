@@ -11,7 +11,7 @@ services:
       - backend
     build: ./frontend
     ports:
-      - "8080:80"
+      - "6969:80"
 
   automark:
     build: ./automark
