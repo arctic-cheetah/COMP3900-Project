@@ -1,7 +1,14 @@
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:5000";
 
-export const scanURL = async () => {
-  const res = await fetch(`${API_BASE}/scan`);
-  if (!res.ok) throw new Error("Failed to scan website url");
+export const scanURL = async (url) => {
+  const res = await fetch(`${API_BASE}/scan`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url: url }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || "Failed to scan website url");
+  }
   return res.json();
 };
