@@ -24,7 +24,10 @@ def check_url():
         return jsonify({"error": "url is not valid"}), 400
     
     app.logger.info(type(request_data))
-    return jsonify(), 200
+    if url == "realwebsite.com":
+        return jsonify(True), 200
+    else:
+        return jsonify(False), 200
 
 
 if __name__ == "__main__":
