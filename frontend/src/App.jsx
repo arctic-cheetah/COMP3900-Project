@@ -33,7 +33,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>Phishing Checker</h1>
+        <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
       <form onSubmit={postURL}>
         <label>
