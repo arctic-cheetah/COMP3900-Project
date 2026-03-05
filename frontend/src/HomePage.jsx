@@ -1,5 +1,5 @@
-import { scanURL } from "./api";
-import "./App.css";
+import { scanURL } from './api';
+import './App.css';
 
 export default function HomePage() {
   const postURL = async (e) => {
@@ -11,19 +11,19 @@ export default function HomePage() {
       return;
     }
 
-    const url = formData.get("url-link");
-    if (url == null || url == "") {
-      console.log("invalid URL");
+    const url = formData.get('url-link');
+    if (url == null || url == '') {
+      console.log('invalid URL');
       return;
     }
     try {
       const scanResult = await scanURL(url);
-      const resultElem = document.getElementById("result");
+      const resultElem = document.getElementById('result');
 
       if (scanResult) {
-        resultElem.textContent = "passed";
+        resultElem.textContent = 'passed';
       } else {
-        resultElem.textContent = "failed";
+        resultElem.textContent = 'failed';
       }
     } catch (e) {
       console.log(e);
@@ -31,19 +31,32 @@ export default function HomePage() {
   };
 
   return (
-    <div className="homepage">
-      <header className="header">
+    <div className='homepage'>
+      <header className='header'>
         <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
-      <p>Enter any URL below to instantly analyze and detect potential phishing threats using advanced Al-powered detection</p>
-      <form onSubmit={postURL}>
+      <div className='description'>
+        <p>
+          Enter any URL below to instantly analyze and detect potential phishing
+          threats
+        </p>
+        <p>using advanced Al-powered detection</p>
+      </div>
+      <form onSubmit={postURL} className='url-form'>
         <label>
-          <input name="url-link" defaultValue="Enter URL to analyze (e.g., https://example.com)" />
+          <input
+            name='url-link'
+            defaultValue=''
+            placeholder='Enter URL to analyze (e.g., https://example.com)'
+          />
         </label>
-        <button type="submit">Analyse URL</button>
+        <button type='submit'>Analyse URL</button>
       </form>
-      <p>Your privacy is protected. URLs are analyzed securely and not stored permanently.</p>
-      <div id="result" />
+      <p className='privacy-text'>
+        Your privacy is protected. URLs are analyzed securely and not stored
+        permanently.
+      </p>
+      <div id='result' />
     </div>
   );
 }
