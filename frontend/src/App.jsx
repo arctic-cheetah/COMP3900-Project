@@ -1,105 +1,47 @@
-import { useState, useEffect } from 'react'
-import { getStudents, createStudent, updateStudent, deleteStudent } from './api'
-import StudentForm from './components/StudentForm'
-import StudentTable from './components/StudentTable'
-import EditStudentModal from './components/EditStudentModal'
-import './App.css'
+import { scanURL } from "./api";
+import "./App.css";
 
 export default function App() {
-  const [students, setStudents] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [editing, setEditing] = useState(null)
+  const postURL = async (e) => {
+    e.preventDefault();
 
-  const load = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const data = await getStudents()
-      setStudents(data)
-    } catch (e) {
-      setError(e.message)
-    } finally {
-      setLoading(false)
+    const form = e.target;
+    const formData = new FormData(form);
+    if (formData == null) {
+      return;
     }
-  }
 
-  useEffect(() => {
-    load()
-  }, [])
-
-  const handleCreate = async (student) => {
-    setError(null)
-    try {
-      const created = await createStudent(student)
-      setStudents((prev) => [...prev, created])
-    } catch (e) {
-      setError(e.message)
+    const url = formData.get("url-link");
+    if (url == null || url == "") {
+      console.log("invalid URL");
+      return;
     }
-  }
-
-  const handleUpdate = async (id, student) => {
-    setError(null)
     try {
-      const updated = await updateStudent(id, student)
-      setStudents((prev) => prev.map((s) => (s.id === id ? updated : s)))
-      setEditing(null)
-    } catch (e) {
-      setError(e.message)
-    }
-  }
+      const scanResult = await scanURL(url);
+      const resultElem = document.getElementById("result");
 
-  const handleDelete = async (id) => {
-    setError(null)
-    try {
-      await deleteStudent(id)
-      setStudents((prev) => prev.filter((s) => s.id !== id))
-      if (editing?.id === id) setEditing(null)
+      if (scanResult) {
+        resultElem.textContent = "passed";
+      } else {
+        resultElem.textContent = "failed";
+      }
     } catch (e) {
-      setError(e.message)
+      console.log(e);
     }
-  }
+  };
 
   return (
     <div className="app">
       <header className="header">
-        <h1>Student Marks Manager</h1>
-        <p className="tagline">Create and manage students and their marks</p>
+        <h1>Phishing Checker</h1>
       </header>
-
-      <main className="main">
-        <section className="card form-card">
-          <h2>Add tutor</h2>
-          <StudentForm onSubmit={handleCreate} />
-        </section>
-
-        {error && (
-          <div className="banner banner-error" role="alert">
-            {error}
-          </div>
-        )}
-
-        <section className="card table-card">
-          <h2>Tutors</h2>
-          {loading ? (
-            <p className="loading">Loading…</p>
-          ) : (
-            <StudentTable
-              students={students}
-              onEdit={setEditing}
-              onDelete={handleDelete}
-            />
-          )}
-        </section>
-      </main>
-
-      {editing && (
-        <EditStudentModal
-          student={editing}
-          onSave={handleUpdate}
-          onClose={() => setEditing(null)}
-        />
-      )}
+      <form onSubmit={postURL}>
+        <label>
+          URL: <input name="url-link" defaultValue="" />
+        </label>
+        <button type="submit">Submit form</button>
+      </form>
+      <div id="result" />
     </div>
-  )
+  );
 }

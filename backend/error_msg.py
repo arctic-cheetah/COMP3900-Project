@@ -1,5 +1,0 @@
-ERROR_NAME = "Student name has incorrect data"
-ERROR_COURSE = "Course name has incorrect data"
-ERROR_MARK = "Mark name has incorrect data"
-ERROR_JSON = "Data must be json"
-ERROR_ID = "Wtf are you enumerating student id?"

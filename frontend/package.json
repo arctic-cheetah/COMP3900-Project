@@ -1,5 +1,5 @@
 {
-  "name": "student-marks-manager",
+  "name": "phishing-checker",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,6 +14,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^7.0.0"
+    "vite": "^7.3.1"
   }
 }
