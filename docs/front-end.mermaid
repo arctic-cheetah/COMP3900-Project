@@ -1,7 +1,7 @@
 graph TD
 
     subgraph backend["Backend Server"]
-        c1["GET /scan route"]
+        c1["POST /scan route"]
         c0["POST /login route"]
 
         c2["Execute analysation pipeline"]
@@ -9,14 +9,14 @@ graph TD
         c4[("Database: Stores, result, user, etc")]
         c5["Logout user and invalidate session"]
 
-        c1<-->c2<-->c3<-->c4
+        c1-->c2-->c3-->c4
         c0<-->c4
         c4<-->c5
+        %% c4-->b3
     end
 
     subgraph frontend["Frontend"]
         a0["User POST '/login' "]
-        
 
         a0<==>|4xx Login Fail|c0
         
