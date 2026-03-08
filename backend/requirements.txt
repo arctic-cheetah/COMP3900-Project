@@ -1,3 +1,7 @@
 flask
 psycopg2-binary
 flask_cors
+ipykernel
+pandas
+matplotlib
+seaborn
