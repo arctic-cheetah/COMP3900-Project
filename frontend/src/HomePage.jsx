@@ -38,9 +38,8 @@ export default function HomePage() {
       <div className='description'>
         <p>
           Enter any URL below to instantly analyze and detect potential phishing
-          threats
+          threats <br /> using advanced Al-powered detection
         </p>
-        <p>using advanced Al-powered detection</p>
       </div>
       <form onSubmit={postURL} className='url-form'>
         <label>
