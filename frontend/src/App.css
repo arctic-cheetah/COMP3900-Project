@@ -1,0 +1,51 @@
+.homepage {
+  text-align: center;
+  padding: 40px;
+  font-family: inherit;
+}
+
+.header {
+  font-size: 1.1em;
+  margin-bottom: 0px;
+  line-height: 40px;
+}
+
+.description {
+  font-size: 1.15em;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  color: #5e6775;
+}
+
+.privacy-text {
+  color: grey;
+  font-size: 0.84em;
+}
+
+.url-form {
+  position: relative;
+  display: inline-block;
+  width: 40%;
+}
+
+.url-form input {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 15px #c5c4c4;
+}
+
+.url-form button {
+  position: absolute;
+  top: 50%;
+  right: 1px;
+  transform: translateY(-50%);
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #7aafff;
+  color: white;
+}
