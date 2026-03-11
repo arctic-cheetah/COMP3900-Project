@@ -11,7 +11,7 @@ app = Flask(__name__)
 # DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
 # ADD WHITELIST
 # CORS for frontend only
-CORS(app, resources={r"/scan": {"origins: [http://localhost:5173/]"}})
+CORS(app)
 
 # initial url validity check
 def check_valid_url(url):
