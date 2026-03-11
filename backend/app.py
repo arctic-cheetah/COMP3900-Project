@@ -16,6 +16,11 @@ from pipeline import model_pipeline
 
 
 app = Flask(__name__)
+# TODO:
+# DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
+# ADD WHITELIST
+# CORS for frontend only
+CORS(app)
 
 allowed_origins = [
     "http://127.0.0.1:80",
