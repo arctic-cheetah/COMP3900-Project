@@ -8,7 +8,9 @@ app = Flask(__name__)
 # TODO:
 # DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
 # ADD WHITELIST
-CORS(app)
+allowedOrigins = ["127.0.0.1:80", "127.0.0.1:6969"]
+corsConfig = {"origins": allowedOrigins}
+CORS(app, resources={r"/*": corsConfig})
 
 
 @app.route("/scan", methods=["POST"])
@@ -24,6 +26,8 @@ def check_url():
     request_data = request.json
     url = request_data.get("url")
 
+    # TODO: SOmeone needs to do more error checking for url here!!
+    # Like https or http
     if not isinstance(url, str) or url is None:
         return jsonify({"error": "url is not valid"}), 400
 
