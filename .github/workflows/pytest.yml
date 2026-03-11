@@ -30,3 +30,9 @@ jobs:
 
       - name: Run Tests
         run: pytest
+
+      - name: Print backend log on failure
+        if: failure()
+        run: | 
+            echo "_____backend."_____backend.log______"
+            cat backend.log
