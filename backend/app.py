@@ -3,13 +3,38 @@ from functools import *
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
+import re 
+from urllib.parse import urlparse, urlunparse, quote
 
 app = Flask(__name__)
 # TODO:
 # DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
 # ADD WHITELIST
-CORS(app)
+# CORS for frontend only
+CORS(app, resources={r"/scan": {"origins: [http://localhost:5173/]"}})
 
+# initial url validity check
+def check_valid_url(url):
+    if not url or not isinstance(url, str):
+        return False
+    # ensure url starts with http(s)://
+    if not re.match(r'^https?://.+', url, re.IGNORECASE):
+        return False
+    
+    return True 
+
+# strip leading/trailing spaces, encode path to prevent xss/sqli
+def sanitise_url(url):
+    url = url.strip()
+    parsed_url = urlparse(url)
+
+    # encode path and query to prevent sqli + xss
+    path = quote(parsed_url.path, safe="/")
+    query = quote(parsed_url.query, safe="=&")
+
+    sanitised_url = urlunparse((parsed_url.scheme, parsed_url.netloc, path, parsed_url.params, query, parsed_url.fragment))
+
+    return sanitised_url
 
 @app.route("/scan", methods=["POST"])
 def check_url():
@@ -24,8 +49,11 @@ def check_url():
     request_data = request.json
     url = request_data.get("url")
 
-    if not isinstance(url, str) or url is None:
-        return jsonify({"error": "url is not valid"}), 400
+    if not check_valid_url(url):
+        app.logger.warning(f"Bad URL from {request.remote_addr}: {url[:100]}...")
+        return jsonify({"error": "invalid url format"}), 400
+    
+    sanitised_url = sanitise_url(url)
 
     app.logger.info(type(request_data))
     if url == "realwebsite.com":
