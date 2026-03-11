@@ -1,4 +1,4 @@
-import pytest, requests
+import requests
 
 
 sites_test = "realwebsite.com"
