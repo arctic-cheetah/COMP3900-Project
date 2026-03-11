@@ -10,8 +10,9 @@ app = Flask(__name__)
 # TODO:
 # DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
 # ADD WHITELIST
-# CORS for frontend only
-CORS(app)
+allowedOrigins = ["127.0.0.1:80", "127.0.0.1:6969"]
+corsConfig = {"origins": allowedOrigins}
+CORS(app, resources={r"/*": corsConfig})
 
 # initial url validity check
 def check_valid_url(url):
