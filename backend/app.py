@@ -43,6 +43,14 @@ def check_url():
 
 @app.route("/error", methods=["POST"])
 def log_error():
+    """
+    Route to log errors from the ai model
+    Args:
+        param info: The information to be logged (from request body)
+        param1: request object with json inside
+    Returns:
+        return: The results if successful otherwise return 400 error
+    """
     # TODO: please throw exceptions from AI model to this route for logging
     if not isinstance(request.json, dict):
         return jsonify({"error": "invalid request body"}), 400
