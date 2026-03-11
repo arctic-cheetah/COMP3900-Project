@@ -13,8 +13,8 @@ services:
     ports:
       - "6969:80"
 
-  automark:
-    build: ./automark
+  test:
+    build: ./test
     depends_on:
       - backend
     profiles:
