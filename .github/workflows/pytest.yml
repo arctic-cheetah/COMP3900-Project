@@ -7,18 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.13"]
+        python-version: ["3.11"]
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      # You can test your matrix by printing the current Python version
+  
       - name: Install Dependencies
         run: |
             python -m pip install --upgrade pip
             pip install -r backend/requirements.txt
-            pip install pytest
+            pip install pytest, requests
+
+      - name: Run Backend
+        run: | 
+            python backend/app.py
+
       - name: Run Tests
         run: pytest

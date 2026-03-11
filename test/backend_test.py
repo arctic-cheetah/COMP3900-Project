@@ -1,10 +1,10 @@
 import requests
+import os
 
 
 sites_test = "realwebsite.com"
-URL = "http://backend:5001"
 # USE THIS URL IF RUNNING EVERTHING LOCALLY
-# URL = "http://127.0.0.1:5001"
+URL = os.getenv("BACKEND_URL", "http://127.0.0.1:5001")
 headers = {"Content-Type": "application/json"}
 payload = {"url": sites_test}
 SCAN = "/scan"

@@ -28,7 +28,7 @@ python3 backend/app.py
 #### Run database
 
 ```bash
-docker compose -f 'docker-compose.yml' up 
+docker compose -f 'docker-compose.yml' up -d --build 'test' 
 ```
 
 #### Run test cases
