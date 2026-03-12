@@ -40,9 +40,12 @@ def sanitise_url(url):
 @app.route("/scan", methods=["POST"])
 def check_url():
     """
-    Route to check a URL
-    param url: The url link to be checked (from request body)
-    return: The results if successful
+    Route to check a URL from a given frontend
+    Args:
+        param url: The url link to be checked (from request body)
+        param1: request object with json inside
+    Returns:
+        return: The results if successful otherwise return 400 error
     """
     if not isinstance(request.json, dict):
         return jsonify({"error": "invalid request body"}), 400
@@ -61,6 +64,32 @@ def check_url():
         return jsonify(True), 200
     else:
         return jsonify(False), 200
+
+
+@app.route("/error", methods=["POST"])
+def log_error():
+    """
+    Route to log errors from the ai model
+    Args:
+        param info: The information to be logged (from request body)
+        param1: request object with json inside
+    Returns:
+        return: The results if successful otherwise return 400 error
+    """
+    # TODO: please throw exceptions from AI model to this route for logging
+    if not isinstance(request.json, dict):
+        return jsonify({"error": "invalid request body"}), 400
+
+    request_data = request.json
+    info = request_data.get("info")
+
+    if not isinstance(info, str) or info is None:
+        return jsonify({"error": "empty information field"}), 400
+
+    with open("error-log.txt", "a", encoding="latin-1") as f:
+        f.write(info)
+
+    return jsonify(True), 200
 
 
 if __name__ == "__main__":

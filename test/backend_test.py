@@ -45,4 +45,11 @@ def test_backend_has_error_log():
     res = s.send(prep)
     assert res.status_code != 404
     print(res.text)
-    pass
+
+
+def test_backend_reject_malformed():
+    req = requests.Request("POST", URL + ERROR, headers=headers, data=payload)
+    prep = s.prepare_request(req)
+    res = s.send(prep)
+    assert res.status_code == 400
+    print(res.text)

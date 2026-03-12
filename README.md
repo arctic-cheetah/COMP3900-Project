@@ -40,8 +40,14 @@ docker compose -f 'docker-compose.yml' up -d --build 'test'
 
 ## Usage
 
-TODO:
+### Routes
+```python
+POST /scan 
+```
+Accepts a POST request with JSON as the payload, and the only valid key is:
 
+```
+{"url": "website_here"}
 ```
 
 ## Contributing
