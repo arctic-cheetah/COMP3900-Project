@@ -5,9 +5,7 @@ export default function Navbar() {
       <p className='website-name'>Phishy Links</p>
 
       <div className='links'>
-        <a href='/user'>User | </a>
-        <a href='/home'>Home | </a>
-        <a href='/about'>About </a>
+        <a href='/user'>User</a>
       </div>
     </nav>
   );

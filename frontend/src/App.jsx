@@ -1,4 +1,3 @@
-import { scanURL } from './api';
 import './App.css';
 import HomePage from './HomePage';
 
