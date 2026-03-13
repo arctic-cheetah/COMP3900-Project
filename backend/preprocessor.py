@@ -3,6 +3,7 @@ from urllib.parse import urlparse, urlsplit
 import tldextract
 import pandas as pd
 from typing import *
+import requests
 
 # Given a url get these feature data
 # Then return a np.array of those features
@@ -15,6 +16,11 @@ class preprocess_data:
     func_pointer: List[Callable]
     url: str = ""
     numObfuscatedChar = 0
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
+    }
+    # Page data should be list of lines for ease of processing
+    page_data: List[str]
 
     def __init__(self, url: str):
         self.url_len = len(url)
@@ -100,7 +106,13 @@ class preprocess_data:
         return self.NoOfObfuscatedChar(url) / len(url) if len(url) > 0 else 0
 
     def NoOfLettersInURL(self, url: str):
-        return sum(c.isalpha() for c in url)
+        # Count number of unique letters!
+        ht = set()
+        for c in url:
+            if c.isalpha():
+                ht.add(c)
+
+        return len(ht)
 
     def LetterRatioInURL(self, url: str):
         return self.NoOfLettersInURL(url) / len(url) if len(url) > 0 else 0
@@ -121,7 +133,7 @@ class preprocess_data:
         return sum(c in "&" for c in url)
 
     def NoOfOtherSpecialCharsInURL(self, url: str):
-        special = "!@#$%^*()_+-[]{}|;:'\",<>/~`"
+        special = "!@#$%^*()_+-[]{}|;:'\",<>~`"
         return sum(c in special for c in url)
 
     def SpacialCharRatioInURL(self, url: str):
@@ -140,15 +152,31 @@ class preprocess_data:
     # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
     def LineOfCode(self, url: str):
-        return url.count("\n") + 1 if url else 0
+        # TODO: REDIRECTS ARE BAD HERE
+        try:
+            r = requests.get(
+                url, allow_redirects=True, timeout=10, headers=self.headers
+            )
+            self.page_data = r.text.splitlines()
+            return len(r.text.splitlines())
+        except Exception as err:
+            print(err)
+            self.page_data = []
+            return 0
+            # Check if request failed!
 
     def LargestLineLength(self, url: str):
-        return max((len(line) for line in url.splitlines()), default=0)
+        return max((len(line) for line in self.page_data), default=0)
 
 
 # TODO: Gotta run the class
 tmp_example = "wtf.com"
 obfuscation = "https://s3.amazonaws.com/appforest_uf/f1678949673383x832048620362898600/index%20%284%29.html"
+safe = "https://www.saffronart.com"
 example = preprocess_data(obfuscation)
-df = example.get_data()
-print(df)
+safeURL = preprocess_data(safe)
+obfuscated = example.get_data()
+s = safeURL.get_data()
+
+print(s)
+print(obfuscated)
