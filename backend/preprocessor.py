@@ -12,22 +12,46 @@ from typing import *
 class preprocess_data:
     url_len = 0
     num_digit = 0
-    func_pointer: List[callable] = {}
-
+    func_pointer: List[Callable]
+    url: str = ""
+    numObfuscatedChar = 0
 
     def __init__(self, url: str):
         self.url_len = len(url)
-    
-    def get_data(self, url:str):
+        self.url = url
+
+    def get_data(self) -> pd.DataFrame:
         func_pointer = [
             [self.URLLength, "URLLength"],
-            [self.DomainLength, "DomainLength"]
-            # TODO: Add other function here
+            [self.DomainLength, "DomainLength"],
+            [self.IsDomainIP, "isDomainIP"],
+            [self.TLDLength, "TLDLength"],
+            [self.NoOfSubDomain, "NoOfSubDomain"],
+            [self.HasObfuscation, "HasObfuscation"],
+            [self.NoOfObfuscatedChar, "NoOfObfuscatedChar"],
+            [self.ObfuscationRatio, "ObfuscationRatio"],
+            [self.NoOfLettersInURL, "NoOfLettersInURL"],
+            [self.NoOfDegitsInURL, "NoOfDegitsInURL"],
+            [self.DegitRatioInURL, "DegitRatioInURL"],
+            [self.NoOfEqualsInURL, "NoOfEqualsInURL"],
+            [self.NoOfQMarkInURL, "NoOfQMarkInURL"],
+            [self.NoOfAmpersandInURL, "NoOfAmpersandInURL"],
+            [self.NoOfOtherSpecialCharsInURL, "NoOfOtherSpecialCharsInURL"],
+            [self.SpacialCharRatioInURL, "SpacialCharRatioInURL"],
+            [self.IsHTTPS, "IsHTTPS"],
+            [self.LineOfCode, "LineOfCode"],
+            [self.LargestLineLength, "LargestLineLength"],
         ]
+        # TODO: Add other function here
+
+        dat = {}
+        # THIS IS WHERE DF FROM URL IS MADE
+        # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
         for x in func_pointer:
-            print(x[0](url))
-        pass
-    
+            # print((x[1], x[0](self.url)))
+            dat[x[1]] = [x[0](self.url)]
+        return pd.DataFrame(dat)
+
     def URLLength(self, url: str):
         return len(url)
 
@@ -42,11 +66,11 @@ class preprocess_data:
 
         ipv4 = re.match(regexIPV4, str(parsed_url.hostname))
         ipv6 = re.match(regexIPV6, str(parsed_url.hostname))
-        return (ipv6 is None) or (ipv4 is None)
+        return 1 if (ipv6 is None) or (ipv4 is None) else 0
 
     def TLDLength(self, url: str):
         extracted = tldextract.extract(url)
-        tld = extracted.suffix()
+        tld = extracted.suffix
         return len(tld)
 
     def NoOfSubDomain(self, url: str):
@@ -59,11 +83,17 @@ class preprocess_data:
         # URL obfuscation according to this article
         # https://pushsecurity.com/blog/detecting-phishing-pages-using-obfuscated-url-destinations
         # is any character after the @ symbol
-        regex = r"@[@\w.-]+"
-        return re.match(regex, url) is None
+        # WRONG => DATA SET USES HTML ENCODING FOR DETECTION
+        regex = r"%\d{2}"
+        return 1 if re.match(regex, url) is None else 0
 
     def NoOfObfuscatedChar(self, url: str):
-        return len(url.split("@", 1)[1]) if "@" in url else 0
+        regex = r"%\d{2}"
+        found = re.findall(regex, url)
+        # HTML encoding always comes in triplets
+        # eg: %01 or %0A or %10
+        self.numObfuscatedChar = len(found) * 3
+        return self.numObfuscatedChar
 
     def ObfuscationRatio(self, url: str):
         return self.NoOfObfuscatedChar(url) / len(url) if len(url) > 0 else 0
@@ -104,8 +134,10 @@ class preprocess_data:
         return total_special / len(url) if len(url) > 0 else 0
 
     def IsHTTPS(self, url: str):
-        return url.strip().lower().startswith("https://")
+        return 1 if url.strip().lower().startswith("https://") else 0
 
+    # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
+    # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
     def LineOfCode(self, url: str):
         return url.count("\n") + 1 if url else 0
 
@@ -115,4 +147,7 @@ class preprocess_data:
 
 # TODO: Gotta run the class
 tmp_example = "wtf.com"
-preprocess_data(tmp_example)
+obfuscation = "https://s3.amazonaws.com/appforest_uf/f1678949673383x832048620362898600/index%20%284%29.html"
+example = preprocess_data(obfuscation)
+df = example.get_data()
+print(df)
