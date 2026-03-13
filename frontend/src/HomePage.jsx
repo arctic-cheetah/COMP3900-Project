@@ -1,7 +1,19 @@
 import { scanURL } from './api';
+import { useState } from 'react';
+import HistoricalData from './HistoricData';
 import './App.css';
 
+// --- DUMMY DATA FOR PREVIEW ---
+const DUMMY_HISTORY = [
+  { url: 'https://example-bank-secure.com', timestamp: new Date(2026, 2, 1, 14, 30), isSafe: true, confidence: 95 },
+  { url: 'http://paypa1-verify.tk/login', timestamp: new Date(2026, 2, 1, 12, 15), isSafe: false, confidence: 98 },
+  { url: 'https://microsoft.com', timestamp: new Date(2026, 2, 1, 16, 45), isSafe: true, confidence: 99 },
+  { url: 'http://amaz0n-account-verify.xyz', timestamp: new Date(2026, 2, 1, 10, 20), isSafe: false, confidence: 97 },
+  { url: 'https://github.com', timestamp: new Date(2026, 1, 28, 13, 10), isSafe: true, confidence: 99 },
+];
+
 export default function HomePage() {
+  const [history, setHistory] = useState(DUMMY_HISTORY);
   const postURL = async (e) => {
     e.preventDefault();
 
@@ -33,7 +45,7 @@ export default function HomePage() {
   return (
     <div className='homepage'>
       <header className='header'>
-        <h1>Protect Yourself from Phishing Attacks</h1>
+        <h1> Yourself from Phishing Attacks</h1>
       </header>
       <div className='description'>
         <p>
@@ -56,6 +68,11 @@ export default function HomePage() {
         permanently.
       </p>
       <div id='result' />
+      
+      <HistoricalData history={history} />
+      <p className='privacy-text'>
+        Your privacy is protected. URLs are analyzed securely and not stored permanently.
+      </p>
     </div>
   );
 }
