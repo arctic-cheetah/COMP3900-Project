@@ -31,6 +31,7 @@ export default function HomePage() {
     try {
       const scanResult = await scanURL(url);
       const resultElem = document.getElementById('result');
+      console.log(scanResult)
 
       if (scanResult) {
         resultElem.textContent = 'passed';
@@ -38,6 +39,8 @@ export default function HomePage() {
         resultElem.textContent = 'failed';
       }
     } catch (e) {
+      const resultElem = document.getElementById('result');
+      resultElem.textContent = e.message
       console.log(e);
     }
   };

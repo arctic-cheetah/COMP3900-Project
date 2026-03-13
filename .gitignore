@@ -1,2 +1,5 @@
 no-commit/
 node_modules/
+__pycache__/
+__pycache__/**
+.pytest_cache/

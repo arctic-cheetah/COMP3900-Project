@@ -4,7 +4,7 @@ This is the P133 project _Systems and Methods for Phishing and Spam Detection_
 
 ### <u>Run project via docker (Most portable)</u>
 
-#### Run entire stack:
+#### Run entire stack
 
 ```bash
 docker compose up --build
@@ -12,29 +12,42 @@ docker compose up --build
 
 ### Run project locally (Easiest way to debug)
 
-#### Front end:
+#### Front end
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-#### Back end:
+#### Back end
 
 ```bash
 python3 backend/app.py
 ```
 
-#### Run database:
+#### Run database
 
 ```bash
-docker compose -f 'docker-compose.yml' up -d --build 'db'
+docker compose -f 'docker-compose.yml' up -d --build 'test' 
+```
+
+#### Run test cases
+
+```bash
+    cd ~/capstone-project-26t1-3900-m18b-date
+    pytest
 ```
 
 ## Usage
 
-TODO:
+### Routes
+```python
+POST /scan 
+```
+Accepts a POST request with JSON as the payload, and the only valid key is:
 
+```
+{"url": "website_here"}
 ```
 
 ## Contributing

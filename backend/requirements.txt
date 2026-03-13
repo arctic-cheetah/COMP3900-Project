@@ -5,3 +5,8 @@ ipykernel
 pandas
 matplotlib
 seaborn
+pytest
+requests
+tldextract
+joblib
+scikit-learn
