@@ -6,11 +6,36 @@ import './App.css';
 
 // --- DUMMY DATA FOR PREVIEW ---
 const DUMMY_HISTORY = [
-  { url: 'https://example-bank-secure.com', timestamp: new Date(2026, 2, 1, 14, 30), isSafe: true, confidence: 95 },
-  { url: 'http://paypa1-verify.tk/login', timestamp: new Date(2026, 2, 1, 12, 15), isSafe: false, confidence: 98 },
-  { url: 'https://microsoft.com', timestamp: new Date(2026, 2, 1, 16, 45), isSafe: true, confidence: 99 },
-  { url: 'http://amaz0n-account-verify.xyz', timestamp: new Date(2026, 2, 1, 10, 20), isSafe: false, confidence: 97 },
-  { url: 'https://github.com', timestamp: new Date(2026, 1, 28, 13, 10), isSafe: true, confidence: 99 },
+  {
+    url: 'https://example-bank-secure.com',
+    timestamp: new Date(2026, 2, 1, 14, 30),
+    isSafe: true,
+    confidence: 95,
+  },
+  {
+    url: 'http://paypa1-verify.tk/login',
+    timestamp: new Date(2026, 2, 1, 12, 15),
+    isSafe: false,
+    confidence: 98,
+  },
+  {
+    url: 'https://microsoft.com',
+    timestamp: new Date(2026, 2, 1, 16, 45),
+    isSafe: true,
+    confidence: 99,
+  },
+  {
+    url: 'http://amaz0n-account-verify.xyz',
+    timestamp: new Date(2026, 2, 1, 10, 20),
+    isSafe: false,
+    confidence: 97,
+  },
+  {
+    url: 'https://github.com',
+    timestamp: new Date(2026, 1, 28, 13, 10),
+    isSafe: true,
+    confidence: 99,
+  },
 ];
 
 export default function HomePage() {
@@ -56,6 +81,20 @@ export default function HomePage() {
         </p>
       </div>
       <form onSubmit={postURL} className='url-form'>
+        <span className='search-icon'>
+          <svg width='25' height='25' viewBox='0 0 24 24' fill='none'>
+            <circle cx='11' cy='11' r='7' stroke='#9aa4b2' strokeWidth='1.5' />
+            <line
+              x1='16.5'
+              y1='16.5'
+              x2='21'
+              y2='21'
+              stroke='#9aa4b2'
+              strokeWidth='1.5'
+            />
+          </svg>
+        </span>
+        
         <label>
           <input
             name='url-link'
@@ -70,10 +109,11 @@ export default function HomePage() {
         permanently.
       </p>
       <div id='result' />
-      
+
       <HistoricalData history={history} />
       <p className='privacy-text'>
-        Your privacy is protected. URLs are analyzed securely and not stored permanently.
+        Your privacy is protected. URLs are analyzed securely and not stored
+        permanently.
       </p>
     </div>
   );
