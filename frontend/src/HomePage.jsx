@@ -27,6 +27,8 @@ export default function HomePage() {
         resultElem.textContent = 'failed';
       }
     } catch (e) {
+      const resultElem = document.getElementById('result');
+      resultElem.textContent = e.message
       console.log(e);
     }
   };
