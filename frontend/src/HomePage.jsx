@@ -71,15 +71,14 @@ export default function HomePage() {
   return (
     <div className='homepage'>
       <Navbar />
+      <img className='logo-homepage' src='assets/logo.png' />
       <header className='header'>
         <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
-      <div className='description'>
-        <p>
-          Enter any URL below to instantly analyse and detect potential phishing
-          threats <br /> using advanced Al-powered detection
-        </p>
-      </div>
+      <p className='description'>
+        Enter any URL below to instantly analyse and detect potential phishing
+        threats <br /> using advanced Al-powered detection
+      </p>
       <form onSubmit={postURL} className='url-form'>
         <span className='search-icon'>
           <svg width='25' height='25' viewBox='0 0 24 24' fill='none'>
@@ -94,7 +93,7 @@ export default function HomePage() {
             />
           </svg>
         </span>
-        
+
         <label>
           <input
             name='url-link'
