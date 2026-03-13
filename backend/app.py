@@ -8,7 +8,13 @@ app = Flask(__name__)
 # TODO:
 # DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
 # ADD WHITELIST
-allowedOrigins = ["127.0.0.1:80", "127.0.0.1:6969"]
+allowedOrigins = [
+    "http://127.0.0.1:80",
+    "http://127.0.0.1:6969",
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+    "http://localhost:6969",
+]
 corsConfig = {"origins": allowedOrigins}
 CORS(app, resources={r"/*": corsConfig})
 

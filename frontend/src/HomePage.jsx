@@ -19,6 +19,7 @@ export default function HomePage() {
     try {
       const scanResult = await scanURL(url);
       const resultElem = document.getElementById('result');
+      console.log(scanResult)
 
       if (scanResult) {
         resultElem.textContent = 'passed';
