@@ -23,6 +23,10 @@ jobs:
             pip install requests
             pip install flask
             pip install flask_cors
+            pip install scikit-learn
+            pip install joblib
+            pip install tldextract
+
 
       - name: Run Backend
         run: | 
