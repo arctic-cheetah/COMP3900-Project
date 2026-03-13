@@ -70,6 +70,8 @@ def check_url():
 
     request_data = request.json
     url = request_data.get("url")
+    if url is None:
+        return jsonify({"error": "invalid request body"}), 400
 
     if not check_valid_url(url):
         app.logger.warning(f"Bad URL from {request.remote_addr}: {url[:100]}...")
