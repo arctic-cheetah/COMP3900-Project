@@ -1,6 +1,7 @@
 import { scanURL } from './api';
 import { useState } from 'react';
 import HistoricalData from './HistoricData';
+import Navbar from './Navbar';
 import './App.css';
 
 // --- DUMMY DATA FOR PREVIEW ---
@@ -44,8 +45,9 @@ export default function HomePage() {
 
   return (
     <div className='homepage'>
+      <Navbar />
       <header className='header'>
-        <h1> Yourself from Phishing Attacks</h1>
+        <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
       <div className='description'>
         <p>

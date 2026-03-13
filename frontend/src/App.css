@@ -5,6 +5,7 @@
 }
 
 .header {
+  margin-top: 5%;
   font-size: 1.1em;
   margin-bottom: 0px;
   line-height: 40px;
@@ -20,12 +21,14 @@
 .privacy-text {
   color: grey;
   font-size: 0.84em;
+  margin-bottom: 50px;
 }
 
 .url-form {
   position: relative;
   display: inline-block;
   width: 40%;
+  min-width: 320px;
 }
 
 .url-form input {
@@ -40,7 +43,7 @@
 .url-form button {
   position: absolute;
   top: 50%;
-  right: 1px;
+  right: 1%;
   transform: translateY(-50%);
   height: 40px;
   padding: 0 20px;
@@ -48,4 +51,21 @@
   border: none;
   background-color: #7aafff;
   color: white;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 20px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;
 }
