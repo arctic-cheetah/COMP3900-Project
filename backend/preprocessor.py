@@ -24,13 +24,14 @@ class preprocess_data:
         func_pointer = [
             [self.URLLength, "URLLength"],
             [self.DomainLength, "DomainLength"],
-            [self.IsDomainIP, "isDomainIP"],
+            [self.IsDomainIP, "IsDomainIP"],
             [self.TLDLength, "TLDLength"],
             [self.NoOfSubDomain, "NoOfSubDomain"],
             [self.HasObfuscation, "HasObfuscation"],
             [self.NoOfObfuscatedChar, "NoOfObfuscatedChar"],
             [self.ObfuscationRatio, "ObfuscationRatio"],
             [self.NoOfLettersInURL, "NoOfLettersInURL"],
+            [self.LetterRatioInURL, "LetterRatioInURL"],
             [self.NoOfDegitsInURL, "NoOfDegitsInURL"],
             [self.DegitRatioInURL, "DegitRatioInURL"],
             [self.NoOfEqualsInURL, "NoOfEqualsInURL"],
@@ -84,11 +85,11 @@ class preprocess_data:
         # https://pushsecurity.com/blog/detecting-phishing-pages-using-obfuscated-url-destinations
         # is any character after the @ symbol
         # WRONG => DATA SET USES HTML ENCODING FOR DETECTION
-        regex = r"%\d{2}"
+        regex = r"%[0-9a-fA-F]{2}"
         return 1 if re.match(regex, url) is None else 0
 
     def NoOfObfuscatedChar(self, url: str):
-        regex = r"%\d{2}"
+        regex = r"%[0-9a-fA-F]{2}"
         found = re.findall(regex, url)
         # HTML encoding always comes in triplets
         # eg: %01 or %0A or %10
