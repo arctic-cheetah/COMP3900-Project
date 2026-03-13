@@ -1,6 +1,8 @@
 import re
 from urllib.parse import urlparse, urlsplit
 import tldextract
+import pandas as pd
+from typing import *
 
 # Given a url get these feature data
 # Then return a np.array of those features
@@ -10,10 +12,22 @@ import tldextract
 class preprocess_data:
     url_len = 0
     num_digit = 0
+    func_pointer: List[callable] = {}
+
 
     def __init__(self, url: str):
         self.url_len = len(url)
-
+    
+    def get_data(self, url:str):
+        func_pointer = [
+            [self.URLLength, "URLLength"],
+            [self.DomainLength, "DomainLength"]
+            # TODO: Add other function here
+        ]
+        for x in func_pointer:
+            print(x[0](url))
+        pass
+    
     def URLLength(self, url: str):
         return len(url)
 
@@ -97,3 +111,8 @@ class preprocess_data:
 
     def LargestLineLength(self, url: str):
         return max((len(line) for line in url.splitlines()), default=0)
+
+
+# TODO: Gotta run the class
+tmp_example = "wtf.com"
+preprocess_data(tmp_example)
