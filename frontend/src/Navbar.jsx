@@ -1,11 +1,13 @@
 export default function Navbar() {
   return (
-    <nav className="navbar">
-      <div className="links">
-        
-        {/* <a href="#">User </a>
-        <a href="#">Home </a>
-        <a href="#">About </a> */}
+    <nav className='navbar'>
+      <img className='logo' src='assets/logo.png' />
+      <p className='website-name'>Phishy Links</p>
+
+      <div className='links'>
+        <a href='/user'>User | </a>
+        <a href='/home'>Home | </a>
+        <a href='/about'>About </a>
       </div>
     </nav>
   );

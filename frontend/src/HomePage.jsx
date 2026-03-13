@@ -76,7 +76,7 @@ export default function HomePage() {
       </header>
       <div className='description'>
         <p>
-          Enter any URL below to instantly analyze and detect potential phishing
+          Enter any URL below to instantly analyse and detect potential phishing
           threats <br /> using advanced Al-powered detection
         </p>
       </div>
@@ -99,20 +99,20 @@ export default function HomePage() {
           <input
             name='url-link'
             defaultValue=''
-            placeholder='Enter URL to analyze (e.g., https://example.com)'
+            placeholder='Enter URL to analsze (e.g., https://example.com)'
           />
         </label>
         <button type='submit'>Analyse URL</button>
       </form>
       <p className='privacy-text'>
-        Your privacy is protected. URLs are analyzed securely and not stored
+        Your privacy is protected. URLs are analszed securely and not stored
         permanently.
       </p>
       <div id='result' />
 
       <HistoricalData history={history} />
       <p className='privacy-text'>
-        Your privacy is protected. URLs are analyzed securely and not stored
+        Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
     </div>
