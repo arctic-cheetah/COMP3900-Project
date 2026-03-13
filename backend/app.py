@@ -5,8 +5,12 @@ from flask_cors import CORS
 import logging
 import re
 from urllib.parse import urlparse, urlunparse, quote
+import joblib
+from sklearn.linear_model import LogisticRegression
+from backend.preprocessor import preprocess_data
 
 app = Flask(__name__)
+model: LogisticRegression
 # TODO:
 # DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
 # ADD WHITELIST
@@ -77,10 +81,15 @@ def check_url():
         app.logger.warning(f"Bad URL from {request.remote_addr}: {url[:100]}...")
         return jsonify({"error": "invalid url format"}), 400
 
-    sanitised_url = sanitise_url(url)
-
     app.logger.info(type(request_data))
-    if url == "realwebsite.com":
+
+    sanitised_url = sanitise_url(url)
+    url_obj = preprocess_data(sanitised_url)
+    df = url_obj.get_data()
+    # Model returns a np.array
+    isSafe = model.predict(df)[0]
+
+    if isSafe:
         return jsonify(True), 200
     else:
         return jsonify(False), 200
@@ -113,5 +122,6 @@ def log_error():
 
 
 if __name__ == "__main__":
+    model: LogisticRegression = joblib.load("./models/logit_model.pkl")
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)
