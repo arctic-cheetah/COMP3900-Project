@@ -4,9 +4,7 @@ export default function Navbar() {
       <img className='logo' src='assets/logo.png' />
       <p className='website-name'>Phishy Links</p>
 
-      <div className='links'>
-        <a href='/user'>User</a>
-      </div>
+      <img className='user-photo' src='assets/user.png' />
     </nav>
   );
 }
