@@ -170,13 +170,13 @@ class preprocess_data:
 
 
 # TODO: Gotta run the class
-tmp_example = "wtf.com"
-obfuscation = "https://s3.amazonaws.com/appforest_uf/f1678949673383x832048620362898600/index%20%284%29.html"
-safe = "https://www.saffronart.com"
-example = preprocess_data(obfuscation)
-safeURL = preprocess_data(safe)
-obfuscated = example.get_data()
-s = safeURL.get_data()
+# tmp_example = "wtf.com"
+# obfuscation = "https://s3.amazonaws.com/appforest_uf/f1678949673383x832048620362898600/index%20%284%29.html"
+# safe = "https://www.saffronart.com"
+# example = preprocess_data(obfuscation)
+# safeURL = preprocess_data(safe)
+# obfuscated = example.get_data()
+# s = safeURL.get_data()
 
-print(s)
-print(obfuscated)
+# print(s)
+# print(obfuscated)

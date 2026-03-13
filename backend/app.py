@@ -7,7 +7,7 @@ import re
 from urllib.parse import urlparse, urlunparse, quote
 import joblib
 from sklearn.linear_model import LogisticRegression
-from backend.preprocessor import preprocess_data
+from preprocessor import preprocess_data
 
 app = Flask(__name__)
 model: LogisticRegression
@@ -122,6 +122,6 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: LogisticRegression = joblib.load("./models/logit_model.pkl")
+    model: LogisticRegression = joblib.load("backend/models/logit_model.pkl")
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)

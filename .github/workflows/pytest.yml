@@ -27,6 +27,7 @@ jobs:
       - name: Run Backend
         run: | 
             python backend/app.py > backend.log 2>&1 & echo $! > backend.pi
+            sleep(5)
 
       - name: Run Tests
         run: pytest
