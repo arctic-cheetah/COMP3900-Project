@@ -8,6 +8,9 @@ from urllib.parse import urlparse, urlunparse, quote
 import joblib
 from sklearn.linear_model import LogisticRegression
 from preprocessor import preprocess_data
+from pathlib import Path as path
+import datetime
+import sys
 
 app = Flask(__name__)
 model: LogisticRegression
@@ -24,6 +27,40 @@ allowedOrigins = [
 corsConfig = {"origins": allowedOrigins}
 CORS(app, resources={r"/*": corsConfig})
 
+# log directory details
+LOG_DIR = path("logs")
+LOG_DIR.mkdir(exist_ok=True)
+ERROR_LOG = LOG_DIR + "/api_errors.txt"
+CRITICAL_LOG = LOG_DIR + "/critical_failures.txt"
+
+# logging config to file + console
+logging.basicConfig(
+    level=logging.INFO, 
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_DIR + "/app.txt"),
+        logging.StreamHandler()
+    ]
+)
+
+# logs a JSON entry to the appropriate log file based on log type
+# log type is either ERROR or CRITICAL
+def write_log(msg, log_type):
+
+    timestamp = datetime.utcnow().isoformat()
+    entry = {
+        "timestamp": timestamp, 
+        "log_type": log_type, 
+        "message": msg
+    }
+
+    target_file = ERROR_LOG if log_type == "ERROR" else CRITICAL_LOG
+
+    try:
+        with open(target_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+    except Exception as e:
+        print(f"LOGGING FAILED: {str(e)}", file=sys.stderr)
 
 # initial url validity check
 def check_valid_url(url):
@@ -111,12 +148,15 @@ def log_error():
 
     request_data = request.json
     info = request_data.get("info")
+    level = request_data.get("level", "ERROR")
 
     if not isinstance(info, str) or info is None:
         return jsonify({"error": "empty information field"}), 400
+    
+    # add IP addr which triggered error + log level to context
+    context = f"[{request.remote_addr}] {info}"
 
-    with open("error-log.txt", "a", encoding="latin-1") as f:
-        f.write(info)
+    write_log(context, level)
 
     return jsonify(True), 200
 
