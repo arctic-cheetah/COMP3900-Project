@@ -22,7 +22,6 @@ export default function HomePage() {
     if (formData == null) {
       return;
     }
-
     const url = formData.get('url-link');
     if (url == null || url == '') {
       console.log('invalid URL');
@@ -32,12 +31,17 @@ export default function HomePage() {
       const scanResult = await scanURL(url);
       const resultElem = document.getElementById('result');
       console.log(scanResult)
+      let { isSafe, confidence } = scanResult
 
-      if (scanResult) {
-        resultElem.textContent = 'passed';
+      if (isSafe) {
+        resultElem.textContent = 'URL IS SAFE! 🙂✅';
       } else {
-        resultElem.textContent = 'failed';
+        resultElem.textContent = 'URL IS PHISHING ⚠️❌';
       }
+      setHistory((current) => [
+        { url, "timestamp": new Date(Date.now()), isSafe, confidence: Math.round(confidence*100)/100 },
+        ...current
+      ])
     } catch (e) {
       const resultElem = document.getElementById('result');
       resultElem.textContent = e.message
@@ -71,7 +75,7 @@ export default function HomePage() {
         permanently.
       </p>
       <div id='result' />
-      
+
       <HistoricalData history={history} />
       <p className='privacy-text'>
         Your privacy is protected. URLs are analyzed securely and not stored permanently.

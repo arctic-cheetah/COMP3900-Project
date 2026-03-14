@@ -88,11 +88,16 @@ def check_url():
     df = url_obj.get_data()
     # Model returns a np.array
     isSafe = model.predict(df)[0]
+    confidence = model.predict_proba(df)[0] * 100.0
+    # {notSafe = 0, safe = 1}
 
-    if isSafe:
-        return jsonify(True), 200
-    else:
-        return jsonify(False), 200
+    print(isSafe)
+    return jsonify(
+        {"isSafe": bool(isSafe), 
+         "confidence": float(confidence[1] if isSafe == 1 else confidence[0])
+         }), 200
+
+    
 
 
 @app.route("/error", methods=["POST"])
