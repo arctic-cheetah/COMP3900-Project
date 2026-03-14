@@ -30,15 +30,15 @@ CORS(app, resources={r"/*": corsConfig})
 # log directory details
 LOG_DIR = path("logs")
 LOG_DIR.mkdir(exist_ok=True)
-ERROR_LOG = LOG_DIR + "/api_errors.txt"
-CRITICAL_LOG = LOG_DIR + "/critical_failures.txt"
+ERROR_LOG = LOG_DIR / "api_errors.txt"
+CRITICAL_LOG = LOG_DIR / "critical_failures.txt"
 
 # logging config to file + console
 logging.basicConfig(
     level=logging.INFO, 
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler(LOG_DIR + "/app.txt"),
+        logging.FileHandler(LOG_DIR / "app.txt"),
         logging.StreamHandler()
     ]
 )
@@ -47,7 +47,7 @@ logging.basicConfig(
 # log type is either ERROR or CRITICAL
 def write_log(msg, log_type):
 
-    timestamp = datetime.utcnow().isoformat()
+    timestamp = datetime.datetime.utcnow().isoformat()
     entry = {
         "timestamp": timestamp, 
         "log_type": log_type, 
