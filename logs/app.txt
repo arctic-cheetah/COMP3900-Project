@@ -1,0 +1,8 @@
+2026-03-14 23:13:52,484 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-03-14 23:13:52,485 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-14 23:14:01,740 - INFO - 127.0.0.1 - - [14/Mar/2026 23:14:01] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-14 23:14:01,989 - WARNING - Bad URL from 127.0.0.1: aednfjldv...
+2026-03-14 23:14:01,990 - INFO - 127.0.0.1 - - [14/Mar/2026 23:14:01] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -

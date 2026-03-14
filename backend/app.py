@@ -107,6 +107,7 @@ def check_url():
         return: The results if successful otherwise return 400 error
     """
     if not isinstance(request.json, dict):
+        write_log("invalid request body", ERROR_LOG)
         return jsonify({"error": "invalid request body"}), 400
 
     request_data = request.json
@@ -116,6 +117,7 @@ def check_url():
 
     if not check_valid_url(url):
         app.logger.warning(f"Bad URL from {request.remote_addr}: {url[:100]}...")
+        write_log(f"Bad URL from {request.remote_addr}: {url[:100]}...", ERROR_LOG)
         return jsonify({"error": "invalid url format"}), 400
 
     app.logger.info(type(request_data))
@@ -125,7 +127,6 @@ def check_url():
     df = url_obj.get_data()
     # Model returns a np.array
     isSafe = model.predict(df)[0]
-
     if isSafe:
         return jsonify(True), 200
     else:
