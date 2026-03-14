@@ -73,7 +73,7 @@ export default function HistoricalData({ history }) {
       {/* Header Section */}
       <Group justify="space-between" mb="xl" align="flex-start">
         <Stack gap={4}>
-          <Title order={3}>Past URLs Analyzed</Title>
+          <Title order={3}>Past URLs Analysed</Title>
           <Text size="sm" c="dimmed">Review your recent scans and historical analysis results</Text>
         </Stack>
         <Select
@@ -110,7 +110,7 @@ export default function HistoricalData({ history }) {
           <Table.Thead bg="gray.0" style={{ position: 'sticky', top: 0, zIndex: 1 }}>
             <Table.Tr>
               <Table.Th>URL</Table.Th>
-              <Table.Th>DATE/TIME ANALYZED</Table.Th>
+              <Table.Th>DATE/TIME ANALYsED</Table.Th>
               <Table.Th>RESULT</Table.Th>
               <Table.Th textAlign="right">CONFIDENCE SCORE</Table.Th>
             </Table.Tr>
