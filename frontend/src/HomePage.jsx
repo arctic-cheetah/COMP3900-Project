@@ -136,7 +136,7 @@ export default function HomePage() {
       </form>
 
       <p className='privacy-text'>
-        Your privacy is protected. URLs are analszed securely and not stored
+        Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
 
