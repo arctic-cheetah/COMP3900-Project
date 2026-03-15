@@ -13,15 +13,15 @@ app = Flask(__name__)
 model: str
 # TODO:
 # ADD WHITELIST
-allowedOrigins = [
+allowed_origins = [
     "http://127.0.0.1:80",
     "http://127.0.0.1:6969",
     "http://127.0.0.1:5173",
     "http://localhost:5173",
     "http://localhost:6969",
 ]
-corsConfig = {"origins": allowedOrigins}
-CORS(app, resources={r"/*": corsConfig})
+cors_config = {"origins": allowed_origins}
+CORS(app, resources={r"/*": cors_config})
 
 
 # initial url validity check
@@ -103,12 +103,12 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
 
-    isSafe, confidence = models_pipeline(sanitised_url, model)
+    is_safe, confidence = models_pipeline(sanitised_url, model)
 
-    print(isSafe)
+    print(is_safe)
     return jsonify(
-        {"isSafe": bool(isSafe), 
-         "confidence": float(confidence[1] if isSafe == 1 else confidence[0])
+        {"is_safe": bool(is_safe), 
+         "confidence": float(confidence[1] if is_safe == 1 else confidence[0])
          }), 200
 
 
