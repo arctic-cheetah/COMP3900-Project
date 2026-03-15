@@ -127,6 +127,6 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: LogisticRegression = joblib.load("backend/models/logit_model.pkl")
+    model: LogisticRegression = joblib.load("models/logit_model.pkl")
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)
