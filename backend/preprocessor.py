@@ -38,8 +38,8 @@ class preprocess_data:
             [self.ObfuscationRatio, "ObfuscationRatio"],
             [self.NoOfLettersInURL, "NoOfLettersInURL"],
             [self.LetterRatioInURL, "LetterRatioInURL"],
-            [self.NoOfDegitsInURL, "NoOfDegitsInURL"],
-            [self.DegitRatioInURL, "DegitRatioInURL"],
+            [self.NoOfDigitsInURL, "NoOfDigitsInURL"],
+            [self.DigitRatioInURL, "DigitRatioInURL"],
             [self.NoOfEqualsInURL, "NoOfEqualsInURL"],
             [self.NoOfQMarkInURL, "NoOfQMarkInURL"],
             [self.NoOfAmpersandInURL, "NoOfAmpersandInURL"],
@@ -117,11 +117,11 @@ class preprocess_data:
     def LetterRatioInURL(self, url: str):
         return self.NoOfLettersInURL(url) / len(url) if len(url) > 0 else 0
 
-    def NoOfDegitsInURL(self, url: str):
+    def NoOfDigitsInURL(self, url: str):
         return sum(c.isdigit() for c in url)
 
-    def DegitRatioInURL(self, url: str):
-        return self.NoOfDegitsInURL(url) / len(url) if len(url) > 0 else 0
+    def DigitRatioInURL(self, url: str):
+        return self.NoOfDigitsInURL(url) / len(url) if len(url) > 0 else 0
 
     def NoOfEqualsInURL(self, url: str):
         return sum(c in "=" for c in url)

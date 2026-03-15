@@ -59,10 +59,10 @@ class preprocess_data:
     def LetterRatioInURL(self, url: str):
         pass
 
-    def NoOfDegitsInURL(self, url: str):
+    def NoOfDigitsInURL(self, url: str):
         return sum(c.isdigit() for c in url)
 
-    def DegitRatioInURL(self, url: str):
+    def DigitRatioInURL(self, url: str):
         pass
 
     def NoOfEqualsInURL(self, url: str):
