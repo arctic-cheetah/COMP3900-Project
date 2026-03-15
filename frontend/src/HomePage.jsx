@@ -123,7 +123,7 @@ export default function HomePage() {
             name='url-link'
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder='Enter URL to analsze (e.g., https://example.com)'
+            placeholder='Enter URL to analyse (e.g., https://example.com)'
           />
         </label>
         <button
