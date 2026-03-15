@@ -18,9 +18,20 @@ const ResultModal = ({ result, onClose }) => {
             : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
         </div>
 
-        <p>Confidence: {Math.round(result.confidence)}%</p>
+        <div className="result-cards">
 
-        <p>URL: {result.url}</p>
+          <div className="result-card">
+            <p className="card-title">Confidence Score</p>
+            <p className="card-value">{Math.round(result.confidence)}%</p>
+          </div>
+
+          <div className="result-card">
+            <p className="card-title">Analyzed URL</p>
+            <p className="card-url">{result.url}</p>
+          </div>
+
+        </div>
+
       </div>
     </div>
   );
