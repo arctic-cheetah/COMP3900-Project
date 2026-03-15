@@ -144,7 +144,7 @@ export default function HistoricalData({ history, onHistoryClick }) {
           >
             <Table.Tr>
               <Table.Th>URL</Table.Th>
-              <Table.Th>DATE/TIME ANALYsED</Table.Th>
+              <Table.Th>DATE/TIME ANALYSED</Table.Th>
               <Table.Th>RESULT</Table.Th>
               <Table.Th textAlign='right'>CONFIDENCE SCORE</Table.Th>
             </Table.Tr>
