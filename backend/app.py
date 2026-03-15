@@ -103,7 +103,7 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
 
-    is_safe, confidence = models_pipeline(sanitised_url, model)
+    is_safe, confidence = model_pipeline(sanitised_url, model)
 
     print(is_safe)
     return jsonify(
