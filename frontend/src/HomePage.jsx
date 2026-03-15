@@ -41,6 +41,9 @@ const DUMMY_HISTORY = [
 export default function HomePage() {
   const [history, setHistory] = useState(DUMMY_HISTORY);
   const [url, setUrl] = useState('');
+  const [scanResult, setScanResult] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+
   const postURL = async (e) => {
     e.preventDefault();
 
