@@ -134,6 +134,7 @@ export default function HomePage() {
           Analyse URL
         </button>
       </form>
+
       <p className='privacy-text'>
         Your privacy is protected. URLs are analszed securely and not stored
         permanently.
@@ -145,7 +146,6 @@ export default function HomePage() {
           onClose={() => setIsModalOpen(false)}
         />
       )}
-      <div id='result' />
 
       <HistoricalData history={history} onHistoryClick={openHistoryResult} />
       <p className='privacy-text'>
