@@ -2,6 +2,7 @@ import { scanURL } from './api';
 import { useState } from 'react';
 import HistoricalData from './HistoricData';
 import Navbar from './Navbar';
+import ResultModal from './Resultmodal';
 import './App.css';
 
 // --- DUMMY DATA FOR PREVIEW ---
@@ -41,8 +42,8 @@ const DUMMY_HISTORY = [
 export default function HomePage() {
   const [history, setHistory] = useState(DUMMY_HISTORY);
   const [url, setUrl] = useState('');
-  const [scanResult, setScanResult] = useState(null);
-  const [showResult, setShowResult] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentResult, setCurrentResult] = useState(null);
 
   const postURL = async (e) => {
     e.preventDefault();
@@ -62,6 +63,9 @@ export default function HomePage() {
       const resultElem = document.getElementById('result');
       console.log(scanResult);
       let { isSafe, confidence } = scanResult;
+
+      setCurrentResult({ url, isSafe, confidence });
+      setIsModalOpen(true);
 
       if (isSafe) {
         resultElem.textContent = 'URL IS SAFE! 🙂✅';
@@ -130,6 +134,13 @@ export default function HomePage() {
         Your privacy is protected. URLs are analszed securely and not stored
         permanently.
       </p>
+
+      {isModalOpen && (
+        <ResultModal 
+          result={currentResult} 
+          onClose={() => setIsModalOpen(false)} 
+        />
+      )}
       <div id='result' />
 
       <HistoricalData history={history} />
