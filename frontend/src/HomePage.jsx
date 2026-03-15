@@ -60,18 +60,12 @@ export default function HomePage() {
     }
     try {
       const scanResult = await scanURL(url);
-      const resultElem = document.getElementById('result');
       console.log(scanResult);
       let { isSafe, confidence } = scanResult;
 
       setCurrentResult({ url, isSafe, confidence });
       setIsModalOpen(true);
 
-      if (isSafe) {
-        resultElem.textContent = 'URL IS SAFE! 🙂✅';
-      } else {
-        resultElem.textContent = 'URL IS PHISHING ⚠️❌';
-      }
       setHistory((current) => [
         {
           url,
