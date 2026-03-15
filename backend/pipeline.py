@@ -1,7 +1,7 @@
 from sklearn.linear_model import LogisticRegression
 import joblib
 import pandas as pd
-
+import os
 from preprocessor import preprocess_data
 
 
@@ -20,8 +20,8 @@ def run_model(url_features : pd.DataFrame, model_path: str) -> tuple[str, str] |
         model = joblib.load(model_path)
         
         # Model returns a np.array
-        is_safe = model.predict(df)[0]
-        confidence = model.predict_proba(df)[0] * 100.0
+        is_safe = model.predict(url_features)[0]
+        confidence = model.predict_proba(url_features)[0] * 100.0
         # {notSafe = 0, safe = 1}
 
         return is_safe, confidence
@@ -42,9 +42,12 @@ def model_pipeline(url : str, model_path : str) -> tuple[str, str] | None:
         tuple: Returns the verdict and confidence score.
     """
     try:
-        url_obj = preprocess_data(sanitised_url)
+        url_obj = preprocess_data(url)
         df = url_obj.get_data()
-
+        print("zzzzzzzzzzzzzzzzzzzzzzzzzzz")
+        print(os.getcwd())
+        print(os.listdir(os.getcwd()))
+        
         is_safe, confidence = run_model(df, model_path)
 
         return is_safe, confidence

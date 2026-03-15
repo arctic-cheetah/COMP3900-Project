@@ -102,14 +102,16 @@ def check_url():
     app.logger.info(type(request_data))
 
     sanitised_url = sanitise_url(url)
-
-    is_safe, confidence = model_pipeline(sanitised_url, model)
-
-    print(is_safe)
-    return jsonify(
-        {"is_safe": bool(is_safe), 
-         "confidence": float(confidence[1] if is_safe == 1 else confidence[0])
-         }), 200
+    try:
+        is_safe, confidence = model_pipeline(sanitised_url, model)
+        print(is_safe)
+        return jsonify(
+            {"is_safe": bool(is_safe), 
+            "confidence": float(confidence[1] if is_safe == 1 else confidence[0])
+            }), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "invalid url format"}), 400
 
 
 @app.route("/error", methods=["POST"])
@@ -140,6 +142,6 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: str = "backend/models/logit_model.pkl"
+    model: str = "models/logit_model.pkl"
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)
