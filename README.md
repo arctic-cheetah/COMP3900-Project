@@ -19,6 +19,8 @@ cd frontend
 npm run dev
 ```
 
+# TO DEVS PLEASE RUN THE BACKEND IN TO ROOT DIRECTORY OF PROJECT!!!😡
+
 #### Back end
 
 ```bash
