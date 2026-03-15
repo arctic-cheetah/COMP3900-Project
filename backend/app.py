@@ -58,9 +58,11 @@ def sanitise_url(url):
 
     return sanitised_url
 
+
 @app.route("/", methods=["GET"])
 def health_check():
-    return "Working!" , 200
+    return "Working!", 200
+
 
 @app.route("/scan", methods=["POST"])
 def check_url():
@@ -95,12 +97,15 @@ def check_url():
     # {notSafe = 0, safe = 1}
 
     print(isSafe)
-    return jsonify(
-        {"isSafe": bool(isSafe), 
-         "confidence": float(confidence[1] if isSafe == 1 else confidence[0])
-         }), 200
-
-    
+    return (
+        jsonify(
+            {
+                "isSafe": bool(isSafe),
+                "confidence": float(confidence[1] if isSafe == 1 else confidence[0]),
+            }
+        ),
+        200,
+    )
 
 
 @app.route("/error", methods=["POST"])
