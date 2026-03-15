@@ -1,0 +1,13 @@
+.modal {
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 300px;
+  color: #333;
+}
+
+.result-icon {
+  font-size: 24px;
+  margin: 20px 0;
+}
