@@ -6,12 +6,10 @@ import logging
 import re
 from urllib.parse import urlparse, urlunparse, quote
 from urllib.request import urlopen, URLError
-import joblib
-from sklearn.linear_model import LogisticRegression
-from preprocessor import preprocess_data
+from pipeline import model_pipeline
 
 app = Flask(__name__)
-model: LogisticRegression
+model: str
 # TODO:
 # ADD WHITELIST
 allowedOrigins = [
@@ -85,12 +83,8 @@ def check_url():
     app.logger.info(type(request_data))
 
     sanitised_url = sanitise_url(url)
-    url_obj = preprocess_data(sanitised_url)
-    df = url_obj.get_data()
-    # Model returns a np.array
-    isSafe = model.predict(df)[0]
-    confidence = model.predict_proba(df)[0] * 100.0
-    # {notSafe = 0, safe = 1}
+
+    isSafe, confidence = models_pipeline(sanitised_url, model)
 
     print(isSafe)
     return jsonify(
@@ -128,6 +122,6 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: LogisticRegression = joblib.load("backend/models/logit_model.pkl")
+    model: str = "backend/models/logit_model.pkl"
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)
