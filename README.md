@@ -50,6 +50,15 @@ Accepts a POST request with JSON as the payload, and the only valid key is:
 {"url": "website_here"}
 ```
 
+# AI Documentation
+Documentation about the AI is better seen in the project proposal, google docs and drive attached here:
+
+[Drive](https://drive.google.com/drive/u/0/folders/1N3dP0OT8UrrZ0Erqoa-uDxxtts7K4beO)
+
+[Project proposal](https://docs.google.com/document/d/1fBpHYAdUYVQCxvb3eVvccJjBpkHvOcFmu_YNtdwViTw/edit?usp=drive_link)
+
+[Ai Model Information](https://docs.google.com/document/d/18d1kwb2hCRl2MtNw0yuYHhzIhPl3S8mXL4isAkQN7-4/edit?usp=sharing)
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
