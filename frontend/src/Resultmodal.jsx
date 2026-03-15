@@ -1,16 +1,23 @@
-export default function Resultmodal({ result, onClose }) {
+import './App.css';
+
+const ResultModal = ({ result, onClose }) => {
   if (!result) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-card">
-        <h2>Analysis Results</h2>
+    <div className="overlay">
+      <div className="modal">
+        <h2>Scan Results</h2>
+        <p><strong>URL:</strong> {result.url}</p>
 
-        <p>{result.isSafe ? "Safe URL" : "Phishing URL"}</p>
-        <p>Confidence: {Math.round(result.confidence * 100)}%</p>
-        <p>Analyzed URL: {result.url}</p>
+        <div className="result-icon">
+          {result.isSafe ? '✅ URL IS SAFE!' : '⚠️ URL IS PHISHING'}
+        </div>
 
+        <p>Confidence: {Math.round(result.confidence)}%</p>
+        <button onClick={onClose} className="close-button">Close</button>
       </div>
     </div>
   );
-}
+};
+
+export default ResultModal;
