@@ -1,6 +1,5 @@
 import json
 from functools import *
-import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
@@ -132,6 +131,5 @@ def log_error():
 
 if __name__ == "__main__":
     model: LogisticRegression = joblib.load("backend/models/logit_model.pkl")
-    print(os.popen("pwd"))
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)
