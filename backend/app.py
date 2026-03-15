@@ -6,6 +6,7 @@ import logging
 import re
 from urllib.parse import urlparse, urlunparse, quote
 from urllib.request import urlopen, URLError
+
 from pipeline import model_pipeline
 
 app = Flask(__name__)
@@ -25,9 +26,18 @@ CORS(app, resources={r"/*": corsConfig})
 
 # initial url validity check
 def check_valid_url(url):
+    """
+    Check if URL is valid using urllib.
+
+    Args:
+        url (str): URL link to be checked.
+
+    Returns:
+        bool: Returns True if the URL is valid.
+    """
     if not url or not isinstance(url, str):
         return False
-    # use urllib to check validity
+
     try:
         urlopen(url)
         return True
@@ -35,12 +45,20 @@ def check_valid_url(url):
         return False
 
 
-# strip leading/trailing spaces, encode path to prevent xss/sqli
 def sanitise_url(url):
+    """
+    Sanitise URL by stripping leading/trailing spaces and encodes path to prevent XSS/SQLI.
+
+    Args:
+        url (str): URL link to be sanitised.
+
+    Returns:
+        str: Returns the sanitised URL.
+    """
     url = url.strip()
     parsed_url = urlparse(url)
 
-    # encode path and query to prevent sqli + xss
+    # encode path and query to prevent XSS/SQLI
     path = quote(parsed_url.path, safe="/")
     query = quote(parsed_url.query, safe="=&")
 
@@ -61,12 +79,13 @@ def sanitise_url(url):
 @app.route("/scan", methods=["POST"])
 def check_url():
     """
-    Route to check a URL from a given frontend
+    Route to check a URL from a given frontend.
+
     Args:
-        param url: The url link to be checked (from request body)
-        param1: request object with json inside
+        url (str): URL link to be checked (from request body).
+
     Returns:
-        return: The results if successful otherwise return 400 error
+        JSON: Return the result if successful, otherwise returns a 400 error.
     """
     if not isinstance(request.json, dict):
         return jsonify({"error": "invalid request body"}), 400
@@ -92,18 +111,17 @@ def check_url():
          "confidence": float(confidence[1] if isSafe == 1 else confidence[0])
          }), 200
 
-    
-
 
 @app.route("/error", methods=["POST"])
 def log_error():
     """
-    Route to log errors from the ai model
+    Route to log errors from the ML model.
+    
     Args:
-        param info: The information to be logged (from request body)
-        param1: request object with json inside
+        info: The information to be logged (from request body)
+        
     Returns:
-        return: The results if successful otherwise return 400 error
+        JSON: Return True if successful, otherwise returns a 400 error.
     """
     # TODO: please throw exceptions from AI model to this route for logging
     if not isinstance(request.json, dict):
