@@ -46,8 +46,6 @@ class preprocess_data:
             [self.NoOfOtherSpecialCharsInURL, "NoOfOtherSpecialCharsInURL"],
             [self.SpacialCharRatioInURL, "SpacialCharRatioInURL"],
             [self.IsHTTPS, "IsHTTPS"],
-            [self.LineOfCode, "LineOfCode"],
-            [self.LargestLineLength, "LargestLineLength"],
         ]
         # TODO: Add other function here
 
@@ -148,25 +146,6 @@ class preprocess_data:
 
     def IsHTTPS(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
-
-    # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
-    # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
-    def LineOfCode(self, url: str):
-        # TODO: REDIRECTS ARE BAD HERE
-        try:
-            r = requests.get(
-                url, allow_redirects=True, timeout=10, headers=self.headers
-            )
-            self.page_data = r.text.splitlines()
-            return len(r.text.splitlines())
-        except Exception as err:
-            print(err)
-            self.page_data = []
-            return 0
-            # Check if request failed!
-
-    def LargestLineLength(self, url: str):
-        return max((len(line) for line in self.page_data), default=0)
 
 
 # TODO: Gotta run the class

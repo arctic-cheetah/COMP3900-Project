@@ -105,6 +105,7 @@ def check_url():
     try:
         is_safe, confidence = model_pipeline(sanitised_url, model)
         print(is_safe)
+        print(f"URL is {'safe' if is_safe else 'not safe'}")
         return jsonify(
             {"is_safe": bool(is_safe), 
             "confidence": float(confidence[1] if is_safe == 1 else confidence[0])

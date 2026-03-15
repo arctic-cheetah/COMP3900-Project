@@ -1,7 +1,6 @@
 from sklearn.linear_model import LogisticRegression
 import joblib
 import pandas as pd
-import os
 from preprocessor import preprocess_data
 
 
@@ -44,9 +43,6 @@ def model_pipeline(url : str, model_path : str) -> tuple[str, str] | None:
     try:
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
-        print("zzzzzzzzzzzzzzzzzzzzzzzzzzz")
-        print(os.getcwd())
-        print(os.listdir(os.getcwd()))
         
         is_safe, confidence = run_model(df, model_path)
 
