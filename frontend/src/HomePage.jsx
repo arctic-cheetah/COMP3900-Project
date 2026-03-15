@@ -45,6 +45,16 @@ export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
 
+  const openHistoryResult = (item) => {
+    setCurrentResult({
+      url: item.url,
+      isSafe: item.isSafe,
+      confidence: item.confidence,
+    });
+
+    setIsModalOpen(true);
+  };
+
   const postURL = async (e) => {
     e.preventDefault();
 
@@ -130,14 +140,14 @@ export default function HomePage() {
       </p>
 
       {isModalOpen && (
-        <ResultModal 
-          result={currentResult} 
-          onClose={() => setIsModalOpen(false)} 
+        <ResultModal
+          result={currentResult}
+          onClose={() => setIsModalOpen(false)}
         />
       )}
       <div id='result' />
 
-      <HistoricalData history={history} />
+      <HistoricalData history={history} onHistoryClick={openHistoryResult} />
       <p className='privacy-text'>
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.

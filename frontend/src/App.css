@@ -107,4 +107,6 @@
   z-index: 1000;
 }
 
-
+tbody tr:hover {
+  background-color: rgb(247, 247, 247);
+}
