@@ -1,13 +1,28 @@
+.overlay {
+  padding-bottom: 50px
+}
+
 .modal {
   background-color: white;
-  padding: 40px;
+  padding: 5px;
+  padding-left: 2%;
   border-radius: 12px;
-  text-align: center;
   min-width: 300px;
   color: #333;
+  text-align: left;
+}
+
+.analysis-result-text {
+  font-size: 1.3em;
+  font-weight: 800;
 }
 
 .result-icon {
-  font-size: 24px;
+  font-size: 1.5em;
   margin: 20px 0;
+  text-align: center;
+}
+
+.result-text {
+  text-align: center;
 }
