@@ -18,20 +18,29 @@ const ResultModal = ({ result, onClose }) => {
             : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
         </div>
 
-        <div className="result-cards">
+        <div className='result-cards'>
+          <div className='confidence-result-card'>
+            <p className='card-title'>Confidence Score</p>
 
-          <div className="confidence-result-card">
-            <p className="card-title">Confidence Score</p>
-            <p className="card-value">{Math.round(result.confidence)}%</p>
+            <div className='confidence-row'>
+              <div className='confidence-bar'>
+                <div
+                  className={`confidence-fill ${result.isSafe ? 'safe' : 'phishing'}`}
+                  style={{ width: `${result.confidence}%` }}
+                ></div>
+              </div>
+
+              <span className='confidence-value'>
+                {Math.round(result.confidence)}%
+              </span>
+            </div>
           </div>
 
-          <div className="result-card">
-            <p className="card-title">Analyzed URL</p>
-            <p className="card-url">{result.url}</p>
+          <div className='result-card'>
+            <p className='card-title'>Analyzed URL</p>
+            <p className='card-url'>{result.url}</p>
           </div>
-
         </div>
-
       </div>
     </div>
   );
