@@ -4,6 +4,12 @@ import tldextract
 import pandas as pd
 from typing import *
 import requests
+import logging
+import json, datetime
+from pathlib import Path as path
+
+# create logger for preprocessor
+logger = logging.getLogger(__name__)
 
 # Given a url get these feature data
 # Then return a np.array of those features
@@ -52,12 +58,38 @@ class preprocess_data:
         # TODO: Add other function here
 
         dat = {}
+        # better variable names cuz it took me way too long to figure out what x was doing
+        for func, name in func_pointer:
+            try:
+                result = func(self.url)
+                dat[name] = [result]
+            except Exception as e:
+                print(f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}")
+                
+                LOG_DIR = path("logs")
+                LOG_DIR.mkdir(exist_ok=True)
+
+                timestamp = datetime.datetime.utcnow().isoformat()
+                entry = {
+                    "timestamp": timestamp,
+                    "log_type": "PREPROCESSOR_ERROR",
+                    "message": f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}"
+                }
+
+                with open(LOG_DIR / "preprocessor_errors.txt", "a") as f:
+                    f.write(json.dumps(entry) + "\n")
+                
+                dat[name] = [None]
+
+        return pd.DataFrame(dat)
+
+
         # THIS IS WHERE DF FROM URL IS MADE
         # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
-        for x in func_pointer:
-            # print((x[1], x[0](self.url)))
-            dat[x[1]] = [x[0](self.url)]
-        return pd.DataFrame(dat)
+        # for x in func_pointer:
+        #     # print((x[1], x[0](self.url)))
+        #     dat[x[1]] = [x[0](self.url)]
+        # return pd.DataFrame(dat)
 
     def URLLength(self, url: str):
         return len(url)
