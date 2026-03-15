@@ -5,6 +5,7 @@ from flask_cors import CORS
 import logging
 import re
 from urllib.parse import urlparse, urlunparse, quote
+from urllib.request import urlopen, URLError
 import joblib
 from sklearn.linear_model import LogisticRegression
 from preprocessor import preprocess_data
@@ -12,7 +13,6 @@ from preprocessor import preprocess_data
 app = Flask(__name__)
 model: LogisticRegression
 # TODO:
-# DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
 # ADD WHITELIST
 allowedOrigins = [
     "http://127.0.0.1:80",
@@ -29,11 +29,12 @@ CORS(app, resources={r"/*": corsConfig})
 def check_valid_url(url):
     if not url or not isinstance(url, str):
         return False
-    # ensure url starts with http(s)://
-    if not re.match(r"^https?://.+", url, re.IGNORECASE):
+    # use urllib to check validity
+    try:
+        urlopen(url)
+        return True
+    except URLError:
         return False
-
-    return True
 
 
 # strip leading/trailing spaces, encode path to prevent xss/sqli
