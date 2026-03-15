@@ -20,7 +20,7 @@ const ResultModal = ({ result, onClose }) => {
 
         <div className="result-cards">
 
-          <div className="result-card">
+          <div className="confidence-result-card">
             <p className="card-title">Confidence Score</p>
             <p className="card-value">{Math.round(result.confidence)}%</p>
           </div>

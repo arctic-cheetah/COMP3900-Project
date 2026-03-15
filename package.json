@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@iconify-json/simple-icons": "^1.2.71",
+    "flask": "^0.2.10",
+    "i": "^0.3.7",
     "mermaid": "^11.12.3"
   }
 }
