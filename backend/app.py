@@ -58,6 +58,9 @@ def sanitise_url(url):
 
     return sanitised_url
 
+@app.route("/", methods=["GET"])
+def health_check():
+    return "Working!" , 200
 
 @app.route("/scan", methods=["POST"])
 def check_url():

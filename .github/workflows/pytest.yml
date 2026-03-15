@@ -27,11 +27,19 @@ jobs:
             pip install joblib
             pip install tldextract
 
-
       - name: Run Backend
         run: | 
             python backend/app.py > backend.log 2>&1 & echo $! > backend.pi
-            sleep 5
+            sleep 10
+      
+      - name: Check Backend
+        run: |
+            for i in {1..10}; do
+              curl -sSf "http://127.0.0.1:5001/" >/dev/null && exit 0
+              sleep 0.5
+            done
+            echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
+            exit 1
 
       - name: Run Tests
         run: pytest
@@ -39,5 +47,6 @@ jobs:
       - name: Print backend log on failure
         if: failure()
         run: | 
-            echo "_____backend."_____backend.log______"
+            echo "_____backend.log______"
             cat backend.log
+            
