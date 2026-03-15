@@ -1,5 +1,6 @@
 import json
 from functools import *
+import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
@@ -58,6 +59,9 @@ def sanitise_url(url):
 
     return sanitised_url
 
+@app.route("/", methods=["GET"])
+def health_check():
+    return "Working!" , 200
 
 @app.route("/scan", methods=["POST"])
 def check_url():
@@ -127,6 +131,7 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: LogisticRegression = joblib.load("models/logit_model.pkl")
+    model: LogisticRegression = joblib.load("backend/models/logit_model.pkl")
+    print(os.popen("pwd"))
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)
