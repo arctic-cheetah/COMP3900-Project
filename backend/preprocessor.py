@@ -7,7 +7,7 @@ import requests
 import logging
 import json, datetime
 from pathlib import Path as path
-from ipaddress import ip_address, AddressValueError, NetmaskValueError
+from ipaddress import ip_address
 
 
 # create logger for preprocessor
@@ -115,7 +115,7 @@ class preprocess_data:
         try:
             ip_address("hostname")
             return 1
-        except AddressValueError or NetmaskValueError:
+        except ValueError:
             return 0
         except Exception as e:
             print(f'is_domain_ip error: "{e}"')
