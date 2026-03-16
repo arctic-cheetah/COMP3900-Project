@@ -2,6 +2,7 @@ import { scanURL } from "./api";
 import { useState } from "react";
 import HistoricalData from "./HistoricData";
 import Navbar from "./Navbar";
+import ResultModal from "./Resultmodal";
 import "./App.css";
 
 // --- DUMMY DATA FOR PREVIEW ---
@@ -40,6 +41,20 @@ const DUMMY_HISTORY = [
 
 export default function HomePage() {
   const [history, setHistory] = useState(DUMMY_HISTORY);
+  const [url, setUrl] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentResult, setCurrentResult] = useState(null);
+
+  const openHistoryResult = (item) => {
+    setCurrentResult({
+      url: item.url,
+      isSafe: item.isSafe,
+      confidence: item.confidence,
+    });
+
+    setIsModalOpen(true);
+  };
+
   const postURL = async (e) => {
     e.preventDefault();
 
@@ -55,21 +70,17 @@ export default function HomePage() {
     }
     try {
       const scanResult = await scanURL(url);
-      const resultElem = document.getElementById("result");
       console.log(scanResult);
-      let { is_safe, confidence } = scanResult;
-      console.log(is_safe);
-      console.log(confidence);
-      if (is_safe) {
-        resultElem.textContent = "URL IS SAFE! 🙂✅";
-      } else {
-        resultElem.textContent = "URL IS PHISHING ⚠️❌";
-      }
+      let { is_safe: isSafe, confidence } = scanResult;
+
+      setCurrentResult({ url, isSafe, confidence });
+      setIsModalOpen(true);
+
       setHistory((current) => [
         {
           url,
           timestamp: new Date(Date.now()),
-          is_safe,
+          isSafe,
           confidence: Math.round(confidence * 100) / 100,
         },
         ...current,
@@ -110,19 +121,33 @@ export default function HomePage() {
         <label>
           <input
             name="url-link"
-            defaultValue=""
-            placeholder="Enter URL to analsze (e.g., https://example.com)"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            placeholder="Enter URL to analyse (e.g., https://example.com)"
           />
         </label>
-        <button type="submit">Analyse URL</button>
+        <button
+          type="submit"
+          className={url.trim() ? "active-btn" : "inactive-btn"}
+          disabled={!url.trim()}
+        >
+          Analyse URL
+        </button>
       </form>
+
       <p className="privacy-text">
-        Your privacy is protected. URLs are analszed securely and not stored
+        Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
-      <div id="result" />
 
-      <HistoricalData history={history} />
+      {isModalOpen && (
+        <ResultModal
+          result={currentResult}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+
+      <HistoricalData history={history} onHistoryClick={openHistoryResult} />
       <p className="privacy-text">
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.

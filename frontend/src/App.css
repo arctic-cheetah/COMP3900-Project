@@ -7,7 +7,7 @@
 .header {
   font-size: 1.1em;
   margin-bottom: 30px;
-  line-height: 0px;
+  line-height: 1.1;
   margin-top: -20px;
 }
 
@@ -50,8 +50,18 @@
   padding: 0 20px;
   border-radius: 10px;
   border: none;
-  background-color: #7aafff;
   color: white;
+}
+
+.inactive-btn {
+  background-color: #7aafff;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.active-btn {
+  background-color: #4b80fc;
+  cursor: pointer;
 }
 
 .search-icon {
@@ -96,3 +106,6 @@
   z-index: 1000;
 }
 
+tbody tr:hover {
+  background-color: rgb(247, 247, 247);
+}

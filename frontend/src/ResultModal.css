@@ -1,0 +1,104 @@
+.overlay {
+  padding-bottom: 50px;
+}
+
+.modal {
+  background-color: white;
+  padding: 5px;
+  padding-left: 2%;
+  border-radius: 12px;
+  min-width: 300px;
+  color: #333;
+  text-align: left;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.analysis-result-text {
+  font-size: 1.3em;
+  font-weight: 800;
+}
+
+.result-icon {
+  font-size: 1.5em;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.result-text {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.result-cards {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-bottom: 30px;
+  padding-right: 30px;
+}
+
+.confidence-result-card {
+  background: #f7f9fc;
+  border: 1px solid #e2e6ef;
+  border-radius: 10px;
+  padding: 15px;
+  margin-right: 36%;
+  margin-left: 36%;
+  text-align: center;
+}
+
+.result-card {
+  background: #f7f9fc;
+  border: 1px solid #e2e6ef;
+  border-radius: 10px;
+  padding-left: 15px;
+}
+
+.card-title {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.card-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.card-url {
+  font-size: 0.95rem;
+}
+
+.confidence-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.confidence-bar {
+  flex: 1;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 20px;
+}
+
+.confidence-fill {
+  height: 100%;
+  border-radius: 20px;
+}
+
+.confidence-fill.safe {
+  background: #22c55e;
+}
+
+.confidence-fill.phishing {
+  background: #ef4444;
+}
+
+.confidence-value {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
