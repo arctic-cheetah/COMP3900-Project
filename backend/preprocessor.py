@@ -54,7 +54,7 @@ class preprocess_data:
             [self.no_of_q_mark_in_url, "NoOfQMarkInURL"],
             [self.no_of_ampersand_in_url, "NoOfAmpersandInURL"],
             [self.no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"],
-            [self.special_char_ratio_in_url, "SpacialCharRatioInURL"],
+            [self.special_char_ratio_in_url, "SpecialCharRatioInURL"],
             [self.is_https, "IsHTTPS"],
         ]
         # TODO: Add other function here
