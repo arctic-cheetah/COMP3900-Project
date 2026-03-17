@@ -49,7 +49,6 @@ logging.basicConfig(
 # logs a JSON entry to the appropriate log file based on log type
 # log type is either ERROR or CRITICAL
 def write_log(msg, log_type):
-
     timestamp = datetime.datetime.utcnow().isoformat()
     entry = {
         "timestamp": timestamp, 
@@ -66,7 +65,6 @@ def write_log(msg, log_type):
         print(f"LOGGING FAILED: {str(e)}", file=sys.stderr)
 
 
-# initial url validity check
 def check_valid_url(url):
     """
     Check if URL is valid using urllib.
@@ -83,7 +81,10 @@ def check_valid_url(url):
     try:
         urlopen(url)
         return True
-    except URLError:
+    except URLError as e:
+        print(e)
+        return False
+    except Exception as e:
         return False
 
 
@@ -156,14 +157,14 @@ def check_url():
         msg = f"{request.remote_addr}: Missing or invalid url field"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "missing/invalid url field"}), 400
+        return jsonify({"error": "missing/invalid URL field"}), 400
     
     # check if url is valid format 
     if not check_valid_url(url):
-        msg = f"Bad URL from {request.remote_addr}: {url}"
+        msg = f"Invalid URL from {request.remote_addr}: {url}"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "bad URL format"}), 400
+        return jsonify({"error": "Invalid URL format"}), 400
 
     app.logger.info(type(request_data))
 
@@ -178,7 +179,7 @@ def check_url():
             }), 200
     except Exception as e:
         print(e)
-        return jsonify({"error": "invalid url format"}), 400
+        return jsonify({"error": "URL could not be scanned"}), 400
 
 
 @app.route("/error", methods=["POST"])
