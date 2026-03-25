@@ -25,12 +25,12 @@ jobs:
             pip install flask_cors
             pip install scikit-learn
             pip install joblib
-            pip install tldextract pytest-cov codecov
+            pip install tldextract pytest-cov
 
       - name: Run Backend
         run: | 
-            python backend/app.py > backend.log 2>&1 & echo $! > backend.pi
-            sleep 10
+          python backend/app.py > backend.log 2>&1 & echo $! > backend.pid
+          sleep 10
       
       - name: Check Backend
         run: |
@@ -42,10 +42,13 @@ jobs:
             exit 1
 
       - name: Run Tests
-        run: pytest --cov=backend_cov --cov-report=html
+        run: coverage run --parallel-mode -m pytest
 
-      - name: Run coverage
-        run: codecov
+      - name: Generate coverage reports
+        run: |
+            coverage combine
+            coverage report
+            coverage html
 
       - name: Print backend log on failure
         if: failure()
