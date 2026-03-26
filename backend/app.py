@@ -1,5 +1,3 @@
-import json
-from functools import *
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
@@ -121,7 +119,8 @@ def sanitise_url(url):
 
 @app.route("/", methods=["GET"])
 def health_check():
-    return "Working!" , 200
+    return "Working!", 200
+
 
 
 @app.route("/scan", methods=["POST"])
@@ -169,17 +168,23 @@ def check_url():
     app.logger.info(type(request_data))
 
     sanitised_url = sanitise_url(url)
-    try:
-        is_safe, confidence = model_pipeline(sanitised_url, model)
-        print(is_safe)
-        print(f"URL is {'safe' if is_safe else 'not safe'}")
-        return jsonify(
-            {"is_safe": bool(is_safe), 
-            "confidence": float(confidence[1] if is_safe == 1 else confidence[0])
-            }), 200
-    except Exception as e:
-        print(e)
-        return jsonify({"error": "URL could not be scanned"}), 400
+    url_obj = preprocess_data(sanitised_url)
+    df = url_obj.get_data()
+    # Model returns a np.array
+    isSafe = model.predict(df)[0]
+    confidence = model.predict_proba(df)[0] * 100.0
+    # {notSafe = 0, safe = 1}
+
+    print(isSafe)
+    return (
+        jsonify(
+            {
+                "isSafe": bool(isSafe),
+                "confidence": float(confidence[1] if isSafe == 1 else confidence[0]),
+            }
+        ),
+        200,
+    )
 
 
 @app.route("/error", methods=["POST"])
