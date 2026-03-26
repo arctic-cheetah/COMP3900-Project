@@ -59,8 +59,9 @@ class preprocess_data:
         ]
         # TODO: Add other function here
 
+        # THIS IS WHERE DF FROM URL IS MADE
+        # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
         data = {}
-        # better variable names cuz it took me way too long to figure out what x was doing
         for func, name in func_pointer:
             try:
                 result = func(self.url)
@@ -86,12 +87,7 @@ class preprocess_data:
         return pd.DataFrame(data)
 
 
-        # THIS IS WHERE DF FROM URL IS MADE
-        # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
-        # for x in func_pointer:
-        #     # print((x[1], x[0](self.url)))
-        #     dat[x[1]] = [x[0](self.url)]
-        # return pd.DataFrame(dat)
+
     def url_length(self, url: str):
         return len(url)
 
