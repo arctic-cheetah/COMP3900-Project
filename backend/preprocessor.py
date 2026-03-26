@@ -56,6 +56,9 @@ class preprocess_data:
             [self.no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"],
             [self.special_char_ratio_in_url, "SpecialCharRatioInURL"],
             [self.is_https, "IsHTTPS"],
+            [self.LineOfCode, "LineOfCode"],
+            [self.LargestLineLength, "LargestLineLength"],
+            
         ]
         # TODO: Add other function here
 
