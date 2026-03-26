@@ -153,13 +153,22 @@ class preprocess_data:
 
 
     def no_of_letters_in_url(self, url: str):
-        # Count number of unique letters!
-        ht = set()
-        for c in url:
-            if c.isalpha():
-                ht.add(c)
-
-        return len(ht)
+        """
+        Dataset behaviour
+        - Count all letters in the hostname, not full url
+        - drop leading www if present
+        - dataset seems to drop last char wtf
+        """
+        
+        host = (urlparse(url).netloc or "").lower()
+        
+        if host.startswith("www."):
+            host = host[4:]
+        
+        if host:
+            host = host[:-1]
+        
+        return sum(c.isalpha() for c in host)
 
 
     def letter_ratio_in_url(self, url: str):
@@ -204,6 +213,26 @@ class preprocess_data:
 
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
+    
+    
+    # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
+    # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
+    # def LineOfCode(self, url: str):
+    #     # TODO: REDIRECTS ARE BAD HERE
+    #     try:
+    #         r = requests.get(
+    #             url, allow_redirects=True, timeout=10, headers=self.headers
+    #         )
+    #         self.page_data = r.text.splitlines()
+    #         return len(r.text.splitlines())
+    #     except Exception as err:
+    #         print(err)
+    #         self.page_data = []
+    #         return 0
+    #         # Check if request failed!
+
+    # def LargestLineLength(self, url: str):
+    #     return max((len(line) for line in self.page_data), default=0)
 
 
 # TODO: Gotta run the class

@@ -56,4 +56,4 @@ def compare_features(check_urls_num : int, print_all : bool) -> bool:
 
     return is_same
 
-compare_features(3, True)
+compare_features(5, True)
