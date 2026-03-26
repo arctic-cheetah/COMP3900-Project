@@ -214,6 +214,14 @@ class preprocess_data:
 
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
+    
+    
+    # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
+    # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
+
+
+    def LargestLineLength(self, url: str):
+        return max((len(line) for line in self.page_data), default=0)
 
 
 # TODO: Gotta run the class
