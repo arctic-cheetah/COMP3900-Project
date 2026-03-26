@@ -86,7 +86,8 @@ class preprocess_data:
 
         return pd.DataFrame(data)
 
-
+    def _avoid_div_zero(self, url: str) -> int:
+        return max(len(str), 1)
 
     def url_length(self, url: str):
         return len(url)
@@ -172,7 +173,7 @@ class preprocess_data:
 
 
     def letter_ratio_in_url(self, url: str):
-        return self.no_of_letters_in_url(url) / len(url) if len(url) > 0 else 0
+        return self.no_of_letters_in_url(url) / self._avoid_div_zero(url)
 
 
     def no_of_digits_in_url(self, url: str):
@@ -180,7 +181,7 @@ class preprocess_data:
 
 
     def digit_ratio_in_url(self, url: str):
-        return self.no_of_digits_in_url(url) / len(url) if len(url) > 0 else 0
+        return self.no_of_digits_in_url(url) / self._avoid_div_zero(url)
 
 
     def no_of_equals_in_url(self, url: str):
@@ -214,25 +215,7 @@ class preprocess_data:
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
     
-    
-    # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
-    # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
-    # def LineOfCode(self, url: str):
-    #     # TODO: REDIRECTS ARE BAD HERE
-    #     try:
-    #         r = requests.get(
-    #             url, allow_redirects=True, timeout=10, headers=self.headers
-    #         )
-    #         self.page_data = r.text.splitlines()
-    #         return len(r.text.splitlines())
-    #     except Exception as err:
-    #         print(err)
-    #         self.page_data = []
-    #         return 0
-    #         # Check if request failed!
 
-    # def LargestLineLength(self, url: str):
-    #     return max((len(line) for line in self.page_data), default=0)
 
 
 # TODO: Gotta run the class
