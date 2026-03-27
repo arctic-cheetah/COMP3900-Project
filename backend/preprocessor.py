@@ -238,6 +238,38 @@ class preprocess_data:
     def LargestLineLength(self, url: str):
         return max((len(line) for line in self.page_data), default=0)
 
+    
+    def NoOfJSCode(self, url: str) -> int:
+        """
+        Count the number of JavaScript "code occurrences" in the fetched HTML.
+
+        Heuristic (fast, no HTML parser dependency):
+        - Counts <script> blocks (inline or external via src=)
+        - Also counts inline event handlers (onclick=, onload=, etc.)
+        - Also counts javascript: URLs
+
+        Returns 0 if the page can't be fetched.
+        """
+        # Ensure page_data is populated (LineOfCode fetches and sets self.page_data)
+        if not hasattr(self, "page_data") or self.page_data is None:
+            _ = self.LineOfCode(url)
+
+        if not self.page_data:
+            return 0
+
+        html = "\n".join(self.page_data)
+
+        # 1) <script ...> occurrences
+        script_tags = len(re.findall(r"<\s*script\b", html, flags=re.IGNORECASE))
+
+        # 2) Inline JS event handlers like onclick=, onsubmit=, onload=, etc.
+        # (This is a heuristic: counts any attribute that starts with "on" followed by letters, then '=')
+        inline_handlers = len(re.findall(r"\bon[a-z]+\s*=", html, flags=re.IGNORECASE))
+
+        # 3) javascript: pseudo-protocol usage
+        js_protocol = len(re.findall(r"\bjavascript\s*:", html, flags=re.IGNORECASE))
+
+        return script_tags + inline_handlers + js_protocol
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"
