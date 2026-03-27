@@ -41,6 +41,7 @@ class preprocess_data:
             [self.url_length, "URLLength"],
             [self.domain_length, "DomainLength"],
             [self.is_domain_ip, "IsDomainIP"],
+            # [self.get_url_similarity_score, "URLSimilarityIndex"],
             [self.tld_length, "TLDLength"],
             [self.no_of_sub_domain, "NoOfSubDomain"],
             [self.has_obfuscation, "HasObfuscation"],
@@ -208,6 +209,9 @@ class preprocess_data:
 
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
+    
+    # def get_url_similarity_score(self, url: str):
+        
 
 
 # TODO: Gotta run the class
