@@ -29,12 +29,12 @@ class preprocess_data:
     }
     # Page data should be list of lines for ease of processing
     page_data: List[str]
+    
 
 
     def __init__(self, url: str):
         self.url_len = len(url)
         self.url = url
-
 
     def get_data(self) -> pd.DataFrame:
         func_pointer = [
@@ -58,7 +58,6 @@ class preprocess_data:
             [self.is_https, "IsHTTPS"],
             [self.LineOfCode, "LineOfCode"],
             [self.LargestLineLength, "LargestLineLength"],
-            
         ]
         # TODO: Add other function here
 
@@ -240,6 +239,10 @@ class preprocess_data:
             return 0
 
     def LargestLineLength(self, url: str):
+        """
+        Find the line with the largest length
+        otherwise, return 0
+        """
         return max((len(line) for line in self.page_data), default=0)
 
     
@@ -275,7 +278,28 @@ class preprocess_data:
 
         return script_tags + inline_handlers + js_protocol
 
-    
+    func_pointer : List[List[Callable | str]]= [
+        [url_length, "URLLength"],
+        [domain_length, "DomainLength"],
+        [is_domain_ip, "IsDomainIP"],
+        [tld_length, "TLDLength"],
+        [no_of_sub_domain, "NoOfSubDomain"],
+        [has_obfuscation, "HasObfuscation"],
+        [no_of_obfuscated_char, "NoOfObfuscatedChar"],
+        [obfuscation_ratio, "ObfuscationRatio"],
+        [no_of_letters_in_url, "NoOfLettersInURL"],
+        [letter_ratio_in_url, "LetterRatioInURL"],
+        [no_of_digits_in_url, "NoOfDigitsInURL"],
+        [digit_ratio_in_url, "DigitRatioInURL"],
+        [no_of_equals_in_url, "NoOfEqualsInURL"],
+        [no_of_q_mark_in_url, "NoOfQMarkInURL"],
+        [no_of_ampersand_in_url, "NoOfAmpersandInURL"],
+        [no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"],
+        [special_char_ratio_in_url, "SpecialCharRatioInURL"],
+        [is_https, "IsHTTPS"],
+        [LineOfCode, "LineOfCode"],
+        [LargestLineLength, "LargestLineLength"],
+    ]
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"

@@ -31,8 +31,14 @@ def compare_features(check_urls_num : int, print_all : bool) -> bool:
     df = pd.read_csv("./backend/data/uci_phishing_url_dataset.csv")
     urls = df["URL"]
 
-    df = pd.read_csv("./backend/data/uci_phishing_url_dataset_clean.csv")
+    df = pd.read_csv("./backend/data/uci_phishing_url_dataset.csv")
     df = df.drop(columns="IsLegit")
+    # TODO: Exclude cols we have not calcuated yet!
+    # print([name for func, name in preprocess_data.func_pointer])
+    remaining_col = df.columns.difference(other=[name for func, name in preprocess_data.func_pointer])
+    # print(remaining_col)
+    df = df.drop(columns=remaining_col)
+    
     for i, url in enumerate(urls):
         if i >= check_urls_num:
             break
