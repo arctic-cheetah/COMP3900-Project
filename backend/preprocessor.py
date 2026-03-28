@@ -222,7 +222,12 @@ class preprocess_data:
     # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
     def LineOfCode(self, url: str):
+        """
+        Count lines in the html code
+        Returns 0 if the page can't be fetched.
+        """
         # TODO: REDIRECTS ARE BAD HERE
+        # Check if request failed!
         try:
             r = requests.get(
                 url, allow_redirects=True, timeout=10, headers=self.headers
@@ -233,7 +238,6 @@ class preprocess_data:
             print(err)
             self.page_data = []
             return 0
-            # Check if request failed!
 
     def LargestLineLength(self, url: str):
         return max((len(line) for line in self.page_data), default=0)
@@ -270,6 +274,8 @@ class preprocess_data:
         js_protocol = len(re.findall(r"\bjavascript\s*:", html, flags=re.IGNORECASE))
 
         return script_tags + inline_handlers + js_protocol
+
+    
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"
