@@ -45,12 +45,12 @@ jobs:
       # Need to add github workspace environment here to get path of ai backend
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest test/ai_test.py
+        run: pytest test/ai_test.py --cov=backend --cov-branch --cov-report= 
 
       - name: Run Backend Integration Tests 
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest test/backend_test.py
+        run: pytest test/backend_test.py --cov=backend --cov-branch --cov-append --cov-report=term-missing 
 
       - name: Stop Backend (This is needed to allow coverage to finish)
         if: always()
