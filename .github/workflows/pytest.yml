@@ -25,12 +25,12 @@ jobs:
             pip install flask_cors
             pip install scikit-learn
             pip install joblib
-            pip install tldextract
+            pip install tldextract pytest-cov coverage
 
       - name: Run Backend
         run: | 
-            python backend/app.py > backend.log 2>&1 & echo $! > backend.pi
-            sleep 10
+          coverage run --parallel-mode backend/app.py > backend.log 2>&1 & echo $! > backend.pid
+          sleep 10
       
       - name: Check Backend
         run: |
@@ -43,6 +43,36 @@ jobs:
 
       - name: Run Tests
         run: pytest
+
+      - name: Stop Backend (This is needed to allow coverage to finish)
+        if: always()
+        run: |
+          if [ -f backend.pid ]; then
+            pid="$(cat backend.pid)"
+            if kill -0 "$pid" 2>/dev/null; then
+              kill -INT "$pid" 2>/dev/null || true
+              for i in {1..10}; do
+                kill -0 "$pid" 2>/dev/null || break
+                sleep 0.5
+              done
+            fi
+
+            if kill -0 "$pid" 2>/dev/null; then
+              kill -TERM "$pid" 2>/dev/null || true
+              for i in {1..10}; do
+                kill -0 "$pid" 2>/dev/null || break
+                sleep 0.5
+              done
+            fi
+
+            kill -KILL "$pid" 2>/dev/null || true
+          fi
+
+      - name: Generate coverage reports
+        run: |
+            coverage combine
+            coverage report
+            coverage html
 
       - name: Print backend log on failure
         if: failure()

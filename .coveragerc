@@ -1,0 +1,15 @@
+[run]
+branch = True
+parallel = True
+sigterm = True
+source = backend
+
+[report]
+show_missing = True
+skip_covered = True
+omit = 
+    */__pycache__/*
+    backend/data/*
+    backend/models/*
+    backend/outputs/*
+    backend/model_training/*
