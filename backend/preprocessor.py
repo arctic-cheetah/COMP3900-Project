@@ -22,7 +22,6 @@ logger = logging.getLogger(__name__)
 class preprocess_data:
     url_len = 0
     num_digit = 0
-    func_pointer: List[Callable]
     url: str = ""
     num_obfuscated_char = 0
     headers = {
@@ -30,14 +29,12 @@ class preprocess_data:
     }
     # Page data should be list of lines for ease of processing
     page_data: List[str]
-    
-
 
     def __init__(self, url: str):
+        # We should ensure ending slashes are stripped
+        url.strip("/")
         self.url_len = len(url)
         self.url = url
-
-
 
     def _avoid_div_zero(self, url: str) -> int:
         return max(len(url) - 1, 1)
@@ -51,17 +48,17 @@ class preprocess_data:
 
     def is_domain_ip(self, url: str):
         """
-            Checks if domain is an IP address.
-            
-            Args:
-                url (str): The URL to be checked.
-            
-            Returns:
-                int: Returns 1 if domain is IP, otherwise 0.
+        Checks if domain is an IP address.
+
+        Args:
+            url (str): The URL to be checked.
+
+        Returns:
+            int: Returns 1 if domain is IP, otherwise 0.
         """
         parsed_url = urlsplit(url)
         hostname = str(parsed_url.hostname)
-       
+
         try:
             ip_address("hostname")
             return 1
@@ -70,19 +67,16 @@ class preprocess_data:
         except Exception as e:
             print(f'is_domain_ip error: "{e}"')
 
-
     def tld_length(self, url: str):
         extracted = tldextract.extract(url)
         tld = extracted.suffix
         return len(tld)
-
 
     def no_of_sub_domain(self, url: str):
         extracted = tldextract.extract(url)
         if extracted.subdomain == "":
             return 0
         return len(extracted.subdomain.split("."))
-
 
     def has_obfuscation(self, url: str):
         # URL obfuscation according to this article
@@ -92,7 +86,6 @@ class preprocess_data:
         regex = r"%[0-9a-fA-F]{2}"
         return 1 if re.match(regex, url) else 0
 
-
     def no_of_obfuscated_char(self, url: str):
         regex = r"%[0-9a-fA-F]{2}"
         found = re.findall(regex, url)
@@ -101,10 +94,8 @@ class preprocess_data:
         self.num_obfuscated_char = len(found) * 3
         return self.num_obfuscated_char
 
-
     def obfuscation_ratio(self, url: str):
         return self.no_of_obfuscated_char(url) / self._avoid_div_zero(url)
-
 
     def no_of_letters_in_url(self, url: str):
         """
@@ -113,46 +104,38 @@ class preprocess_data:
         - drop leading www if present
         - dataset seems to drop last char wtf
         """
-        
+
         host = (urlparse(url).netloc or "").lower()
-        
+
         if host.startswith("www."):
             host = host[4:]
-        
+
         if host:
             host = host[:-1]
-        
-        return sum(c.isalpha() for c in host)
 
+        return sum(c.isalpha() for c in host)
 
     def letter_ratio_in_url(self, url: str):
         return self.no_of_letters_in_url(url) / self._avoid_div_zero(url)
 
-
     def no_of_digits_in_url(self, url: str):
         return sum(c.isdigit() for c in url)
-
 
     def digit_ratio_in_url(self, url: str):
         return self.no_of_digits_in_url(url) / self._avoid_div_zero(url)
 
-
     def no_of_equals_in_url(self, url: str):
         return sum(c in "=" for c in url)
-
 
     def no_of_q_mark_in_url(self, url: str):
         return sum(c in "?" for c in url)
 
-
     def no_of_ampersand_in_url(self, url: str):
         return sum(c in "&" for c in url)
-
 
     def no_of_other_special_chars_in_url(self, url: str):
         special = "!@#$%^*()_+-[]{}|;:'\",<>~`"
         return sum(c in special for c in url)
-
 
     def special_char_ratio_in_url(self, url: str):
         total_special = (
@@ -164,11 +147,9 @@ class preprocess_data:
 
         return total_special / self._avoid_div_zero(url)
 
-
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
-    
-    
+
     # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
     def LineOfCode(self, url: str):
@@ -196,10 +177,10 @@ class preprocess_data:
         """
         return max((len(line) for line in self.page_data), default=0)
 
-    
-    def NoOfJSCode(self, url: str) -> int:
+    def NoOfJS(self, url: str) -> int:
         """
         Count the number of JavaScript "code occurrences" in the fetched HTML.
+        This can be defeated if the page is behind some kind of WAF
 
         Heuristic (fast, no HTML parser dependency):
         - Counts <script> blocks (inline or external via src=)
@@ -216,6 +197,12 @@ class preprocess_data:
             return 0
 
         html = "\n".join(self.page_data)
+        # html = requests.get(
+        #     url,
+        #     allow_redirects=True,
+        #     timeout=10,
+        #     headers=self.headers,
+        # ).text
 
         # 1) <script ...> occurrences
         script_tags = len(re.findall(r"<\s*script\b", html, flags=re.IGNORECASE))
@@ -228,8 +215,28 @@ class preprocess_data:
         js_protocol = len(re.findall(r"\bjavascript\s*:", html, flags=re.IGNORECASE))
 
         return script_tags + inline_handlers + js_protocol
-    
-    
+
+    def hasFavicon(self, url) -> int:
+        """
+        Check if the site has a favicon image
+        Args:
+            url (_type_): url
+        """
+        try:
+            r = requests.get(
+                url + "/favicon.ico",
+                allow_redirects=True,
+                timeout=10,
+                headers=self.headers,
+            )
+            if r.status_code >= 200 and r.status_code < 400:
+                return 1
+
+        except Exception:
+            return 0
+        return 0
+
+    # TODO: Add other function here
     FeatureFn = Callable[["preprocess_data", str], Any]
     func_pointer: ClassVar[list[tuple[FeatureFn, str]]] = [
         (url_length, "URLLength"),
@@ -252,11 +259,11 @@ class preprocess_data:
         (is_https, "IsHTTPS"),
         (LineOfCode, "LineOfCode"),
         (LargestLineLength, "LargestLineLength"),
-        (NoOfJSCode, "NoOfJSCode"),
+        (hasFavicon, "HasFavicon"),
+        (NoOfJS, "NoOfJS"),
     ]
-    
+
     def get_data(self) -> pd.DataFrame:
-        # TODO: Add other function here
 
         # THIS IS WHERE DF FROM URL IS MADE
         # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
@@ -268,8 +275,10 @@ class preprocess_data:
                 bounded_func: Callable = getattr(self, func.__name__)
                 data[name] = [bounded_func(self.url)]
             except Exception as e:
-                print(f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}")
-                
+                print(
+                    f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}"
+                )
+
                 LOG_DIR = path("logs")
                 LOG_DIR.mkdir(exist_ok=True)
 
@@ -277,15 +286,16 @@ class preprocess_data:
                 entry = {
                     "timestamp": timestamp,
                     "log_type": "PREPROCESSOR_ERROR",
-                    "message": f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}"
+                    "message": f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}",
                 }
 
                 with open(LOG_DIR / "preprocessor_errors.txt", "a") as f:
                     f.write(json.dumps(entry) + "\n")
-                
+
                 data[name] = [None]
 
         return pd.DataFrame(data)
+
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"
