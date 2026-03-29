@@ -3,6 +3,7 @@ from urllib.parse import urlparse, urlsplit
 import tldextract
 import pandas as pd
 from typing import *
+from types import MethodType
 import requests
 import logging
 import json, datetime
@@ -36,57 +37,7 @@ class preprocess_data:
         self.url_len = len(url)
         self.url = url
 
-    def get_data(self) -> pd.DataFrame:
-        func_pointer = [
-            [self.url_length, "URLLength"],
-            [self.domain_length, "DomainLength"],
-            [self.is_domain_ip, "IsDomainIP"],
-            [self.tld_length, "TLDLength"],
-            [self.no_of_sub_domain, "NoOfSubDomain"],
-            [self.has_obfuscation, "HasObfuscation"],
-            [self.no_of_obfuscated_char, "NoOfObfuscatedChar"],
-            [self.obfuscation_ratio, "ObfuscationRatio"],
-            [self.no_of_letters_in_url, "NoOfLettersInURL"],
-            [self.letter_ratio_in_url, "LetterRatioInURL"],
-            [self.no_of_digits_in_url, "NoOfDigitsInURL"],
-            [self.digit_ratio_in_url, "DigitRatioInURL"],
-            [self.no_of_equals_in_url, "NoOfEqualsInURL"],
-            [self.no_of_q_mark_in_url, "NoOfQMarkInURL"],
-            [self.no_of_ampersand_in_url, "NoOfAmpersandInURL"],
-            [self.no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"],
-            [self.special_char_ratio_in_url, "SpecialCharRatioInURL"],
-            [self.is_https, "IsHTTPS"],
-            [self.LineOfCode, "LineOfCode"],
-            [self.LargestLineLength, "LargestLineLength"],
-        ]
-        # TODO: Add other function here
 
-        # THIS IS WHERE DF FROM URL IS MADE
-        # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
-        data = {}
-        for func, name in func_pointer:
-            try:
-                result = func(self.url)
-                data[name] = [result]
-            except Exception as e:
-                print(f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}")
-                
-                LOG_DIR = path("logs")
-                LOG_DIR.mkdir(exist_ok=True)
-
-                timestamp = datetime.datetime.utcnow().isoformat()
-                entry = {
-                    "timestamp": timestamp,
-                    "log_type": "PREPROCESSOR_ERROR",
-                    "message": f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}"
-                }
-
-                with open(LOG_DIR / "preprocessor_errors.txt", "a") as f:
-                    f.write(json.dumps(entry) + "\n")
-                
-                data[name] = [None]
-
-        return pd.DataFrame(data)
 
     def _avoid_div_zero(self, url: str) -> int:
         return max(len(url) - 1, 1)
@@ -277,29 +228,64 @@ class preprocess_data:
         js_protocol = len(re.findall(r"\bjavascript\s*:", html, flags=re.IGNORECASE))
 
         return script_tags + inline_handlers + js_protocol
-
-    func_pointer : List[List[Callable | str]]= [
-        [url_length, "URLLength"],
-        [domain_length, "DomainLength"],
-        [is_domain_ip, "IsDomainIP"],
-        [tld_length, "TLDLength"],
-        [no_of_sub_domain, "NoOfSubDomain"],
-        [has_obfuscation, "HasObfuscation"],
-        [no_of_obfuscated_char, "NoOfObfuscatedChar"],
-        [obfuscation_ratio, "ObfuscationRatio"],
-        [no_of_letters_in_url, "NoOfLettersInURL"],
-        [letter_ratio_in_url, "LetterRatioInURL"],
-        [no_of_digits_in_url, "NoOfDigitsInURL"],
-        [digit_ratio_in_url, "DigitRatioInURL"],
-        [no_of_equals_in_url, "NoOfEqualsInURL"],
-        [no_of_q_mark_in_url, "NoOfQMarkInURL"],
-        [no_of_ampersand_in_url, "NoOfAmpersandInURL"],
-        [no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"],
-        [special_char_ratio_in_url, "SpecialCharRatioInURL"],
-        [is_https, "IsHTTPS"],
-        [LineOfCode, "LineOfCode"],
-        [LargestLineLength, "LargestLineLength"],
+    
+    
+    FeatureFn = Callable[["preprocess_data", str], Any]
+    func_pointer: ClassVar[list[tuple[FeatureFn, str]]] = [
+        (url_length, "URLLength"),
+        (domain_length, "DomainLength"),
+        (is_domain_ip, "IsDomainIP"),
+        (tld_length, "TLDLength"),
+        (no_of_sub_domain, "NoOfSubDomain"),
+        (has_obfuscation, "HasObfuscation"),
+        (no_of_obfuscated_char, "NoOfObfuscatedChar"),
+        (obfuscation_ratio, "ObfuscationRatio"),
+        (no_of_letters_in_url, "NoOfLettersInURL"),
+        (letter_ratio_in_url, "LetterRatioInURL"),
+        (no_of_digits_in_url, "NoOfDigitsInURL"),
+        (digit_ratio_in_url, "DigitRatioInURL"),
+        (no_of_equals_in_url, "NoOfEqualsInURL"),
+        (no_of_q_mark_in_url, "NoOfQMarkInURL"),
+        (no_of_ampersand_in_url, "NoOfAmpersandInURL"),
+        (no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"),
+        (special_char_ratio_in_url, "SpecialCharRatioInURL"),
+        (is_https, "IsHTTPS"),
+        (LineOfCode, "LineOfCode"),
+        (LargestLineLength, "LargestLineLength"),
+        (NoOfJSCode, "NoOfJSCode"),
     ]
+    
+    def get_data(self) -> pd.DataFrame:
+        # TODO: Add other function here
+
+        # THIS IS WHERE DF FROM URL IS MADE
+        # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
+        data = {}
+        for func, name in self.func_pointer:
+            try:
+                # result = func(self, self.url)
+                # The methods stored in func pointer belong to class => need to bind it to the object
+                bounded_func: Callable = getattr(self, func.__name__)
+                data[name] = [bounded_func(self.url)]
+            except Exception as e:
+                print(f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}")
+                
+                LOG_DIR = path("logs")
+                LOG_DIR.mkdir(exist_ok=True)
+
+                timestamp = datetime.datetime.utcnow().isoformat()
+                entry = {
+                    "timestamp": timestamp,
+                    "log_type": "PREPROCESSOR_ERROR",
+                    "message": f"PREPROCESSOR ERROR: Feature '{name}' failed on url '{self.url}' with error {e}"
+                }
+
+                with open(LOG_DIR / "preprocessor_errors.txt", "a") as f:
+                    f.write(json.dumps(entry) + "\n")
+                
+                data[name] = [None]
+
+        return pd.DataFrame(data)
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"
