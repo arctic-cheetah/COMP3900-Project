@@ -41,8 +41,16 @@ jobs:
             echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
             exit 1
 
-      - name: Run Tests
-        run: pytest
+      - name: Run Preprocessor Unit Tests 
+      # Need to add github workspace environment here to get path of ai backend
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest test/ai_test.py
+
+      - name: Run Backend Integration Tests 
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest test/backend_test.py
 
       - name: Stop Backend (This is needed to allow coverage to finish)
         if: always()
