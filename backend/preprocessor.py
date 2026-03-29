@@ -158,6 +158,7 @@ class preprocess_data:
         Returns 0 if the page can't be fetched.
         """
         # TODO: REDIRECTS ARE BAD HERE
+        # TODO: FIX TIMEOUT
         # Check if request failed!
         try:
             r = requests.get(
@@ -189,6 +190,7 @@ class preprocess_data:
 
         Returns 0 if the page can't be fetched.
         """
+        # TODO: My JS CHECKER MAY OVERCOUNT!
         # Ensure page_data is populated (LineOfCode fetches and sets self.page_data)
         if not hasattr(self, "page_data") or self.page_data is None:
             _ = self.LineOfCode(url)

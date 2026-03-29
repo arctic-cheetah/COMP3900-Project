@@ -48,12 +48,14 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
 
         url_obj = preprocess_data(url)
         url_features = url_obj.get_data()
-        url_features_str = url_features.to_string(header=False, index=False)
+        url_features_str = url_features.to_string(
+            header=False, index=False, float_format="{:.3f}".format
+        )
         print(url_features_str)
 
         row = df.iloc[[i]]
-        print(row)
-        row_str = row.to_string(header=False, index=False)
+        # print(row)
+        row_str = row.to_string(header=False, index=False, float_format="{:.3f}".format)
         print(row_str)
 
         if url_features_str != row_str:
