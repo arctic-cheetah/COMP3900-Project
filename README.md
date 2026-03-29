@@ -25,7 +25,7 @@ npm run dev
 python3 backend/app.py
 ```
 
-#### Run database
+#### Run test cases
 
 ```bash
 docker compose -f 'docker-compose.yml' up -d --build 'test' 
@@ -61,6 +61,7 @@ Please make sure to update tests as appropriate.
 
 We sourced data from this dataset:
 [Research paper](linkinghub.elsevier.com/retrieve/pii/S0167404823004558)
+
 [AI dataset source](https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset)
 
 ## License
