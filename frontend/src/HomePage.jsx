@@ -76,20 +76,22 @@ export default function HomePage() {
       console.log(scanResult);
       let { is_safe: isSafe, confidence } = scanResult;
 
-      setCurrentResult({ url, isSafe, confidence });
-      setIsModalOpen(true);
+      setTimeout(() => {
+        setCurrentResult({ url, isSafe, confidence });
+        setIsModalOpen(true);
 
-      setHistory((current) => [
-        {
-          url,
-          timestamp: new Date(Date.now()),
-          isSafe,
-          confidence: Math.round(confidence * 100) / 100,
-        },
-        ...current,
-      ]);
+        setHistory((current) => [
+          {
+            url,
+            timestamp: new Date(Date.now()),
+            isSafe,
+            confidence: Math.round(confidence * 100) / 100,
+          },
+          ...current,
+        ]);
 
-      setLoading(false);
+        setLoading(false);
+      }, 500);
     } catch (e) {
       const resultElem = document.getElementById('result');
       resultElem.textContent = e.message;
