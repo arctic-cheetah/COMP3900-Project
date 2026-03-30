@@ -11,6 +11,7 @@ from pathlib import Path as path
 import datetime
 import sys
 from urllib.request import urlopen, URLError
+from urllib.parse import urlparse
 
 from pipeline import model_pipeline
 
@@ -60,7 +61,12 @@ def write_log(msg, log_type):
 
 def check_valid_url(url):
     """
-    Check if URL is valid using urllib.
+    A url is valid if it conforms to:
+
+    https://
+    followed by
+    domain name
+
 
     Args:
         url (str): URL link to be checked.
@@ -71,13 +77,14 @@ def check_valid_url(url):
     if not url or not isinstance(url, str):
         return False
 
+    # BUG We should not test validity of url with reachability
     try:
-        urlopen(url)
-        return True
+        out = urlparse(url)
+        return all([out.scheme, out.netloc])
     except URLError as e:
         print(e)
         return False
-    except Exception as e:
+    except Exception:
         return False
 
 
@@ -213,6 +220,6 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: str = "./backend/models/logit_model.pkl"
+    model: str = "backend/models/logit_model.pkl"
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)

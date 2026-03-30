@@ -86,3 +86,68 @@
 2026-03-30 19:15:25,836 - INFO - 127.0.0.1 - - [30/Mar/2026 19:15:25] "OPTIONS /scan HTTP/1.1" 200 -
 2026-03-30 19:15:26,186 - INFO - <class 'dict'>
 2026-03-30 19:16:12,778 - INFO - 127.0.0.1 - - [30/Mar/2026 19:16:12] "POST /scan HTTP/1.1" 200 -
+2026-03-31 00:57:31,576 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 00:57:31,576 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 00:57:39,630 - INFO - 127.0.0.1 - - [31/Mar/2026 00:57:39] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 00:58:28,752 - INFO - 127.0.0.1 - - [31/Mar/2026 00:58:28] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 00:59:40,151 - INFO - <class 'dict'>
+2026-03-31 00:59:40,815 - INFO - 127.0.0.1 - - [31/Mar/2026 00:59:40] "POST /scan HTTP/1.1" 200 -
+2026-03-31 01:00:06,084 - INFO - 127.0.0.1 - - [31/Mar/2026 01:00:06] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:00:32,099 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 01:00:32,099 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 01:02:05,092 - INFO - 127.0.0.1 - - [31/Mar/2026 01:02:05] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:02:05,544 - INFO - <class 'dict'>
+2026-03-31 01:02:06,152 - INFO - 127.0.0.1 - - [31/Mar/2026 01:02:06] "POST /scan HTTP/1.1" 200 -
+2026-03-31 01:03:22,058 - INFO - 127.0.0.1 - - [31/Mar/2026 01:03:22] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:03:22,428 - WARNING - Invalid URL from 127.0.0.1: https://www.saffronart.com
+2026-03-31 01:03:22,428 - INFO - 127.0.0.1 - - [31/Mar/2026 01:03:22] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-03-31 01:03:28,928 - INFO - 127.0.0.1 - - [31/Mar/2026 01:03:28] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:03:29,308 - WARNING - Invalid URL from 127.0.0.1: https://www.saffronart.com
+2026-03-31 01:03:29,309 - INFO - 127.0.0.1 - - [31/Mar/2026 01:03:29] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-03-31 01:03:55,408 - INFO - 127.0.0.1 - - [31/Mar/2026 01:03:55] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:03:55,820 - WARNING - Invalid URL from 127.0.0.1: https://saffronart.com
+2026-03-31 01:03:55,821 - INFO - 127.0.0.1 - - [31/Mar/2026 01:03:55] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-03-31 01:19:18,947 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 01:19:18,947 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 01:25:14,708 - INFO - 127.0.0.1 - - [31/Mar/2026 01:25:14] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:51:50,155 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 01:51:50,155 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 01:51:59,108 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 01:51:59,108 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 01:52:21,148 - INFO - 127.0.0.1 - - [31/Mar/2026 01:52:21] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:52:21,410 - INFO - <class 'dict'>
+2026-03-31 01:52:22,373 - INFO - 127.0.0.1 - - [31/Mar/2026 01:52:22] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-03-31 01:52:36,021 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 01:52:36,021 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 01:52:41,388 - INFO - 127.0.0.1 - - [31/Mar/2026 01:52:41] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:52:41,651 - INFO - <class 'dict'>
+2026-03-31 01:52:42,490 - INFO - 127.0.0.1 - - [31/Mar/2026 01:52:42] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-03-31 01:53:04,695 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 01:53:04,695 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 01:53:09,940 - INFO - 127.0.0.1 - - [31/Mar/2026 01:53:09] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:53:10,184 - INFO - <class 'dict'>
+2026-03-31 01:53:10,996 - INFO - 127.0.0.1 - - [31/Mar/2026 01:53:10] "POST /scan HTTP/1.1" 200 -
+2026-03-31 01:53:21,058 - INFO - 127.0.0.1 - - [31/Mar/2026 01:53:21] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 01:53:21,365 - INFO - <class 'dict'>
+2026-03-31 01:53:24,731 - INFO - 127.0.0.1 - - [31/Mar/2026 01:53:24] "POST /scan HTTP/1.1" 200 -
