@@ -57,7 +57,11 @@ to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
+## AI documentation 
 
+We sourced data from this dataset:
+[Research paper](linkinghub.elsevier.com/retrieve/pii/S0167404823004558)
+[AI dataset source](https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset)
 
 ## License
 
