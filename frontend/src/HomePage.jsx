@@ -137,7 +137,7 @@ export default function HomePage() {
           disabled={!url.trim()}
         >
           {isLoading ? (
-            <span className='flex items-center gap-2'>
+            <span className='loader'>
               <Loader color='white' size='sm' />
               Analysing...
             </span>
