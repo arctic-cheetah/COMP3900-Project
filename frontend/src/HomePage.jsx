@@ -3,6 +3,7 @@ import { useState } from 'react';
 import HistoricalData from './HistoricData';
 import Navbar from './Navbar';
 import ResultModal from './Resultmodal';
+import { Loader } from '@mantine/core';
 import './App.css';
 
 // --- DUMMY DATA FOR PREVIEW ---
@@ -134,7 +135,16 @@ export default function HomePage() {
           type='submit'
           className={url.trim() ? 'active-btn' : 'inactive-btn'}
           disabled={!url.trim()}
-        ></button>
+        >
+          {isLoading ? (
+            <span className='flex items-center gap-2'>
+              <Loader color='white' size='sm' />
+              Analysing...
+            </span>
+          ) : (
+            'Analyse URL'
+          )}
+        </button>
       </form>
 
       <p className='privacy-text'>
