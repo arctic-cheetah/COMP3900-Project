@@ -15,7 +15,7 @@ DB_CONFIG = {
     "user":     os.environ.get("DB_USER", "postgres"),
     "password": os.environ.get("DB_PASSWORD", ""),
     "connect_timeout": 5,
-}2
+}
 
 # Open and return a new psycopg2 connection
 def get_connection():
