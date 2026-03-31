@@ -13,6 +13,7 @@ import sys
 from urllib.request import urlopen, URLError
 
 from pipeline import model_pipeline
+from database import init_db, save_scan, get_all_scans
 
 
 app = Flask(__name__)
@@ -171,15 +172,46 @@ def check_url():
     sanitised_url = sanitise_url(url)
     try:
         is_safe, confidence = model_pipeline(sanitised_url, model)
-        print(is_safe)
-        print(f"URL is {'safe' if is_safe else 'not safe'}")
-        return jsonify(
-            {"is_safe": bool(is_safe), 
-            "confidence": float(confidence[1] if is_safe == 1 else confidence[0])
-            }), 200
+        confidence_score = float(confidence[1] if is_safe == 1 else confidence[0])
+    
+        # persistence while maintaining anynomity 
+        saved = save_scan(
+            url=sanitised_url, 
+            is_safe=bool(is_safe),
+            confidence=confidence_score,
+        )
+
+        return jsonify({
+            "is_safe":    bool(is_safe),
+            "confidence": confidence_score,
+            "scanned_at": saved["scanned_at"] if saved else None,
+        }), 200
+
     except Exception as e:
-        print(e)
+        app.logger.error("Scan failed: %s", e)
         return jsonify({"error": "URL could not be scanned"}), 400
+
+# Return paginated scan history from scans table with most recent first
+def list_scans():
+    try:
+        limit  = int(request.args.get("limit", 100))
+        offset = int(request.args.get("offset", 0))
+    except ValueError:
+        return jsonify({"error": "limit and offset must be integers"}), 400
+ 
+    if limit < 1 or offset < 0:
+        return jsonify({"error": "limit must be >= 1 and offset must be >= 0"}), 400
+ 
+    scans = get_all_scans(limit=limit, offset=offset)
+ 
+    if scans is None:
+        return jsonify({"error": "could not retrieve scan history"}), 500
+ 
+    return jsonify({
+        "scans":  scans,
+        "limit":  limit,
+        "offset": offset,
+    }), 200
 
 
 @app.route("/error", methods=["POST"])
