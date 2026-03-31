@@ -22,7 +22,8 @@ npm run dev
 #### Back end
 
 ```bash
-python3 backend/app.py
+cd backend
+python3 app.py
 ```
 
 #### Run test cases
