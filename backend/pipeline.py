@@ -20,6 +20,7 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[str, str]:
         features = model_dump["features"]
         model = model_dump["model"]
 
+        print(features)
         filtered_url_features = url_features[features]
         is_safe = model.predict(filtered_url_features)[0]
         confidence = model.predict_proba(filtered_url_features)[0] * 100.0

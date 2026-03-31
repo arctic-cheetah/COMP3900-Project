@@ -33,3 +33,35 @@
 	TCP/IP connections on port 5432?
 
 2026-03-31 20:12:33,001 - INFO - 127.0.0.1 - - [31/Mar/2026 20:12:33] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:22:21,215 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:22:21,216 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:22:50,665 - INFO - 127.0.0.1 - - [01/Apr/2026 02:22:50] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:22:50,926 - INFO - <class 'dict'>
+2026-04-01 02:22:51,491 - INFO - 127.0.0.1 - - [01/Apr/2026 02:22:51] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:23:27,805 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:23:27,805 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:23:32,436 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:32] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:23:32,592 - INFO - <class 'dict'>
+2026-04-01 02:23:33,174 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:33] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:23:42,492 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:23:42,492 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:23:51,316 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:51] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:23:51,580 - INFO - <class 'dict'>
+2026-04-01 02:23:52,214 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:52] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:24:03,662 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:24:03,662 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:24:08,349 - INFO - 127.0.0.1 - - [01/Apr/2026 02:24:08] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:24:08,611 - INFO - <class 'dict'>
+2026-04-01 02:24:09,179 - INFO - 127.0.0.1 - - [01/Apr/2026 02:24:09] "POST /scan HTTP/1.1" 200 -

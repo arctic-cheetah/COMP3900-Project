@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 # Given a url get these feature data
 # Then return a np.array of those features
-TIMEOUT = 5
+TIMEOUT = 10
 
 
 # def preprocess_data(self, self, url: str):
@@ -286,8 +286,8 @@ class preprocess_data:
         (LineOfCode, "LineOfCode"),
         (LargestLineLength, "LargestLineLength"),
         (hasFavicon, "HasFavicon"),
-        (NoOfJS, "NoOfJS"),
         (robots, "Robots"),
+        (NoOfJS, "NoOfJS"),
     ]
 
     def get_data(self) -> pd.DataFrame:
