@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 # Given a url get these feature data
 # Then return a np.array of those features
+TIMEOUT = 5
 
 
 # def preprocess_data(self, self, url: str):
@@ -164,7 +165,7 @@ class preprocess_data:
         # Check if request failed!
         try:
             r = requests.get(
-                url, allow_redirects=True, timeout=10, headers=self.headers
+                url, allow_redirects=True, timeout=TIMEOUT, headers=self.headers
             )
             self.page_data = r.text.splitlines()
             return len(r.text.splitlines())
@@ -226,11 +227,12 @@ class preprocess_data:
         Args:
             url (_type_): url
         """
+        # TODO: Check if we should do redirects!
         try:
             r = requests.get(
                 url + "/favicon.ico",
                 allow_redirects=True,
-                timeout=10,
+                timeout=TIMEOUT,
                 headers=self.headers,
             )
             if r.status_code >= 200 and r.status_code < 400:
@@ -240,7 +242,27 @@ class preprocess_data:
             return 0
         return 0
 
-    # TODO: Add other function here
+    def robots(self, url) -> int:
+        """
+        Check if the site has a robots.txt
+        Args:
+            url (_type_): url
+        """
+
+        try:
+            r = requests.get(
+                url + "/robots.txt",
+                allow_redirects=True,
+                timeout=TIMEOUT,
+                headers=self.headers,
+            )
+            if r.status_code >= 200 and r.status_code < 400:
+                return 1
+        except Exception:
+            return 0
+        return 0
+
+    # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
     FeatureFn = Callable[["preprocess_data", str], Any]
     func_pointer: ClassVar[list[tuple[FeatureFn, str]]] = [
         (url_length, "URLLength"),
@@ -265,6 +287,7 @@ class preprocess_data:
         (LargestLineLength, "LargestLineLength"),
         (hasFavicon, "HasFavicon"),
         (NoOfJS, "NoOfJS"),
+        (robots, "Robots"),
     ]
 
     def get_data(self) -> pd.DataFrame:
