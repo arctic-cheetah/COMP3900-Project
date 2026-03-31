@@ -150,6 +150,8 @@ class preprocess_data:
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
 
+    # def get_url_similarity_score(self, url: str):
+
     # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
     def LineOfCode(self, url: str):

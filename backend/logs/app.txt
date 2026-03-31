@@ -1,0 +1,35 @@
+2026-03-31 19:30:13,495 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 19:30:13,496 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 19:30:15,799 - INFO - 127.0.0.1 - - [31/Mar/2026 19:30:15] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 19:30:25,644 - INFO - 127.0.0.1 - - [31/Mar/2026 19:30:25] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 19:30:43,518 - INFO - <class 'dict'>
+2026-03-31 19:30:44,020 - INFO - 127.0.0.1 - - [31/Mar/2026 19:30:44] "POST /scan HTTP/1.1" 200 -
+2026-03-31 19:32:26,099 - INFO - <class 'dict'>
+2026-03-31 19:32:26,647 - INFO - 127.0.0.1 - - [31/Mar/2026 19:32:26] "POST /scan HTTP/1.1" 200 -
+2026-03-31 20:10:21,530 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 20:10:21,531 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 20:11:08,062 - INFO - 127.0.0.1 - - [31/Mar/2026 20:11:08] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 20:11:08,406 - INFO - <class 'dict'>
+2026-03-31 20:11:08,788 - ERROR - Failed to save scan: could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+
+2026-03-31 20:11:08,788 - INFO - 127.0.0.1 - - [31/Mar/2026 20:11:08] "POST /scan HTTP/1.1" 200 -
+2026-03-31 20:12:25,578 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 20:12:25,578 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 20:12:32,378 - INFO - 127.0.0.1 - - [31/Mar/2026 20:12:32] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 20:12:32,742 - INFO - <class 'dict'>
+2026-03-31 20:12:33,000 - ERROR - Failed to save scan: could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+
+2026-03-31 20:12:33,001 - INFO - 127.0.0.1 - - [31/Mar/2026 20:12:33] "POST /scan HTTP/1.1" 200 -

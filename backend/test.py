@@ -54,8 +54,13 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
         print(url_features_str)
 
         row = df.iloc[[i]]
+<<<<<<< HEAD
         # print(row)
         row_str = row.to_string(header=False, index=False, float_format="{:.3f}".format)
+=======
+        print(row)
+        row_str = row.to_string(header=False, index=False)
+>>>>>>> 90796deb651c2f31aa5cb7537821d892c2fa1159
         print(row_str)
 
         if url_features_str != row_str:
