@@ -11,8 +11,9 @@ def test_preprocessor():
         header=False, index=False, float_format="{:.3f}".format
     )
     print(out)
+    # TODO: Make this test more extensible by allowing more feature var columns to be added
     EXPECTED_OUT = (
-        "32 24 0 3 1 0 0 0.000 18 0.581 0 0.000 0 0 0 1 0.032 1 560 9462 1 1 38"
+        "32 24 0 3 1 0 0 0.000 18 0.581 0 0.000 0 0 0 1 0.032 1 560 9462 1 38 1"
     )
     assert out == EXPECTED_OUT
     print("Url features as predicted")

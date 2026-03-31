@@ -286,8 +286,8 @@ class preprocess_data:
         (LineOfCode, "LineOfCode"),
         (LargestLineLength, "LargestLineLength"),
         (hasFavicon, "HasFavicon"),
-        (robots, "Robots"),
         (NoOfJS, "NoOfJS"),
+        (robots, "Robots"),
     ]
 
     def get_data(self) -> pd.DataFrame:
