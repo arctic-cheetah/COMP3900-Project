@@ -59,7 +59,7 @@ def init_db():
         sys.exit(1)
 
 # Persist an anonymous scan result to the scans table
-def save_scan(url: str, is_safe: bool, confidence: float, scanned_at: datetime) -> int | None:
+def save_scan(url: str, is_safe: bool, confidence: float):
     query = """
         INSERT INTO scans (url, is_safe, confidence)
         VALUES (%s, %s, %s)
@@ -77,5 +77,32 @@ def save_scan(url: str, is_safe: bool, confidence: float, scanned_at: datetime) 
         logger.error("Failed to save scan: %s", e)
         return None
     
+# Retrieves paginated scan history with the most recent first
+def get_all_scans(limit: int = 500, offset: int = 0):
 
-
+    # server side cap to prevent abuse from frontend
+    limit = min(limit, 500)   
+    query = """
+        SELECT id, url, is_safe, confidence, scanned_at
+        FROM scans
+        ORDER BY scanned_at DESC
+        LIMIT %s OFFSET %s;
+    """
+    try:
+        with get_cursor() as cur:
+            cur.execute(query, (limit, offset))
+            rows = cur.fetchall()
+            return [
+                {
+                    "id":         row["id"],
+                    "url":        row["url"],
+                    "is_safe":    row["is_safe"],
+                    "confidence": float(row["confidence"]),
+                    "scanned_at": row["scanned_at"].isoformat(),
+                }
+                for row in rows
+            ]
+        
+    except Exception as e:
+        logger.error("Unable to retrieve scans: %s", e)
+        return None
