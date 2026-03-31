@@ -8,6 +8,21 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.11"]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: phishing_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+ 
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
@@ -28,8 +43,15 @@ jobs:
             pip install tldextract pytest-cov coverage
 
       - name: Run Backend
-        run: | 
-          coverage run --parallel-mode backend/app.py > backend.log 2>&1 & echo $! > backend.pid
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+        run: |
+          coverage run --parallel-mode backend/app.py > backend.log 2>&1 &
+          echo $! > backend.pid
           sleep 10
       
       - name: Check Backend
@@ -42,8 +64,13 @@ jobs:
             exit 1
 
       - name: Run Tests
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
         run: pytest
-
       - name: Stop Backend (This is needed to allow coverage to finish)
         if: always()
         run: |
