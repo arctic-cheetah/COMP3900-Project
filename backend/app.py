@@ -247,4 +247,5 @@ def log_error():
 if __name__ == "__main__":
     model: str = "./models/logit_model.pkl"
     app.logger.setLevel(logging.INFO)
+    init_db()
     app.run(host="0.0.0.0", port=5001)
