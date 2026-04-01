@@ -10,7 +10,7 @@ from sklearn.linear_model import LogisticRegression
 from pathlib import Path as path
 import datetime
 import sys
-from urllib.request import urlopen, URLError
+import tldextract
 
 from pipeline import model_pipeline
 
@@ -65,25 +65,26 @@ def write_log(msg, log_type):
 
 def check_valid_url(url):
     """
-    Check if URL is valid using urllib.
+    Check if URL has valid syntax using tldextract.
 
     Args:
         url (str): URL link to be checked.
 
     Returns:
-        bool: Returns True if the URL is valid.
+        bool: Returns True if the URL has valid syntax.
     """
     if not url or not isinstance(url, str):
         return False
 
     try:
-        urlopen(url)
-        return True
-    except URLError as e:
-        print(e)
-        return False
+        ext = tldextract.extract(url)
+
+        if ext.domain and ext.suffix:
+            return True
     except Exception as e:
-        return False
+        print(e)
+
+    return False
 
 
 def sanitise_url(url):

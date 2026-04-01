@@ -82,6 +82,7 @@ def model_pipeline(url: str) -> tuple[str, str] | None:
     try:
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
+
         domain = df["RootDomain"].iloc[0]
         scores = search_whitelist(domain, whitelist_path)
         if (scores["Levenshtein"] == 1 and scores["JaroWinkler"] == 1 and scores["LCS"] == 1):
