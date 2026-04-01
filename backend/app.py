@@ -16,9 +16,7 @@ from pipeline import model_pipeline
 
 
 app = Flask(__name__)
-model: str
-# TODO:
-# ADD WHITELIST
+
 allowed_origins = [
     "http://127.0.0.1:80",
     "http://127.0.0.1:6969",
@@ -135,15 +133,12 @@ def check_url():
     Returns:
         JSON: Return the result if successful, otherwise returns a 400 error.
     """
-
-    # check whether request is JSON
     if not request.is_json:
         msg = f"Invalid request from {request.remote_addr}: Not a JSON request"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
         return jsonify({"error": "send JSON request"}), 400
 
-    # check whether request body is a JSON object 
     request_data = request.get_json()
     if not isinstance(request_data, dict):
         msg = f"{request.remote_addr}: Body is not JSON object"
@@ -151,7 +146,6 @@ def check_url():
         write_log(msg, "ERROR")
         return jsonify({"error": "invalid request body"}), 400
 
-    # check if url field missing or not a string 
     url = request_data.get("url")
     if url is None or not isinstance(url, str):
         msg = f"{request.remote_addr}: Missing or invalid url field"
@@ -159,7 +153,9 @@ def check_url():
         write_log(msg, "ERROR")
         return jsonify({"error": "missing/invalid URL field"}), 400
     
-    # check if url is valid format 
+    if not url.startswith(("http://", "https://")):
+        url = "http://" + url
+    
     if not check_valid_url(url):
         msg = f"Invalid URL from {request.remote_addr}: {url}"
         app.logger.warning(msg)
@@ -170,7 +166,7 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
     try:
-        is_safe, confidence = model_pipeline(sanitised_url, model)
+        is_safe, confidence = model_pipeline(sanitised_url)
         print(is_safe)
         print(f"URL is {'safe' if is_safe else 'not safe'}")
         return jsonify(
@@ -204,7 +200,6 @@ def log_error():
     if not isinstance(info, str) or info is None:
         return jsonify({"error": "empty information field"}), 400
     
-    # add IP addr which triggered error + log level to context
     context = f"[{request.remote_addr}] {info}"
 
     write_log(context, level)
@@ -213,6 +208,5 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: str = "./models/logit_model.pkl"
     app.logger.setLevel(logging.INFO)
     app.run(host="0.0.0.0", port=5001)
