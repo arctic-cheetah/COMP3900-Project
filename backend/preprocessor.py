@@ -9,6 +9,7 @@ import logging
 import json, datetime
 from pathlib import Path as path
 from ipaddress import ip_address
+import traceback
 
 
 # create logger for preprocessor
@@ -181,6 +182,7 @@ class preprocess_data:
             self.ref_counts(url)
             return len(r.text.splitlines())
         except Exception as err:
+            traceback.print_exc()
             print(err)
             self.page_data = []
             return 0
@@ -286,27 +288,51 @@ class preprocess_data:
         Args:
             url (_type_): url
         """
-        base_url = urlparse(url).hostname.lower()
+        url_info = urlparse(url)
+        base_url: str = url_info.hostname.lower()
+        # Check if ending url has slash or not
+        # if not base_url.endswith("/"):
+        #     base_url += "/"
+
         self.num_empty_ref = 0
         self.num_external_ref = 0
         self.num_self_ref = 0
+        # Usually a tags but also link, script, img, iframe or form
 
         for a_tag in self.html_data.find_all("a"):
             # TODO: remove later because my pylance is fked
             href = a_tag.get("href")
             # empty tags should be empty
-            if href == "" or href == "#" or href.lower().startswith("javascript:"):
+            if (
+                href == ""
+                or href == None
+                or href == "#"
+                or href.lower().startswith("javascript:")
+            ):
                 self.num_empty_ref += 1
 
             # Now check for internal or external
-            absolute_url = urljoin(base_url, href)
-            external = (urlparse(absolute_url) or "").hostname.lower()
+            # urljoin will intelligently join two url if different
+            # otherwise www.southbankmosaics.com + https://southbanksmosaics.com will be
+            # www.southbankmosaics.com
+            absolute_url: str = urljoin(base_url, href)
+            external = (urlparse(absolute_url).hostname or "").lower()
             if external == "" or external == base_url:
                 self.num_self_ref += 1
             else:
                 self.num_external_ref += 1
 
+    def NoOfSelfRef(self, url):
+        return self.num_self_ref
+
+    def NoOfEmptyRef(self, url):
+        return self.num_empty_ref
+
+    def NoOfExternalRef(self, url):
+        return self.num_external_ref
+
     # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
+    # TODO: fix function convention later
     FeatureFn = Callable[["preprocess_data", str], Any]
     func_pointer: ClassVar[list[tuple[FeatureFn, str]]] = [
         (url_length, "URLLength"),
@@ -332,6 +358,9 @@ class preprocess_data:
         (hasFavicon, "HasFavicon"),
         (NoOfJS, "NoOfJS"),
         (robots, "Robots"),
+        (NoOfSelfRef, "NoOfSelfRef"),
+        (NoOfEmptyRef, "NoOfEmptyRef"),
+        (NoOfExternalRef, "NoOfExternalRef"),
     ]
 
     def get_data(self) -> pd.DataFrame:

@@ -46,6 +46,7 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
 
         # TODO: FIX EITHER THE ORDER OF THE COLUMN OR THE HOW ROWS ARE DELETED
         print(f"URL Number {i + 1}.")
+        print(f"URL: {url}.")
 
         url_obj = preprocess_data(url)
         url_features = url_obj.get_data()
@@ -58,6 +59,7 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
         print(row)
         row_str = row.to_string(header=False, index=False, float_format="{:.3f}".format)
         print(row_str)
+        print(url_features_str)
 
         if url_features_str != row_str:
             if print_all:
@@ -68,4 +70,4 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
     return is_same
 
 
-compare_features(5, True)
+compare_features(1, True)
