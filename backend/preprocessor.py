@@ -1,9 +1,9 @@
 import re
-from urllib.parse import urlparse, urlsplit
+from urllib.parse import urlparse, urlsplit, urljoin
 import tldextract
 import pandas as pd
 from typing import *
-from types import MethodType
+from bs4 import BeautifulSoup
 import requests
 import logging
 import json, datetime
@@ -30,6 +30,12 @@ class preprocess_data:
     }
     # Page data should be list of lines for ease of processing
     page_data: List[str]
+    html_data: BeautifulSoup
+
+    # Number of ref tags type
+    num_self_ref = 0
+    num_empty_ref = 0
+    num_external_ref = 0
 
     def __init__(self, url: str):
         # We should ensure ending slashes are stripped
@@ -167,7 +173,12 @@ class preprocess_data:
             r = requests.get(
                 url, allow_redirects=True, timeout=TIMEOUT, headers=self.headers
             )
+            # This is the first function that is run for html feature
+            # analysis so get the html data for use later
+            self.html_data = BeautifulSoup(r.text, "html.parser")
             self.page_data = r.text.splitlines()
+            # Count the refs
+            self.ref_counts(url)
             return len(r.text.splitlines())
         except Exception as err:
             print(err)
@@ -261,6 +272,39 @@ class preprocess_data:
         except Exception:
             return 0
         return 0
+
+    def ref_counts(self, url):
+        """
+        Use this function with the initial html feature analysis at line of code
+        as a hook
+
+        Find the number of href tags that either:
+        1)point to the main website
+        2)Point to another site
+        3)empty
+        @PreConditions => url is not empty! and HTTPS is present
+        Args:
+            url (_type_): url
+        """
+        base_url = urlparse(url).hostname.lower()
+        self.num_empty_ref = 0
+        self.num_external_ref = 0
+        self.num_self_ref = 0
+
+        for a_tag in self.html_data.find_all("a"):
+            # TODO: remove later because my pylance is fked
+            href = a_tag.get("href")
+            # empty tags should be empty
+            if href == "" or href == "#" or href.lower().startswith("javascript:"):
+                self.num_empty_ref += 1
+
+            # Now check for internal or external
+            absolute_url = urljoin(base_url, href)
+            external = (urlparse(absolute_url) or "").hostname.lower()
+            if external == "" or external == base_url:
+                self.num_self_ref += 1
+            else:
+                self.num_external_ref += 1
 
     # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
     FeatureFn = Callable[["preprocess_data", str], Any]
