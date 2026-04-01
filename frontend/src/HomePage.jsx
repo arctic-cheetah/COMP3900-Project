@@ -1,9 +1,12 @@
-import { scanURL } from "./api";
 import { useState } from "react";
+
+import { scanURL } from "./api";
 import HistoricalData from "./HistoricData";
 import Navbar from "./Navbar";
 import ResultModal from "./Resultmodal";
 import "./App.css";
+import logoIcon from "../assets/logo.png";
+import userIcon from "../assets/user.png";
 
 // --- DUMMY DATA FOR PREVIEW ---
 const DUMMY_HISTORY = [
@@ -95,7 +98,7 @@ export default function HomePage() {
   return (
     <div className="homepage">
       <Navbar />
-      <img className="logo-homepage" src="assets/logo.png" />
+      <img className="logo-homepage" src={logoIcon} />
       <header className="header">
         <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
