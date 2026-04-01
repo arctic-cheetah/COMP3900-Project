@@ -298,29 +298,38 @@ class preprocess_data:
         self.num_external_ref = 0
         self.num_self_ref = 0
         # Usually a tags but also link, script, img, iframe or form
+        tags = [
+            ("a", "href"),
+            ("link", "href"),
+            ("script", "src"),
+            ("img", "src"),
+            ("iframe", "src"),
+            ("form", "action"),
+        ]
+        for nameTag, attri in tags:
+            for tag in self.html_data.find_all(nameTag):
+                # TODO: remove later because my pylance is fked
+                val = tag.get(attri)
+                # empty tags should be empty
+                if (
+                    val == ""
+                    or val == None
+                    or val == "#"
+                    or val.lower().startswith("javascript:")
+                ):
+                    self.num_empty_ref += 1
+                    continue
 
-        for a_tag in self.html_data.find_all("a"):
-            # TODO: remove later because my pylance is fked
-            href = a_tag.get("href")
-            # empty tags should be empty
-            if (
-                href == ""
-                or href == None
-                or href == "#"
-                or href.lower().startswith("javascript:")
-            ):
-                self.num_empty_ref += 1
-
-            # Now check for internal or external
-            # urljoin will intelligently join two url if different
-            # otherwise www.southbankmosaics.com + https://southbanksmosaics.com will be
-            # www.southbankmosaics.com
-            absolute_url: str = urljoin(base_url, href)
-            external = (urlparse(absolute_url).hostname or "").lower()
-            if external == "" or external == base_url:
-                self.num_self_ref += 1
-            else:
-                self.num_external_ref += 1
+                # Now check for internal or external
+                # urljoin will intelligently join two url if different
+                # otherwise www.southbankmosaics.com + https://southbanksmosaics.com will be
+                # www.southbankmosaics.com
+                absolute_url: str = urljoin(base_url, val)
+                external = (urlparse(absolute_url).hostname or "").lower()
+                if external == "" or external == base_url:
+                    self.num_self_ref += 1
+                else:
+                    self.num_external_ref += 1
 
     def NoOfSelfRef(self, url):
         return self.num_self_ref
