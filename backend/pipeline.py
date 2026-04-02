@@ -85,7 +85,7 @@ def model_pipeline(url: str) -> tuple[str, str] | None:
 
         domain = df["RootDomain"].iloc[0]
         scores = search_whitelist(domain, whitelist_path)
-        if (scores["Levenshtein"] == 1 and scores["JaroWinkler"] == 1 and scores["LCS"] == 1):
+        if scores["Levenshtein"] == 1 and scores["JaroWinkler"] == 1 and scores["LCS"] == 1:
             return 1, [0, 100]
             
         is_safe, confidence = run_model(df, model_path)

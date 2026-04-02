@@ -135,30 +135,36 @@ def check_url():
         JSON: Return the result if successful, otherwise returns a 400 error.
     """
     if not request.is_json:
-        msg = f"Invalid request from {request.remote_addr}: Not a JSON request"
+        msg = f"{request.remote_addr}: Not a JSON request"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "send JSON request"}), 400
+        return jsonify({"error": "Send JSON request"}), 400
 
     request_data = request.get_json()
     if not isinstance(request_data, dict):
         msg = f"{request.remote_addr}: Body is not JSON object"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "invalid request body"}), 400
+        return jsonify({"error": "Invalid request body"}), 400
 
     url = request_data.get("url")
     if url is None or not isinstance(url, str):
         msg = f"{request.remote_addr}: Missing or invalid url field"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "missing/invalid URL field"}), 400
+        return jsonify({"error": "Missing/Invalid URL field"}), 400
     
-    if not url.startswith(("http://", "https://")):
-        url = "http://" + url
+    url_scheme = urlparse(url).scheme
+    if url_scheme and (url_scheme != "http" and url_scheme != "https"):
+        msg = f'{request.remote_addr}: Invalid URL scheme in "{url}"'
+        app.logger.warning(msg)
+        write_log(msg, "ERROR")
+        return jsonify({"error": "Invalid URL scheme"}), 400
+    if not url_scheme:
+        url = "http://" + url        
     
     if not check_valid_url(url):
-        msg = f"Invalid URL from {request.remote_addr}: {url}"
+        msg = f"{request.remote_addr}: {url}"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL format"}), 400
@@ -192,14 +198,14 @@ def log_error():
     """
     # TODO: please throw exceptions from AI model to this route for logging
     if not isinstance(request.json, dict):
-        return jsonify({"error": "invalid request body"}), 400
+        return jsonify({"error": "Invalid request body"}), 400
 
     request_data = request.json
     info = request_data.get("info")
     level = request_data.get("level", "ERROR")
 
     if not isinstance(info, str) or info is None:
-        return jsonify({"error": "empty information field"}), 400
+        return jsonify({"error": "Empty information field"}), 400
     
     context = f"[{request.remote_addr}] {info}"
 
