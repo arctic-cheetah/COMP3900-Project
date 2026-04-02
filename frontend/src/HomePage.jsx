@@ -49,6 +49,7 @@ export default function HomePage() {
   const [isLoading, setLoading] = useState(false);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const showFullText = useMediaQuery('(max-width: 1173px)');
 
   const openHistoryResult = (item) => {
     setCurrentResult({
@@ -133,9 +134,14 @@ export default function HomePage() {
             name='url-link'
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder='Enter URL to analyse (e.g., https://example.com)'
+            placeholder={
+              showFullText
+                ? 'Enter URL to analyse'
+                : 'Enter URL to analyse (e.g, https://example.com)'
+            }
           />
         </label>
+
         <button
           type='submit'
           className={url.trim() ? 'active-btn' : 'inactive-btn'}
@@ -147,7 +153,10 @@ export default function HomePage() {
               Analysing...
             </span>
           ) : (
-            'Analyse URL'
+            ( isMobile 
+              ? 'Analyse'
+              : 'Analyse URL'
+            )
           )}
         </button>
       </form>
