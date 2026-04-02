@@ -135,7 +135,7 @@ def check_url():
     Returns:
         JSON: Return the result if successful, otherwise returns a 400 error.
     """
-
+    
     # check whether request is JSON
     if not request.is_json:
         msg = f"Invalid request from {request.remote_addr}: Not a JSON request"
