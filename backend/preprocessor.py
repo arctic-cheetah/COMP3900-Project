@@ -275,6 +275,7 @@ class preprocess_data:
             return 0
         return 0
 
+
     def ref_counts(self, url):
         """
         Use this function with the initial html feature analysis at line of code
@@ -339,6 +340,25 @@ class preprocess_data:
 
     def NoOfExternalRef(self, url):
         return self.num_external_ref
+    
+    def HasSubmitButton(self, url):
+        pass
+    
+    def HasTitle(self, url):
+        pass
+    def pay(self, url):
+        pass
+    def HasHiddenFields(self, url):
+        pass
+    def IsResponsive(self, url):
+        pass
+    def HasDescription(self, url):
+        pass
+    def HasCopyRightInfo(self, url):
+        pass
+    def HasSocialNet(self, url):
+        pass
+    
 
     # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
     # TODO: fix function convention later
@@ -370,6 +390,7 @@ class preprocess_data:
         (NoOfSelfRef, "NoOfSelfRef"),
         (NoOfEmptyRef, "NoOfEmptyRef"),
         (NoOfExternalRef, "NoOfExternalRef"),
+        # (HasSubmitButton, "HasSubmitButton")
     ]
 
     def get_data(self) -> pd.DataFrame:
@@ -404,7 +425,6 @@ class preprocess_data:
                 data[name] = [None]
 
         return pd.DataFrame(data)
-
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"
