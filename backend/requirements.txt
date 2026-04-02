@@ -10,3 +10,5 @@ requests
 tldextract
 joblib
 scikit-learn
+levenshtein
+pylcs
