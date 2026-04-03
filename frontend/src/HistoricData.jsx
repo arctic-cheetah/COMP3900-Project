@@ -116,10 +116,16 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
         {scan.isSafe ? "Safe" : "Phishing"}
       </Badge>
     </Table.Td>
-    <Table.Td ta="right">
-      <Group justify="flex-end" gap="xs">
+    <Table.Td>
+      <Group justify="flex-end" gap="xs" wrap="nowrap">
+        <Progress 
+        value={scan.confidence} 
+        color={scan.isSafe ? "green" : "red"} 
+        size="sm" 
+        w={60} 
+        radius="xl" 
+        />
         <Text size="sm" fw={700}>{scan.confidence}%</Text>
-        <Progress value={scan.confidence} color={scan.isSafe ? "green" : "red"} size="sm" w={50} radius="xl" />
       </Group>
     </Table.Td>
   </Table.Tr>
