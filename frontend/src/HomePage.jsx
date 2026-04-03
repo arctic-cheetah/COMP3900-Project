@@ -48,6 +48,10 @@ export default function HomePage() {
   const [currentResult, setCurrentResult] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
+  const handleDeleteScan = (scanToDelete) => {
+    setHistory((current) => current.filter((scan) => scan !== scanToDelete));
+  };
+
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const openHistoryResult = (item) => {
@@ -152,11 +156,6 @@ export default function HomePage() {
         </button>
       </form>
 
-      <p className='privacy-text'>
-        Your privacy is protected. URLs are analysed securely and not stored
-        permanently.
-      </p>
-
       {isModalOpen && isMobile && (
         <ResultModal
           result={currentResult}
@@ -164,8 +163,13 @@ export default function HomePage() {
         />
       )}
 
-      <HistoricalData history={history} onHistoryClick={openHistoryResult} />
-      <p className='privacy-text'>
+      <HistoricalData 
+      history={history} 
+      onDelete={handleDeleteScan}
+      onHistoryClick={openHistoryResult} 
+      />
+      
+    <p className='privacy-text'>
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
