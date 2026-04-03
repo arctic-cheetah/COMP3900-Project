@@ -40,6 +40,10 @@ class preprocess_data:
     def _avoid_div_zero(self, url: str) -> int:
         return max(len(url) - 1, 1)
 
+    def get_root_domain(self, url: str):
+        domain = urlparse(url).netloc.split(":")[0]
+        return domain.removeprefix("www.")
+    
     def url_length(self, url: str):
         return len(url)
 
@@ -150,11 +154,7 @@ class preprocess_data:
 
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
-    
-    # def get_url_similarity_score(self, url: str):
-        
 
-    # TODO: ASK+CHECK WITH KELLY ABOUT THESE TWO FIELDS
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
     def LineOfCode(self, url: str):
         """
@@ -243,6 +243,7 @@ class preprocess_data:
     # TODO: Add other function here
     FeatureFn = Callable[["preprocess_data", str], Any]
     func_pointer: ClassVar[list[tuple[FeatureFn, str]]] = [
+        (get_root_domain, "RootDomain"),
         (url_length, "URLLength"),
         (domain_length, "DomainLength"),
         (is_domain_ip, "IsDomainIP"),
@@ -299,7 +300,7 @@ class preprocess_data:
                 data[name] = [None]
 
         return pd.DataFrame(data)
-
+    
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"
