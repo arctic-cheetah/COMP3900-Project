@@ -359,6 +359,40 @@ class preprocess_data:
     def HasSocialNet(self, url):
         pass
     
+    def CharContinuationRate(self,url :str):
+        # Return the length of the longest congitguous sequence of:
+        # alphabet
+        # numbers 
+        # Special chars
+        # https://www.saffronart.com
+        longest_alphabet = [0, '']
+        longest_number = [0, '']
+        longest_special_char = [0, '']
+        for c in url:
+            if (c.isalpha()):
+                longest_alphabet[1] += c
+                longest_alphabet[0] = len(longest_alphabet[1])
+                # Reset the other variables
+                longest_number[1] = ""
+                longest_special_char[1] = ""
+            
+            elif (c.isdigit()):
+                longest_number[1] += c
+                longest_number[0] = len(longest_number[1])
+                # Reset the other variables
+                longest_number[1] = ""
+                longest_special_char[1] = ""
+            # THis is the special chars now
+            else:
+                longest_special_char[1] += c
+                longest_special_char = len(longest_special_char[1])
+                # Reset other vars
+                longest_alphabet[1] = ""
+                longest_number[1] = ""
+
+        return longest_alphabet[0] + longest_number[0] + longest_special_char[0]
+        
+    
 
     # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
     # TODO: fix function convention later
