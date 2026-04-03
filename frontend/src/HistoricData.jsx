@@ -16,6 +16,7 @@ import {
   Checkbox,
   Button,
   Modal,
+  Box,
 } from "@mantine/core";
 import {
   IconClock,
@@ -63,7 +64,6 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
       setSelection([]);
     }
   };
-
 
   const renderTableHeader = () => (
     <Table.Tr>
@@ -179,6 +179,71 @@ const MobileHistoryContent = () => (
     )}
   </Stack>
 );
+
+const BulkActionBar = ({ isMobileView = false }) => {
+  if (selection.length === 0) return null;
+
+  return (
+    <Group 
+      justify="space-between" 
+      p="xs" 
+      mb="md"
+      style={{ 
+        backgroundColor: 'var(--mantine-color-red-0)', 
+        borderRadius: '8px', 
+        border: '1px solid var(--mantine-color-red-2)',
+        width: '100%'
+      }}
+    >
+      <Group gap="xs">
+        <Checkbox 
+          size="xs"
+          checked={selection.length === filteredData.length && filteredData.length > 0}
+          indeterminate={selection.length > 0 && selection.length < filteredData.length}
+          onChange={toggleAll}
+          label={isMobileView ? "All" : "Select All"}
+        />
+        <Text size="sm" fw={600} c="red.7">
+          {selection.length} {isMobileView ? '' : 'items'} selected
+        </Text>
+      </Group>
+      
+      <Button 
+        color="red" 
+        size="compact-xs" 
+        variant="light"
+        leftSection={<IconTrash size={14} />} 
+        onClick={handleBulkDelete}
+      >
+        Delete
+      </Button>
+    </Group>
+  );
+};
+
+if (isMobile) {
+  return (
+    <>
+      <Button onClick={open} fullWidth size="lg" variant="light" leftSection={<IconHistory size={20} />}>
+        View Scan History ({history.length})
+      </Button>
+
+      <Modal opened={opened} onClose={close} title="Scan History" fullScreen padding="md">
+        <Stack gap="xs" mb="md">
+          <Group grow gap="xs">
+            <StatCard label="Total" value={stats.total} color="blue" active={filter === 'all'} onClick={() => setFilter('all')} />
+            <StatCard label="Safe" value={stats.safe} color="green" active={filter === 'safe'} onClick={() => setFilter('safe')} />
+            <StatCard label="Phishing" value={stats.phishing} color="red" active={filter === 'phishing'} onClick={() => setFilter('phishing')} />
+          </Group>
+          <BulkActionBar isMobileView={true} />
+        </Stack>
+        <ScrollArea.Autosize mah="calc(100vh - 220px)">
+          <MobileHistoryContent /> 
+        </ScrollArea.Autosize>
+      </Modal>
+    </>
+  );
+}
 
   return (
     <Paper p="xl" radius="md" withBorder shadow="sm">
