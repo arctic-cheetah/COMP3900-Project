@@ -27,7 +27,7 @@ class preprocess_data:
     url: str = ""
     num_obfuscated_char = 0
     headers = {
-        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
+       "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
     }
     # Page data should be list of lines for ease of processing
     page_data: List[str]
@@ -347,17 +347,76 @@ class preprocess_data:
     def HasTitle(self, url):
         pass
     def pay(self, url):
-        pass
+        #checks for financial redflag  keywords like asking for bank info
+        if not hasattr(self, "page_data") or not self.page_data:
+            return 0
+        
+        #join everything to make a string to scan whole page at once
+        visible_text = "\n".join(self.page_data).lower()
+
+        #added some keywords to look out for
+        red_flag_words = [
+            'bank', 'pay', 'transfer', 'fee', 'credit card', 'payment', 'billing'
+        ]
+
+        if any(term in visible_text for term in red_flag_words):
+            return 1
+        return 0
+
     def HasHiddenFields(self, url):
-        pass
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+        
+        try:
+            hidden_tags = self.html_data.find_all('input', type='hidden')
+            return 1 if len(hidden_tags) > 0 else 0
+        except Exception:
+            return 0
+
     def IsResponsive(self, url):
         pass
     def HasDescription(self, url):
-        pass
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+        
+        try:
+            desc = self.html_data.find('meta', attrs={'name': 'description'})
+            if desc and desc.get('content'):
+                return 1
+        except Exception:
+            pass
+        return 0
+
     def HasCopyRightInfo(self, url):
-        pass
+        # Regex check for copyright info (symbol or word)
+        if not hasattr(self, "page_data") or not self.page_data:
+            return 0
+        
+        #join all lines to one large string to scan
+        full_html = "\n".join(self.page_data).lower()
+
+        copyright_regex = r"(copyright|©|&copy;)\s*(d{4})?"
+
+        if re.search(copyright_regex, full_html):
+            return 1
+        return 0
+        
     def HasSocialNet(self, url):
-        pass
+        #check for social links
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+
+        platforms = ["facebook", "instagram", "youtube", "x", "linkedin"]
+
+        try:
+            links = self.html_data.find_all('a', href=True)
+            for link in links:
+                href = link['href'].lower()
+                if any(plat in href for plat in platforms):
+                    return 1
+        except Exception:
+            pass
+        return 0
     
     def CharContinuationRate(self,url :str):
         # Return the length of the longest congitguous sequence of:
