@@ -1,1 +1,0 @@
-{"timestamp": "2026-04-03T08:30:41.347556", "log_type": "PREPROCESSOR_ERROR", "message": "PREPROCESSOR ERROR: Feature 'CharContinuationRate' failed on url 'https://www.southbankmosaics.com' with error 'int' object is not subscriptable"}
