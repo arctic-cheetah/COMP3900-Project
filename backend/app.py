@@ -12,7 +12,7 @@ import datetime
 import sys
 import tldextract
 
-from pipeline import model_pipeline
+from ml.pipeline import model_pipeline
 
 
 app = Flask(__name__)
