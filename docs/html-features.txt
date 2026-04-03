@@ -1,0 +1,23 @@
+Easiest                  Significance
+Pay                      0.359747
+HasHiddenFields          0.507731
+HasDescription           0.690232
+HasCopyrightInfo         0.743358
+HasSocialNet             0.784255
+
+
+
+HasSubmitButton          0.578561
+IsResponsive             0.548608
+
+HasTitle                 0.459725
+
+
+Hardest
+CharContinuationRate     0.467735
+URLTitleMatchScore       0.539419
+DomainTitleMatchScore    0.584905
+DomainTitleMatchScore == URLTitleMatchScore
+
+Not doing anymore
+URLCharProb              0.469749

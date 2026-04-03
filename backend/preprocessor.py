@@ -278,7 +278,6 @@ class preprocess_data:
             return 0
         return 0
 
-
     def ref_counts(self, url):
         """
         Use this function with the initial html feature analysis at line of code
@@ -343,30 +342,36 @@ class preprocess_data:
 
     def NoOfExternalRef(self, url):
         return self.num_external_ref
-    
+
     def HasSubmitButton(self, url):
         pass
-    
+
     def HasTitle(self, url) -> int:
-        self.has_title = self.html_data.find('title') is not None
+        self.has_title = self.html_data.find("title") is not None
         return 1 if self.has_title is not None else 0
+
     def pay(self, url):
         pass
+
     def HasHiddenFields(self, url):
         pass
+
     def IsResponsive(self, url):
         pass
+
     def HasDescription(self, url):
         pass
+
     def HasCopyRightInfo(self, url):
         pass
+
     def HasSocialNet(self, url):
         pass
-    
-    def CharContinuationRate(self, url :str):
+
+    def CharContinuationRate(self, url: str):
         # Return the length of the longest congitguous sequence of:
         # alphabet
-        # numbers 
+        # numbers
         # Special chars
         # https://www.saffronart.com
         # FFS it uses hostname
@@ -374,42 +379,54 @@ class preprocess_data:
         hostname = urlsplit(url).hostname.lower()
         if hostname.startswith("www."):
             hostname = hostname[4:]
-        
+
         # Remove final TLD label to match dataset behaviour
         # saffronart.com => saffronart
         if "." in hostname:
             hostname = hostname.rsplit(".", 1)[0]
-            
-        
-        longest_alphabet = [0, '']
-        longest_number = [0, '']
-        longest_special_char = [0, '']
+
+        longest_alphabet = [0, ""]
+        longest_number = [0, ""]
+        longest_special_char = [0, ""]
         for c in hostname:
-            if (c.isalpha()):
+            if c.isalpha():
                 longest_alphabet[1] += c
-                longest_alphabet[0] = len(longest_alphabet[1]) if len(longest_alphabet[1]) > longest_alphabet[0] else longest_alphabet[0]
+                longest_alphabet[0] = (
+                    len(longest_alphabet[1])
+                    if len(longest_alphabet[1]) > longest_alphabet[0]
+                    else longest_alphabet[0]
+                )
                 # Reset the longest sequence of char for other variables
                 longest_number[1] = ""
                 longest_special_char[1] = ""
-            
-            elif (c.isdigit()):
+
+            elif c.isdigit():
                 longest_number[1] += c
-                longest_number[0] = len(longest_number[1]) if len(longest_number[1]) > longest_number[0] else longest_number[0]
+                longest_number[0] = (
+                    len(longest_number[1])
+                    if len(longest_number[1]) > longest_number[0]
+                    else longest_number[0]
+                )
                 # Reset the longest sequence of char for other variables
                 longest_number[1] = ""
                 longest_special_char[1] = ""
             # THis is the special chars now
             else:
                 longest_special_char[1] += c
-                longest_special_char[0] = len(longest_special_char[1]) if len(longest_special_char[1]) > longest_special_char[0] else longest_special_char[0]
+                longest_special_char[0] = (
+                    len(longest_special_char[1])
+                    if len(longest_special_char[1]) > longest_special_char[0]
+                    else longest_special_char[0]
+                )
                 # Reset the longest sequence of char for other variables
                 longest_alphabet[1] = ""
                 longest_number[1] = ""
 
-        return (longest_alphabet[0] + longest_number[0] + longest_special_char[0]) / len(hostname)
-        
-    
-    def URLTitleMatchScore(self, url :str):
+        return (
+            longest_alphabet[0] + longest_number[0] + longest_special_char[0]
+        ) / len(hostname)
+
+    def URLTitleMatchScore(self, url: str):
         """
         This function returns how much the root domain is explained by words
         from the page title
@@ -417,11 +434,11 @@ class preprocess_data:
         # If it does not have title then BAD!
         if not self.has_title:
             return 0
-        
+
         hostname = urlsplit(url).hostname.lower()
         if hostname.startswith("www."):
             hostname = hostname[4:]
-        
+
         # Remove only the *final* dot-label (dataset behavior).
         # Examples:
         # - saffronart.com      -> saffronart
@@ -429,32 +446,30 @@ class preprocess_data:
         if "." in hostname:
             hostname = hostname.rsplit(".", 1)[0]
 
-        if not hostname:
-            return 0
-        
         # Tokenise the title into a set (but normalize first so casing/accents don't break matching)
         title_tag = self.html_data.find("title")
+        # Need this to stop linter from complaing
         if title_tag is None:
             return 0
 
         title_text = title_tag.get_text(" ", strip=True)
-        
+
         # Normalize to ASCII + lowercase, then extract alnum tokens
         title_norm = unicodedata.normalize("NFKD", title_text)
         title_norm = title_norm.encode("ascii", "ignore").decode("ascii").lower()
         raw_tokens = re.findall(r"[a-z0-9]+", title_norm)
 
         tokens_title = set(raw_tokens)
-   
+
         # actual score is here
         score = float(0)
-        baseScore = 100/len(hostname)
-        
+        baseScore = 100 / len(hostname)
+
         for word in tokens_title:
             if hostname.find(word) >= 0:
                 n = len(word)
                 score = score + baseScore * n
-                hostname.replace(word,"")
+                hostname.replace(word, "")
                 if score > 99.9:
                     return 100.0
         return score
@@ -492,7 +507,6 @@ class preprocess_data:
         (NoOfSelfRef, "NoOfSelfRef"),
         (NoOfEmptyRef, "NoOfEmptyRef"),
         (NoOfExternalRef, "NoOfExternalRef"),
-        
         # (HasSubmitButton, "HasSubmitButton")
     ]
 
@@ -528,6 +542,7 @@ class preprocess_data:
                 data[name] = [None]
 
         return pd.DataFrame(data)
+
 
 # TODO: Gotta run the class
 # tmp_example = "wtf.com"
