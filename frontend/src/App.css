@@ -24,6 +24,10 @@
   margin-bottom: 50px;
 }
 
+.space {
+  margin-bottom: 100px;
+}
+
 .url-form {
   position: relative;
   display: inline-block;
@@ -41,7 +45,7 @@
   padding-left: 55px;
 }
 
-.url-form button {
+.url-form .inline-btn {
   position: absolute;
   top: 50%;
   right: 2%;
@@ -51,6 +55,18 @@
   border-radius: 10px;
   border: none;
   color: white;
+}
+
+.url-form .full-btn {
+  position: absolute;
+  margin-top: 85px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  height: 40px;
+  padding: 0 20px;
+  right: 33%;
+
 }
 
 .inactive-btn {
