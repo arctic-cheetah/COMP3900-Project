@@ -22,14 +22,42 @@ import {
   IconFilter,
 } from "@tabler/icons-react";
 import { format } from "date-fns";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function HistoricalData({ history, onHistoryClick }) {
   const [filter, setFilter] = useState("all");
+
+  const [selection, setSelection] = useState([]);
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const [opend, {open, close}] = useDisclosure(false);
+  const [selectedScan, setSelectedScan] = useState(null);
 
   const filteredData = history.filter((item) => {
     if (filter === "all") return true;
     return filter === "safe" ? item.isSafe : !item.isSafe;
   });
+
+  const toggleRow = (scan) => {
+    setSelection((current) =>
+      current.includes(scan)
+        ? current.filter((item) => item !== scan)
+        : [...current, scan]
+    );
+  };
+
+  const toggleAll = () => {
+    setSelection((current) =>
+      current.length === filteredData.length ? [] : [...filteredData]
+    );
+  };
+
+  const handleBulkDelete = () => {
+    if(window.confirm(`Are you sure you want to delete ${selection.length} selected scans?`)) {
+      onHistoryClick(selection);
+      setSelection([]);
+    }
+  };
 
   const stats = {
     total: history.length,
