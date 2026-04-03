@@ -11,7 +11,7 @@ from pathlib import Path as path
 from ipaddress import ip_address
 import traceback
 import unicodedata
-import re
+from playwright.sync_api import sync_playwright
 
 
 # create logger for preprocessor
@@ -191,6 +191,40 @@ class preprocess_data:
             self.page_data = []
             return 0
 
+    # We need to use playwright to allow browser to abstract fetching url for us:
+    # Due to dynamic contetn
+    # Fetch html data 
+    
+    def _fetch_html_playwright(self, url: str):
+        """
+        Fetch HTML data for feature extraction particularly for dynamic content
+        
+        By default it uses requests (fast) for simple websites
+        """
+        timeout_ms = TIMEOUT * 1E3
+        
+        with sync_playwright() as pw:
+            
+            # Run browser without ui
+            browser = pw.chromium(headless=False)
+            
+            
+            # Open a new page
+            
+            # try
+            # Wait for complete postJS DOM snapshot
+            # We use several heuristics
+            # 1) Wait for load stat to be complete
+            # 2) wait for function to be complete in document.readyState
+            # 3) 
+            # catch
+            
+            
+            
+            
+    
+    
+    
     def LargestLineLength(self, url: str):
         """
         Find the line with the largest length
