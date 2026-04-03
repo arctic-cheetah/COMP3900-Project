@@ -37,7 +37,7 @@ const ResultModal = ({ result, onClose }) => {
           </div>
 
           <div className='result-card'>
-            <p className='card-title'>Analyzed URL</p>
+            <p className='card-title'>Analysed URL</p>
             <p className='card-url'>{result.url}</p>
           </div>
         </div>
