@@ -48,8 +48,9 @@ export default function HomePage() {
   const [currentResult, setCurrentResult] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
-  const handleDeleteScan = (scanToDelete) => {
-    setHistory((current) => current.filter((scan) => scan !== scanToDelete));
+  const handleDeleteScans = (scansToDelete) => {
+    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
+    setHistory((current) => current.filter((scan) => !itemsToRemove.includes(scan)));
   };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
