@@ -344,8 +344,8 @@ class preprocess_data:
     def HasSubmitButton(self, url):
         pass
     
-    def HasTitle(self, url):
-        pass
+    def HasTitle(self, url) -> int:
+        return self.html_data.find('title') is not None
     def pay(self, url):
         pass
     def HasHiddenFields(self, url):
@@ -359,7 +359,7 @@ class preprocess_data:
     def HasSocialNet(self, url):
         pass
     
-    def CharContinuationRate(self,url :str):
+    def CharContinuationRate(self, url :str):
         # Return the length of the longest congitguous sequence of:
         # alphabet
         # numbers 
@@ -405,6 +405,13 @@ class preprocess_data:
         return (longest_alphabet[0] + longest_number[0] + longest_special_char[0]) / len(hostname)
         
     
+    def URLTitleMatchScore(self, url :str):
+        """
+        This function returns how much the root domain is explained by words
+        from the page title
+        """
+        
+        pass
 
     # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
     # TODO: fix function convention later
