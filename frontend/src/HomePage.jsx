@@ -8,7 +8,6 @@ import Navbar from "./Navbar";
 import ResultModal from "./Resultmodal";
 import "./App.css";
 import logoIcon from "../assets/logo.png";
-import userIcon from "../assets/user.png";
 
 // --- DUMMY DATA FOR PREVIEW ---
 const DUMMY_HISTORY = [
@@ -169,7 +168,8 @@ export default function HomePage() {
 
       <HistoricalData 
       history={history} 
-      onDelete={handleDeleteScan}
+      onDelete={handleDeleteScans}
+      onDeleteMultiple={handleDeleteScans}
       onHistoryClick={openHistoryResult} 
       />
       

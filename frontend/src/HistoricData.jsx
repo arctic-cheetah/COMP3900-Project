@@ -11,27 +11,29 @@ import {
   Progress,
   Stack,
   Title,
-  Box,
   UnstyledButton,
   ScrollArea,
+  Checkbox,
+  Button,
 } from "@mantine/core";
 import {
   IconClock,
   IconCheck,
   IconAlertTriangle,
   IconFilter,
+  IconTrash,
+  IconHistory,
 } from "@tabler/icons-react";
 import { format } from "date-fns";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery, useDisclosure } from "@mantine/hooks";
 
-export default function HistoricalData({ history, onHistoryClick }) {
+export default function HistoricalData({ history, onDelete, onDeleteMultiple, onHistoryClick }) {
   const [filter, setFilter] = useState("all");
 
   const [selection, setSelection] = useState([]);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [opend, {open, close}] = useDisclosure(false);
-  const [selectedScan, setSelectedScan] = useState(null);
+  const [opened, {open, close}] = useDisclosure(false);
 
   const filteredData = history.filter((item) => {
     if (filter === "all") return true;
@@ -53,12 +55,31 @@ export default function HistoricalData({ history, onHistoryClick }) {
   };
 
   const handleBulkDelete = () => {
-    if(window.confirm(`Are you sure you want to delete ${selection.length} selected scans?`)) {
-      onHistoryClick(selection);
+    if (selection.length === 0) return;
+
+    if (window.confirm(`Are you sure you want to delete ${selection.length} selected scans?`)) {
+      onDeleteMultiple(selection);
       setSelection([]);
     }
   };
 
+
+  const renderTableHeader = () => (
+    <Table.Tr>
+      <Table.Th w={40}>
+        <Checkbox
+          checked={selection.length > 0 && selection.length === filteredData.length}
+          indeterminate={selection.length > 0 && selection.length < filteredData.length}
+          onChange={toggleAll}
+        />
+      </Table.Th>
+      <Table.Th>URL</Table.Th>
+      <Table.Th>DATE/TIME ANALYSED</Table.Th>
+      <Table.Th>RESULT</Table.Th>
+      <Table.Th ta="right">CONFIDENCE SCORE</Table.Th>
+    </Table.Tr>
+  );
+    
   const stats = {
     total: history.length,
     safe: history.filter((h) => h.isSafe).length,
@@ -66,52 +87,42 @@ export default function HistoricalData({ history, onHistoryClick }) {
   };
 
   const rows = filteredData.map((scan, index) => (
-    <Table.Tr key={index} onClick={() => onHistoryClick(scan)}>
-      <Table.Td style={{ fontFamily: "monospace" }}>{scan.url}</Table.Td>
-      <Table.Td>
-        <Group gap="xs">
-          <IconClock size={16} color="gray" />
-          <Box>
-            <Text size="sm">{format(scan.timestamp, "MMM d, yyyy")}</Text>
-            <Text size="xs" c="dimmed">
-              {format(scan.timestamp, "p")}
-            </Text>
-          </Box>
-        </Group>
-      </Table.Td>
-      <Table.Td>
-        <Badge
-          color={scan.isSafe ? "green" : "red"}
-          variant="light"
-          leftSection={
-            scan.isSafe ? (
-              <IconCheck size={12} />
-            ) : (
-              <IconAlertTriangle size={12} />
-            )
-          }
-          size="lg"
-        >
-          {scan.isSafe ? "Safe" : "Phishing"}
-        </Badge>
-      </Table.Td>
-      <Table.Td>
-        <Group justify="flex-end" gap="sm">
-          <Box style={{ width: 100 }}>
-            <Progress
-              value={scan.confidence}
-              color={scan.isSafe ? "green" : "red"}
-              size="sm"
-              radius="xl"
-            />
-          </Box>
-          <Text size="sm" fw={700}>
-            {scan.confidence}%
-          </Text>
-        </Group>
-      </Table.Td>
-    </Table.Tr>
-  ));
+  <Table.Tr 
+    key={index} 
+    onClick={() => onHistoryClick(scan)} 
+    style={{ cursor: 'pointer' }}
+  >
+    <Table.Td onClick={(e) => e.stopPropagation()}>
+      <Checkbox
+        checked={selection.includes(scan)}
+        onChange={() => toggleRow(scan)}
+      />
+    </Table.Td>
+    <Table.Td>
+      <Text size="sm" fw={500} truncate maxWidth={300}>{scan.url}</Text>
+    </Table.Td>
+    <Table.Td>
+      <Text size="xs" c="dimmed">
+        {format(new Date(scan.timestamp), "MMM d, yyyy • h:mm a")}
+      </Text>
+    </Table.Td>
+    <Table.Td>
+      <Badge 
+        color={scan.isSafe ? "green" : "red"} 
+        variant="light"
+        leftSection={scan.isSafe ? <IconCheck size={12}/> : <IconAlertTriangle size={12}/>}
+      >
+        {scan.isSafe ? "Safe" : "Phishing"}
+      </Badge>
+    </Table.Td>
+    <Table.Td ta="right">
+      <Group justify="flex-end" gap="xs">
+        <Text size="sm" fw={700}>{scan.confidence}%</Text>
+        <Progress value={scan.confidence} color={scan.isSafe ? "green" : "red"} size="sm" w={50} radius="xl" />
+      </Group>
+    </Table.Td>
+  </Table.Tr>
+));
 
   return (
     <Paper p="xl" radius="md" withBorder shadow="sm">
@@ -160,6 +171,21 @@ export default function HistoricalData({ history, onHistoryClick }) {
         />
       </Group>
 
+      {selection.length > 0 && (
+        <Group justify="flex-start" mb="md" p="xs" bg="red.0" style={{ borderRadius: '8px' }}>
+          <Text size="sm" fw={500} c="red.7">{selection.length} items selected</Text>
+          <Button 
+            color="red" 
+            size="xs" 
+            variant="light" 
+            leftSection={<IconTrash size={14} />} 
+            onClick={handleBulkDelete}
+          >
+            Delete Selected
+          </Button>
+        </Group>
+      )}
+
       {/* Table Section */}
       <ScrollArea h={400}>
         <Table verticalSpacing="md">
@@ -167,12 +193,7 @@ export default function HistoricalData({ history, onHistoryClick }) {
             bg="gray.0"
             style={{ position: "sticky", top: 0, zIndex: 1 }}
           >
-            <Table.Tr>
-              <Table.Th>URL</Table.Th>
-              <Table.Th>DATE/TIME ANALYSED</Table.Th>
-              <Table.Th>RESULT</Table.Th>
-              <Table.Th textAlign="right">CONFIDENCE SCORE</Table.Th>
-            </Table.Tr>
+            {renderTableHeader()}
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
         </Table>
