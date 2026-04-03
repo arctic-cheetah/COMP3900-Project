@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Loader } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 
 import { scanURL } from "./api";
 import HistoricalData from "./HistoricData";
@@ -49,6 +50,8 @@ export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
   const [isLoading, setLoading] = useState(false);
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const openHistoryResult = (item) => {
     setCurrentResult({
@@ -157,7 +160,7 @@ export default function HomePage() {
         permanently.
       </p>
 
-      {isModalOpen && (
+      {isModalOpen && isMobile && (
         <ResultModal
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
