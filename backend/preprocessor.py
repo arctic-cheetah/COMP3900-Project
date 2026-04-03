@@ -10,6 +10,8 @@ import json, datetime
 from pathlib import Path as path
 from ipaddress import ip_address
 import traceback
+import unicodedata
+import re
 
 
 # create logger for preprocessor
@@ -37,6 +39,7 @@ class preprocess_data:
     num_self_ref = 0
     num_empty_ref = 0
     num_external_ref = 0
+    has_title: bool = False
 
     def __init__(self, url: str):
         # We should ensure ending slashes are stripped
@@ -345,7 +348,8 @@ class preprocess_data:
         pass
     
     def HasTitle(self, url) -> int:
-        return 1 if self.html_data.find('title') is not None else 0
+        self.has_title = self.html_data.find('title') is not None
+        return 1 if self.has_title is not None else 0
     def pay(self, url):
         pass
     def HasHiddenFields(self, url):
@@ -384,21 +388,21 @@ class preprocess_data:
             if (c.isalpha()):
                 longest_alphabet[1] += c
                 longest_alphabet[0] = len(longest_alphabet[1]) if len(longest_alphabet[1]) > longest_alphabet[0] else longest_alphabet[0]
-                # Reset the other variables
+                # Reset the longest sequence of char for other variables
                 longest_number[1] = ""
                 longest_special_char[1] = ""
             
             elif (c.isdigit()):
                 longest_number[1] += c
                 longest_number[0] = len(longest_number[1]) if len(longest_number[1]) > longest_number[0] else longest_number[0]
-                # Reset the other variables
+                # Reset the longest sequence of char for other variables
                 longest_number[1] = ""
                 longest_special_char[1] = ""
             # THis is the special chars now
             else:
                 longest_special_char[1] += c
                 longest_special_char[0] = len(longest_special_char[1]) if len(longest_special_char[1]) > longest_special_char[0] else longest_special_char[0]
-                # Reset other vars
+                # Reset the longest sequence of char for other variables
                 longest_alphabet[1] = ""
                 longest_number[1] = ""
 
@@ -410,8 +414,52 @@ class preprocess_data:
         This function returns how much the root domain is explained by words
         from the page title
         """
+        # If it does not have title then BAD!
+        if not self.has_title:
+            return 0
         
-        pass
+        hostname = urlsplit(url).hostname.lower()
+        if hostname.startswith("www."):
+            hostname = hostname[4:]
+        
+        # Remove only the *final* dot-label (dataset behavior).
+        # Examples:
+        # - saffronart.com      -> saffronart
+        # - voicefmradio.co.uk  -> voicefmradio.co
+        if "." in hostname:
+            hostname = hostname.rsplit(".", 1)[0]
+
+        if not hostname:
+            return 0
+        
+        # Tokenise the title into a set (but normalize first so casing/accents don't break matching)
+        title_tag = self.html_data.find("title")
+        if title_tag is None:
+            return 0
+
+        title_text = title_tag.get_text(" ", strip=True)
+        
+        # Normalize to ASCII + lowercase, then extract alnum tokens
+        title_norm = unicodedata.normalize("NFKD", title_text)
+        title_norm = title_norm.encode("ascii", "ignore").decode("ascii").lower()
+        raw_tokens = re.findall(r"[a-z0-9]+", title_norm)
+
+        # De-dupe while preserving order
+        
+        tokens_title = set(raw_tokens)
+   
+        # actual score is here
+        score = float(0)
+        baseScore = 100/len(hostname)
+        
+        for word in tokens_title:
+            if hostname.find(word) >= 0:
+                n = len(word)
+                score = score + baseScore * n
+                hostname.replace(word,"")
+                if score > 99.9:
+                    return 100.0
+        return score
 
     # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
     # TODO: fix function convention later
@@ -439,12 +487,14 @@ class preprocess_data:
         (LineOfCode, "LineOfCode"),
         (LargestLineLength, "LargestLineLength"),
         (HasTitle, "HasTitle"),
+        (URLTitleMatchScore, "URLTitleMatchScore"),
         (hasFavicon, "HasFavicon"),
         (NoOfJS, "NoOfJS"),
         (robots, "Robots"),
         (NoOfSelfRef, "NoOfSelfRef"),
         (NoOfEmptyRef, "NoOfEmptyRef"),
         (NoOfExternalRef, "NoOfExternalRef"),
+        
         # (HasSubmitButton, "HasSubmitButton")
     ]
 
