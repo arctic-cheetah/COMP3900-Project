@@ -444,8 +444,6 @@ class preprocess_data:
         title_norm = title_norm.encode("ascii", "ignore").decode("ascii").lower()
         raw_tokens = re.findall(r"[a-z0-9]+", title_norm)
 
-        # De-dupe while preserving order
-        
         tokens_title = set(raw_tokens)
    
         # actual score is here
