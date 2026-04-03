@@ -1,9 +1,10 @@
 from sklearn.linear_model import LogisticRegression
 import joblib
 import pandas as pd
-from preprocessor import preprocess_data
 from Levenshtein import distance, jaro_winkler
 from pylcs import lcs_sequence_length
+
+from preprocessor import preprocess_data
 
 
 whitelist_path: str = "./data/top_100k_domains.csv"
