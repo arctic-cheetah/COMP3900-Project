@@ -49,7 +49,8 @@ export default function HomePage() {
   const [isLoading, setLoading] = useState(false);
 
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const showFullText = useMediaQuery('(max-width: 1173px)');
+  const moveButton = useMediaQuery('(max-width: 1173px)');
+  const urlFullText = useMediaQuery('(max-width: 930px)');
 
   const openHistoryResult = (item) => {
     setCurrentResult({
@@ -136,14 +137,14 @@ export default function HomePage() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder={
-              showFullText
+              urlFullText
                 ? 'Enter URL to analyse'
                 : 'Enter URL to analyse (e.g, https://example.com)'
             }
           />
         </label>
 
-        {!showFullText && (
+        {!moveButton && (
           <button
             type='submit'
             className={`inline-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
@@ -160,7 +161,7 @@ export default function HomePage() {
           </button>
         )}
 
-        {showFullText && (
+        {moveButton && (
           <button
             type='submit'
             className={`full-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
@@ -178,14 +179,14 @@ export default function HomePage() {
         )}
       </form>
 
-      {!showFullText && (
+      {!moveButton && (
         <p className='privacy-text'>
           Your privacy is protected. URLs are analysed securely and not stored
           permanently.
         </p>
       )}
 
-      {showFullText && (
+      {moveButton && (
         <div className='space'/>
       )}
 
