@@ -378,7 +378,7 @@ class preprocess_data:
         # Remove final TLD label to match dataset behaviour
         # saffronart.com => saffronart
         if "." in hostname:
-            hostname = hostname.split(".")[0]
+            hostname = hostname.rsplit(".", 1)[0]
             
         
         longest_alphabet = [0, '']
