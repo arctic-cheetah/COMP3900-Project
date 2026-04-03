@@ -365,32 +365,44 @@ class preprocess_data:
         # numbers 
         # Special chars
         # https://www.saffronart.com
+        # FFS it uses hostname
+        # Precondition assume valid url
+        hostname = urlsplit(url).hostname.lower()
+        if hostname.startswith("www."):
+            hostname = hostname[4:]
+        
+        # Remove final TLD label to match dataset behaviour
+        # saffronart.com => saffronart
+        if "." in hostname:
+            hostname = hostname.split(".")[0]
+            
+        
         longest_alphabet = [0, '']
         longest_number = [0, '']
         longest_special_char = [0, '']
-        for c in url:
+        for c in hostname:
             if (c.isalpha()):
                 longest_alphabet[1] += c
-                longest_alphabet[0] = len(longest_alphabet[1])
+                longest_alphabet[0] = len(longest_alphabet[1]) if len(longest_alphabet[1]) > longest_alphabet[0] else longest_alphabet[0]
                 # Reset the other variables
                 longest_number[1] = ""
                 longest_special_char[1] = ""
             
             elif (c.isdigit()):
                 longest_number[1] += c
-                longest_number[0] = len(longest_number[1])
+                longest_number[0] = len(longest_number[1]) if len(longest_number[1]) > longest_number[0] else longest_number[0]
                 # Reset the other variables
                 longest_number[1] = ""
                 longest_special_char[1] = ""
             # THis is the special chars now
             else:
                 longest_special_char[1] += c
-                longest_special_char = len(longest_special_char[1])
+                longest_special_char[0] = len(longest_special_char[1]) if len(longest_special_char[1]) > longest_special_char[0] else longest_special_char[0]
                 # Reset other vars
                 longest_alphabet[1] = ""
                 longest_number[1] = ""
 
-        return longest_alphabet[0] + longest_number[0] + longest_special_char[0]
+        return (longest_alphabet[0] + longest_number[0] + longest_special_char[0]) / len(hostname)
         
     
 
@@ -401,6 +413,7 @@ class preprocess_data:
         (url_length, "URLLength"),
         (domain_length, "DomainLength"),
         (is_domain_ip, "IsDomainIP"),
+        (CharContinuationRate, "CharContinuationRate"),
         (tld_length, "TLDLength"),
         (no_of_sub_domain, "NoOfSubDomain"),
         (has_obfuscation, "HasObfuscation"),
