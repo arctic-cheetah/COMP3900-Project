@@ -169,8 +169,6 @@ def check_url():
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL format"}), 400
 
-    app.logger.info(type(request_data))
-
     sanitised_url = sanitise_url(url)
     try:
         is_safe, confidence = model_pipeline(sanitised_url)
