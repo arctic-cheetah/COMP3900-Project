@@ -345,7 +345,7 @@ class preprocess_data:
         pass
     
     def HasTitle(self, url) -> int:
-        return self.html_data.find('title') is not None
+        return 1 if self.html_data.find('title') is not None else 0
     def pay(self, url):
         pass
     def HasHiddenFields(self, url):
@@ -438,6 +438,7 @@ class preprocess_data:
         (is_https, "IsHTTPS"),
         (LineOfCode, "LineOfCode"),
         (LargestLineLength, "LargestLineLength"),
+        (HasTitle, "HasTitle"),
         (hasFavicon, "HasFavicon"),
         (NoOfJS, "NoOfJS"),
         (robots, "Robots"),
