@@ -7,8 +7,8 @@ from pylcs import lcs_sequence_length
 from .preprocessor import preprocess_data
 
 
-whitelist_path: str = "./data/top_100k_domains.csv"
-model_path: str = "./models/logit_model.pkl"
+whitelist_path: str = "./ml/data/top_100k_domains.csv"
+model_path: str = "./ml/models/logit_model.pkl"
 
 
 def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[str, str] | None:
