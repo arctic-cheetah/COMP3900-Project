@@ -232,9 +232,14 @@ class preprocess_data:
         Default uses `requests` (fast).
         If `USE_PLAYWRIGHT=1` in env, attempts to fetch rendered HTML using
         Playwright (JS executed) and falls back to `requests` on failure.
+
+        If `AUTO_PLAYWRIGHT_FALLBACK=1` (default), we also fall back to
+        Playwright when `requests` returns an obviously blocked/empty response
+        (common for Amazon/CloudFront/WAF-protected pages).
         """
 
         use_playwright = os.getenv("USE_PLAYWRIGHT", "0") == "1"
+        auto_fallback = os.getenv("AUTO_PLAYWRIGHT_FALLBACK", "1") == "1"
 
         if use_playwright:
             try:
@@ -242,8 +247,57 @@ class preprocess_data:
             except Exception as e:
                 logger.warning("Playwright fetch failed for %s: %s", url, e)
 
-        r = requests.get(url, allow_redirects=True, timeout=TIMEOUT, headers=self.headers)
-        return r.text
+        r = None
+        try:
+            r = requests.get(
+                url,
+                allow_redirects=True,
+                timeout=TIMEOUT,
+                headers=self.headers,
+            )
+            text = r.text or ""
+        except Exception as e:
+            logger.warning("requests fetch failed for %s: %s", url, e)
+            text = ""
+
+        if auto_fallback and self._looks_blocked_or_empty(text, r):
+            try:
+                return self._fetch_html_playwright(url)
+            except Exception as e:
+                logger.warning("Playwright fallback failed for %s: %s", url, e)
+
+        return text
+
+    def _looks_blocked_or_empty(self, html: str, response: Any | None = None) -> bool:
+        """Heuristics for when `requests` likely failed due to bot/WAF/JS-only.
+
+        We keep this intentionally simple: only trigger fallback when response
+        is empty/near-empty or clearly a challenge page.
+        """
+
+        if html is None:
+            return True
+
+        status = getattr(response, "status_code", None)
+        if status in {202, 401, 403, 406, 409, 429, 451, 503}:
+            return True
+
+        html_str = str(html)
+        if len(html_str.strip()) < 200:
+            # Near-empty HTML is only suspicious if status isn't a normal 200.
+            return status not in {200}
+
+        lowered = html_str.lower()
+        markers = (
+            "robot check",
+            "captcha",
+            "enter the characters you see",
+            "automated access",
+            "verify you are a human",
+            "access denied",
+            "request blocked",
+        )
+        return any(m in lowered for m in markers)
 
     def _fetch_html_playwright(self, url: str) -> str:
         from playwright.sync_api import sync_playwright
