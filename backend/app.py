@@ -192,6 +192,7 @@ def check_url():
         return jsonify({"error": "URL could not be scanned"}), 400
 
 
+@app.route("/list_scans", methods=["POST"])
 # Return paginated scan history from scans table with most recent first
 def list_scans():
     try:

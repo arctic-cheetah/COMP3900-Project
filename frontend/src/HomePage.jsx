@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -44,6 +44,8 @@ const DUMMY_HISTORY = [
   },
 ];
 
+
+
 export default function HomePage() {
   const [history, setHistory] = useState(DUMMY_HISTORY);
   const [url, setUrl] = useState('');
@@ -64,6 +66,11 @@ export default function HomePage() {
 
     setIsModalOpen(true);
   };
+
+  // A Helperfunction to get the initial history from the db
+  const getHistoryFromDB = () => {
+
+  }
 
   const postURL = async (e) => {
     e.preventDefault();
@@ -190,7 +197,7 @@ export default function HomePage() {
       )}
 
       {moveButton && (
-        <div className='space'/>
+        <div className='space' />
       )}
 
       {isModalOpen && isMobile && (
