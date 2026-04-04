@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-import { scanURL } from "./api";
+import { scanURL, getStoredData } from "./api";
 import HistoricalData from "./HistoricData";
 import Navbar from "./Navbar";
 import ResultModal from "./Resultmodal";
@@ -44,6 +44,8 @@ const DUMMY_HISTORY = [
   },
 ];
 
+
+
 export default function HomePage() {
   const [history, setHistory] = useState(DUMMY_HISTORY);
   const [url, setUrl] = useState('');
@@ -64,6 +66,33 @@ export default function HomePage() {
 
     setIsModalOpen(true);
   };
+
+  // A Helperfunction to get the initial history from the db
+  useEffect(() => {
+    (async () => {
+      try {
+        let data = await getStoredData();
+        console.log(data)
+        let scans = Array.isArray(data["scans"]) ? data["scans"] : []
+        // Is it array?
+        // yes
+        let mapped = scans.map(s => ({
+          url: s.url,
+          timestamp: s.scanned_at,
+          isSafe: s.is_safe,
+          confidence: s.confidence
+        }))
+        setHistory(mapped)
+      }
+      catch (e) {
+        const resultElem = document.getElementById('result');
+        resultElem.textContent = e.message;
+        console.log(e);
+      }
+
+    })();
+  }, []);
+
 
   const postURL = async (e) => {
     e.preventDefault();
@@ -190,7 +219,7 @@ export default function HomePage() {
       )}
 
       {moveButton && (
-        <div className='space'/>
+        <div className='space' />
       )}
 
       {isModalOpen && isMobile && (

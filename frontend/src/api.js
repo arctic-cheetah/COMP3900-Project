@@ -12,3 +12,15 @@ export const scanURL = async (url) => {
   }
   return res.json();
 };
+
+export const getStoredData = async () => {
+  const res = await fetch(`${API_BASE}/list_scans`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || "Failed to scan website url");
+  }
+  return res.json();
+}
