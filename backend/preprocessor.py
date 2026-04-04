@@ -13,6 +13,7 @@ import traceback
 import unicodedata
 import re
 import os
+from bs4 import Comment
 
 
 # create logger for preprocessor
@@ -35,6 +36,7 @@ class preprocess_data:
     # Page data should be list of lines for ease of processing
     page_data: List[str]
     html_data: BeautifulSoup
+    raw_html: str | None = None
 
     # Number of ref tags type
     num_self_ref = 0
@@ -177,10 +179,14 @@ class preprocess_data:
         # Check if request failed!
         try:
             html = self._fetch_html(url)
+            self.raw_html = html
             # This is the first function that is run for html feature
             # analysis so get the html data for use later
             self.html_data = BeautifulSoup(html, "html.parser")
-            self.page_data = html.splitlines()
+
+            # Line-based features are very sensitive to minified / JS-heavy pages.
+            # Compute them from a normalized DOM snapshot to avoid 1-line megablobs.
+            self.page_data = self._html_lines_for_features(html)
             # print(self.page_data)
             # Count the refs
             self.ref_counts(url)
@@ -190,6 +196,35 @@ class preprocess_data:
             print(err)
             self.page_data = []
             return 0
+
+    def _html_lines_for_features(self, html: str) -> List[str]:
+        """Return HTML as a list of lines for line-based features.
+
+        By default we normalize the HTML to reduce artifacts from minified pages:
+        - remove comments
+        - optionally remove script/style/noscript tags
+        - pretty-print the DOM to introduce stable newlines
+
+        Set `NORMALIZE_HTML_LINES=0` to use the raw HTML splitlines().
+        Set `STRIP_SCRIPTS_FOR_LINES=0` to keep scripts/styles when normalizing.
+        """
+
+        if os.getenv("NORMALIZE_HTML_LINES", "1") != "1":
+            return html.splitlines()
+
+        strip_scripts = os.getenv("STRIP_SCRIPTS_FOR_LINES", "1") == "1"
+        soup = BeautifulSoup(html, "html.parser")
+
+        # Remove HTML comments
+        for c in soup.find_all(string=lambda t: isinstance(t, Comment)):
+            c.extract()
+
+        if strip_scripts:
+            for tag in soup(["script", "style", "noscript"]):
+                tag.decompose()
+
+        pretty = soup.prettify()
+        return [line for line in (ln.strip() for ln in pretty.splitlines()) if line]
 
     def _fetch_html(self, url: str) -> str:
         """Fetch HTML for feature extraction.
@@ -296,14 +331,13 @@ class preprocess_data:
         Returns 0 if the page can't be fetched.
         """
         # TODO: My JS CHECKER MAY OVERCOUNT!
-        # Ensure page_data is populated (LineOfCode fetches and sets self.page_data)
-        if not hasattr(self, "page_data") or self.page_data is None:
+        # Ensure HTML is populated (LineOfCode fetches and sets self.raw_html/page_data)
+        if getattr(self, "raw_html", None) is None:
             _ = self.LineOfCode(url)
 
-        if not self.page_data:
+        html = self.raw_html or ""
+        if not html:
             return 0
-
-        html = "\n".join(self.page_data)
         # html = requests.get(
         #     url,
         #     allow_redirects=True,
