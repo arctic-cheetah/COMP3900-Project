@@ -174,6 +174,7 @@ class preprocess_data:
         # TODO: REDIRECTS ARE BAD HERE
         # TODO: FIX TIMEOUT
         # TODO: NEED TO SWITCH FROM REQUESTS TO SELENIUM BROWSER API
+        # TODO: Now need to fix line of code being to big!
         # Check if request failed!
         try:
             r = requests.get(
@@ -181,9 +182,9 @@ class preprocess_data:
             )
             # This is the first function that is run for html feature
             # analysis so get the html data for use later
-            # self.page_data = r.text.splitlines()
             self.raw_html = self._fetch_html_playwright(url)
             self.html_data = BeautifulSoup(self.raw_html, "html.parser")
+            self.page_data = r.text.splitlines()
             # Count the refs
             self.ref_counts(url)
             return len(r.text.splitlines())
@@ -196,12 +197,13 @@ class preprocess_data:
     # We need to use playwright to allow browser to abstract fetching url for us:
     # Due to dynamic contetn
     # Fetch html data
+    # NOTE: helper functions below
 
     def _fetch_html_playwright(self, url: str) -> str:
         """
         Fetch HTML data for feature extraction particularly for dynamic content
 
-        By default it uses requests (fast) for simple websites
+        By default it uses the playright library and not requests anymore
         """
         timeout_ms = TIMEOUT * 1e3
 
@@ -219,7 +221,7 @@ class preprocess_data:
             page = context.new_page()
             try:
                 page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
-
+                # https://medium.com/@anandpak108/handling-dynamic-content-and-complex-interactions-with-playwright-57e3c20e5281
                 # Wait for complete postJS DOM snapshot
                 # We use several heuristics
                 # 1) Wait for load stat to be complete
@@ -234,14 +236,16 @@ class preprocess_data:
                     )
                 except Exception:
                     pass
-
-                # 3) Wait until network is idle
+                # 3) Wait until input box for searching on site is visible eg: amazon.com
+                try:
+                    page.wait_for_selector("input", timeout=timeout_ms / 10)
+                except Exception:
+                    pass
+                # 4) Wait until network is idle
                 try:
                     page.wait_for_load_state("networkidle", timeout=timeout_ms)
                 except Exception:
                     pass
-
-                # 4) Wait until input box for searching on site is visible eg: amazon.com
 
                 return page.content()
             finally:
