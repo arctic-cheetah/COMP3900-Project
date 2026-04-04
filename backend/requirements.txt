@@ -7,6 +7,7 @@ matplotlib
 seaborn
 pytest
 requests
+playwright
 tldextract
 joblib
 scikit-learn

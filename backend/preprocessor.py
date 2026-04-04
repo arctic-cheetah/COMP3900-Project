@@ -12,6 +12,7 @@ from ipaddress import ip_address
 import traceback
 import unicodedata
 import re
+import os
 
 
 # create logger for preprocessor
@@ -175,21 +176,105 @@ class preprocess_data:
         # TODO: NEED TO SWITCH FROM REQUESTS TO SELENIUM BROWSER API
         # Check if request failed!
         try:
-            r = requests.get(
-                url, allow_redirects=True, timeout=TIMEOUT, headers=self.headers
-            )
+            html = self._fetch_html(url)
             # This is the first function that is run for html feature
             # analysis so get the html data for use later
-            self.html_data = BeautifulSoup(r.text, "html.parser")
-            self.page_data = r.text.splitlines()
+            self.html_data = BeautifulSoup(html, "html.parser")
+            self.page_data = html.splitlines()
+            # print(self.page_data)
             # Count the refs
             self.ref_counts(url)
-            return len(r.text.splitlines())
+            return len(self.page_data)
         except Exception as err:
             traceback.print_exc()
             print(err)
             self.page_data = []
             return 0
+
+    def _fetch_html(self, url: str) -> str:
+        """Fetch HTML for feature extraction.
+
+        Default uses `requests` (fast).
+        If `USE_PLAYWRIGHT=1` in env, attempts to fetch rendered HTML using
+        Playwright (JS executed) and falls back to `requests` on failure.
+        """
+
+        use_playwright = os.getenv("USE_PLAYWRIGHT", "0") == "1"
+
+        if use_playwright:
+            try:
+                return self._fetch_html_playwright(url)
+            except Exception as e:
+                logger.warning("Playwright fetch failed for %s: %s", url, e)
+
+        r = requests.get(url, allow_redirects=True, timeout=TIMEOUT, headers=self.headers)
+        return r.text
+
+    def _fetch_html_playwright(self, url: str) -> str:
+        from playwright.sync_api import sync_playwright
+
+        timeout_ms = max(int(TIMEOUT * 1000), 20000)
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            context = browser.new_context(
+                user_agent=self.headers.get("User-Agent"),
+                locale="en-AU",
+                timezone_id="Australia/Sydney",
+                viewport={"width": 1280, "height": 720},
+                ignore_https_errors=True,
+                extra_http_headers={
+                    "Accept-Language": "en-AU,en;q=0.9",
+                },
+            )
+
+            page = context.new_page()
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
+
+                # Wait for a more complete, post-JS DOM snapshot (best-effort).
+                try:
+                    page.wait_for_load_state("load", timeout=timeout_ms)
+                except Exception:
+                    pass
+                try:
+                    page.wait_for_function(
+                        "document.readyState === 'complete'", timeout=min(5000, timeout_ms)
+                    )
+                except Exception:
+                    pass
+                try:
+                    page.wait_for_load_state("networkidle", timeout=min(10000, timeout_ms))
+                except Exception:
+                    pass
+
+                # Google frequently shows a consent interstitial. Click-through best-effort.
+                try:
+                    if "consent.google.com" in (page.url or ""):
+                        for label in ("Accept all", "I agree", "Agree", "Accept"):
+                            locator = page.get_by_role("button", name=label)
+                            if locator.count() > 0:
+                                locator.first.click(timeout=2000)
+                                break
+                        try:
+                            page.wait_for_load_state("networkidle", timeout=min(10000, timeout_ms))
+                        except Exception:
+                            pass
+                except Exception:
+                    pass
+
+                # For google.com, waiting for the search box is a decent signal that scripts ran.
+                try:
+                    host = (urlsplit(url).hostname or "").lower()
+                    if host.endswith("google.com") or host.endswith("google.com.au"):
+                        page.wait_for_selector("input[name='q']", timeout=min(5000, timeout_ms))
+                except Exception:
+                    pass
+
+                # page.content() returns the current DOM snapshot (post-JS) if any changes occurred.
+                return page.content()
+            finally:
+                context.close()
+                browser.close()
 
     def LargestLineLength(self, url: str):
         """
