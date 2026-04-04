@@ -164,7 +164,7 @@ def check_url():
         url = "http://" + url        
     
     if not check_valid_url(url):
-        msg = f"{request.remote_addr}: {url}"
+        msg = f'{request.remote_addr}: Invalid URL "{url}"'
         app.logger.warning(msg)
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL format"}), 400
