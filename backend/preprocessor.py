@@ -199,6 +199,20 @@ class preprocess_data:
     # Fetch html data
     # NOTE: helper functions below
 
+    def _html_lines_for_features(self, html: str) -> List[str]:
+        """Return HTML ONLY as a list of lines for line-based features.
+
+        normalize the HTML and remove JS to reduce anamolous data which leads to skewing from minified pages:
+        - remove comments
+        - remove script/style/noscript tags
+        - pretty-print the DOM to introduce stable newlines
+        """
+        # 1) remove comment
+
+        # 2)remove script
+
+        # 3)
+
     def _fetch_html_playwright(self, url: str) -> str:
         """
         Fetch HTML data for feature extraction particularly for dynamic content
