@@ -10,16 +10,14 @@ from sklearn.linear_model import LogisticRegression
 from pathlib import Path as path
 import datetime
 import sys
-from urllib.request import urlopen, URLError
+import tldextract
 
 from pipeline import model_pipeline
 from database import init_db, save_scan, get_all_scans
 
 
 app = Flask(__name__)
-model: str
-# TODO:
-# ADD WHITELIST
+
 allowed_origins = [
     "http://127.0.0.1:80",
     "http://127.0.0.1:6969",
@@ -38,12 +36,9 @@ CRITICAL_LOG = LOG_DIR / "critical_failures.txt"
 
 # logging config to file + console
 logging.basicConfig(
-    level=logging.INFO, 
+    level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_DIR / "app.txt"),
-        logging.StreamHandler()
-    ]
+    handlers=[logging.FileHandler(LOG_DIR / "app.txt"), logging.StreamHandler()],
 )
 
 
@@ -51,11 +46,7 @@ logging.basicConfig(
 # log type is either ERROR or CRITICAL
 def write_log(msg, log_type):
     timestamp = datetime.datetime.utcnow().isoformat()
-    entry = {
-        "timestamp": timestamp, 
-        "log_type": log_type, 
-        "message": msg
-    }
+    entry = {"timestamp": timestamp, "log_type": log_type, "message": msg}
 
     target_file = ERROR_LOG if log_type == "ERROR" else CRITICAL_LOG
 
@@ -68,25 +59,26 @@ def write_log(msg, log_type):
 
 def check_valid_url(url):
     """
-    Check if URL is valid using urllib.
+    Check if URL has valid syntax using tldextract.
 
     Args:
         url (str): URL link to be checked.
 
     Returns:
-        bool: Returns True if the URL is valid.
+        bool: Returns True if the URL has valid syntax.
     """
     if not url or not isinstance(url, str):
         return False
 
     try:
-        urlopen(url)
-        return True
-    except URLError as e:
-        print(e)
-        return False
+        ext = tldextract.extract(url)
+
+        if ext.domain and ext.suffix:
+            return True
     except Exception as e:
-        return False
+        print(e)
+
+    return False
 
 
 def sanitise_url(url):
@@ -122,7 +114,7 @@ def sanitise_url(url):
 
 @app.route("/", methods=["GET"])
 def health_check():
-    return "Working!" , 200
+    return "Working!", 200
 
 
 @app.route("/scan", methods=["POST"])
@@ -136,33 +128,37 @@ def check_url():
     Returns:
         JSON: Return the result if successful, otherwise returns a 400 error.
     """
-
-    # check whether request is JSON
     if not request.is_json:
-        msg = f"Invalid request from {request.remote_addr}: Not a JSON request"
+        msg = f"{request.remote_addr}: Not a JSON request"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "send JSON request"}), 400
+        return jsonify({"error": "Send JSON request"}), 400
 
-    # check whether request body is a JSON object 
     request_data = request.get_json()
     if not isinstance(request_data, dict):
         msg = f"{request.remote_addr}: Body is not JSON object"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "invalid request body"}), 400
+        return jsonify({"error": "Invalid request body"}), 400
 
-    # check if url field missing or not a string 
     url = request_data.get("url")
     if url is None or not isinstance(url, str):
         msg = f"{request.remote_addr}: Missing or invalid url field"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
-        return jsonify({"error": "missing/invalid URL field"}), 400
-    
-    # check if url is valid format 
+        return jsonify({"error": "Missing/Invalid URL field"}), 400
+
+    url_scheme = urlparse(url).scheme
+    if url_scheme and (url_scheme != "http" and url_scheme != "https"):
+        msg = f'{request.remote_addr}: Invalid URL scheme in "{url}"'
+        app.logger.warning(msg)
+        write_log(msg, "ERROR")
+        return jsonify({"error": "Invalid URL scheme"}), 400
+    if not url_scheme:
+        url = "http://" + url
+
     if not check_valid_url(url):
-        msg = f"Invalid URL from {request.remote_addr}: {url}"
+        msg = f"{request.remote_addr}: {url}"
         app.logger.warning(msg)
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL format"}), 400
@@ -171,72 +167,81 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
     try:
-        is_safe, confidence = model_pipeline(sanitised_url, model)
+        is_safe, confidence = model_pipeline(sanitised_url)
         confidence_score = float(confidence[1] if is_safe == 1 else confidence[0])
-    
-        # persistence while maintaining anynomity 
+
+        # persistence while maintaining anynomity
+        # TODO: CHECK IF THIS VULN
         saved = save_scan(
-            url=sanitised_url, 
+            url=sanitised_url,
             is_safe=bool(is_safe),
             confidence=confidence_score,
         )
-
-        return jsonify({
-            "is_safe":    bool(is_safe),
-            "confidence": confidence_score,
-            "scanned_at": saved["scanned_at"] if saved else None,
-        }), 200
+        return (
+            jsonify(
+                {
+                    "is_safe": bool(is_safe),
+                    "confidence": confidence_score,
+                }
+            ),
+            200,
+        )
 
     except Exception as e:
         app.logger.error("Scan failed: %s", e)
         return jsonify({"error": "URL could not be scanned"}), 400
 
+
 # Return paginated scan history from scans table with most recent first
 def list_scans():
     try:
-        limit  = int(request.args.get("limit", 100))
+        limit = int(request.args.get("limit", 100))
         offset = int(request.args.get("offset", 0))
     except ValueError:
         return jsonify({"error": "limit and offset must be integers"}), 400
- 
+
     if limit < 1 or offset < 0:
         return jsonify({"error": "limit must be >= 1 and offset must be >= 0"}), 400
- 
+
     scans = get_all_scans(limit=limit, offset=offset)
- 
+
     if scans is None:
         return jsonify({"error": "could not retrieve scan history"}), 500
- 
-    return jsonify({
-        "scans":  scans,
-        "limit":  limit,
-        "offset": offset,
-    }), 200
+
+    return (
+        jsonify(
+            {
+                "scans": scans,
+                "limit": limit,
+                "offset": offset,
+            }
+        ),
+        200,
+    )
 
 
 @app.route("/error", methods=["POST"])
 def log_error():
     """
     Route to log errors from the ML model.
-    
+
     Args:
         info: The information to be logged (from request body)
-        
+
     Returns:
         JSON: Return True if successful, otherwise returns a 400 error.
     """
     # TODO: please throw exceptions from AI model to this route for logging
     if not isinstance(request.json, dict):
-        return jsonify({"error": "invalid request body"}), 400
+        return jsonify({"error": "Invalid request body"}), 400
 
     request_data = request.json
     info = request_data.get("info")
     level = request_data.get("level", "ERROR")
 
     if not isinstance(info, str) or info is None:
-        return jsonify({"error": "empty information field"}), 400
-    
-    # add IP addr which triggered error + log level to context
+        return jsonify({"error": "Empty information field"}), 400
+
     context = f"[{request.remote_addr}] {info}"
 
     write_log(context, level)
@@ -245,7 +250,6 @@ def log_error():
 
 
 if __name__ == "__main__":
-    model: str = "./models/logit_model.pkl"
     app.logger.setLevel(logging.INFO)
     init_db()
     app.run(host="0.0.0.0", port=5001)

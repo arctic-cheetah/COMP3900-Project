@@ -8,6 +8,7 @@ from contextlib import contextmanager
 
 logger = logging.getLogger(__name__)
 
+# TODO: REMOVE AND PUT INTO ENVIRON VARIABLES NEXTIME
 DB_CONFIG = {
     "host": os.environ.get("DB_HOST", "localhost"),
     "port": int(os.environ.get("DB_PORT", 5432)),
