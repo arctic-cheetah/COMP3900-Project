@@ -4,6 +4,7 @@ import tldextract
 import pandas as pd
 from typing import *
 from bs4 import BeautifulSoup
+from bs4 import Comment
 import requests
 import logging
 import json, datetime
@@ -19,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 # Given a url get these feature data
 # Then return a np.array of those features
-TIMEOUT = 10
+TIMEOUT = 8
 
 
 # def preprocess_data(self, self, url: str):
@@ -177,17 +178,14 @@ class preprocess_data:
         # TODO: Now need to fix line of code being to big!
         # Check if request failed!
         try:
-            r = requests.get(
-                url, allow_redirects=True, timeout=TIMEOUT, headers=self.headers
-            )
             # This is the first function that is run for html feature
             # analysis so get the html data for use later
             self.raw_html = self._fetch_html_playwright(url)
             self.html_data = BeautifulSoup(self.raw_html, "html.parser")
-            self.page_data = r.text.splitlines()
+            self.page_data = self._html_lines_for_features(self.raw_html)
             # Count the refs
             self.ref_counts(url)
-            return len(r.text.splitlines())
+            return len(self.page_data)
         except Exception as err:
             traceback.print_exc()
             print(err)
@@ -207,11 +205,17 @@ class preprocess_data:
         - remove script/style/noscript tags
         - pretty-print the DOM to introduce stable newlines
         """
+        soup = BeautifulSoup(html, "html.parser")
         # 1) remove comment
+        for c in soup.find_all(string=lambda t: isinstance(t, Comment)):
+            c.decompose()
+        # 2)remove script style or noscript
+        for tag in soup(["script", "style", "noscript"]):
+            tag.decompose()
 
-        # 2)remove script
-
-        # 3)
+        # 3) prettify html code and return the actual number lines
+        pretty = soup.prettify()
+        return [line for line in (ln.strip() for ln in pretty.splitlines()) if line]
 
     def _fetch_html_playwright(self, url: str) -> str:
         """
