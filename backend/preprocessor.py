@@ -224,7 +224,7 @@ class preprocess_data:
         By default it uses the playright library and not requests anymore
         """
         timeout_ms = TIMEOUT * 1e3
-
+        # NOTE: POTENTIAL BOTTLE NECK HERE
         with sync_playwright() as pw:
 
             # Run browser without ui
