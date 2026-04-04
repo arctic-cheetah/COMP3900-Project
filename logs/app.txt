@@ -221,3 +221,39 @@
 2026-04-04 03:20:40,042 - INFO - 127.0.0.1 - - [04/Apr/2026 03:20:40] "OPTIONS /scan HTTP/1.1" 200 -
 2026-04-04 03:20:40,370 - INFO - <class 'dict'>
 2026-04-04 03:21:00,063 - INFO - 127.0.0.1 - - [04/Apr/2026 03:21:00] "POST /scan HTTP/1.1" 200 -
+2026-04-04 18:22:04,433 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 18:22:04,433 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 18:24:03,945 - INFO - 127.0.0.1 - - [04/Apr/2026 18:24:03] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 18:24:04,199 - INFO - <class 'dict'>
+2026-04-04 18:25:07,300 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 18:25:07,300 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 18:28:10,771 - INFO - 127.0.0.1 - - [04/Apr/2026 18:28:10] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 18:28:11,031 - INFO - <class 'dict'>
+2026-04-04 18:28:43,666 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 18:28:43,667 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 18:28:55,465 - INFO - 127.0.0.1 - - [04/Apr/2026 18:28:55] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 18:28:55,713 - INFO - <class 'dict'>
+2026-04-04 18:29:48,274 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 18:29:48,274 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 18:30:37,966 - INFO - 127.0.0.1 - - [04/Apr/2026 18:30:37] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 18:30:38,226 - INFO - <class 'dict'>
+2026-04-04 18:31:21,790 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 18:31:21,790 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 18:31:27,835 - INFO - 127.0.0.1 - - [04/Apr/2026 18:31:27] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 18:31:28,078 - INFO - <class 'dict'>
+2026-04-04 18:32:26,187 - INFO - 127.0.0.1 - - [04/Apr/2026 18:32:26] "POST /scan HTTP/1.1" 200 -

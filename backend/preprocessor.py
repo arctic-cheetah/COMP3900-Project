@@ -34,6 +34,7 @@ class preprocess_data:
     # Page data should be list of lines for ease of processing
     page_data: List[str]
     html_data: BeautifulSoup
+    raw_html: str
 
     # Number of ref tags type
     num_self_ref = 0
@@ -180,8 +181,9 @@ class preprocess_data:
             )
             # This is the first function that is run for html feature
             # analysis so get the html data for use later
-            self.html_data = BeautifulSoup(r.text, "html.parser")
-            self.page_data = r.text.splitlines()
+            # self.page_data = r.text.splitlines()
+            self.raw_html = self._fetch_html_playwright(url)
+            self.html_data = BeautifulSoup(self.raw_html, "html.parser")
             # Count the refs
             self.ref_counts(url)
             return len(r.text.splitlines())
@@ -193,38 +195,59 @@ class preprocess_data:
 
     # We need to use playwright to allow browser to abstract fetching url for us:
     # Due to dynamic contetn
-    # Fetch html data 
-    
-    def _fetch_html_playwright(self, url: str):
+    # Fetch html data
+
+    def _fetch_html_playwright(self, url: str) -> str:
         """
         Fetch HTML data for feature extraction particularly for dynamic content
-        
+
         By default it uses requests (fast) for simple websites
         """
-        timeout_ms = TIMEOUT * 1E3
-        
+        timeout_ms = TIMEOUT * 1e3
+
         with sync_playwright() as pw:
-            
+
             # Run browser without ui
-            browser = pw.chromium(headless=False)
-            
-            
+            browser = pw.chromium.launch(headless=True)
+            context = browser.new_context(
+                user_agent=self.headers.get("User-Agent"),
+                locale="en-AU",
+                timezone_id="Australia/Sydney",
+                ignore_https_errors=True,
+            )
             # Open a new page
-            
-            # try
-            # Wait for complete postJS DOM snapshot
-            # We use several heuristics
-            # 1) Wait for load stat to be complete
-            # 2) wait for function to be complete in document.readyState
-            # 3) 
-            # catch
-            
-            
-            
-            
-    
-    
-    
+            page = context.new_page()
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
+
+                # Wait for complete postJS DOM snapshot
+                # We use several heuristics
+                # 1) Wait for load stat to be complete
+                try:
+                    page.wait_for_load_state("load", timeout=timeout_ms)
+                except Exception:
+                    pass
+                # 2) wait for function to be complete in document.readyState
+                try:
+                    page.wait_for_function(
+                        "document.readyState == complete", timeout=timeout_ms
+                    )
+                except Exception:
+                    pass
+
+                # 3) Wait until network is idle
+                try:
+                    page.wait_for_load_state("networkidle", timeout=timeout_ms)
+                except Exception:
+                    pass
+
+                # 4) Wait until input box for searching on site is visible eg: amazon.com
+
+                return page.content()
+            finally:
+                context.close()
+                browser.close()
+
     def LargestLineLength(self, url: str):
         """
         Find the line with the largest length
