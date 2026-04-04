@@ -1,8 +1,13 @@
+-- Active: 1775300467055@@127.0.0.1@5432
+DROP TABLE IF EXISTS scans;
+
 CREATE TABLE IF NOT EXISTS scans (
-    id          SERIAL          PRIMARY KEY,
-    url         TEXT            NOT NULL,
-    is_safe     BOOLEAN         NOT NULL,
-    confidence  NUMERIC(6, 4)   NOT NULL CHECK (confidence >= 0 AND confidence <= 1),
-    scanned_at  TIMESTAMPTZ     NOT NULL DEFAULT NOW()
+    id SERIAL PRIMARY KEY,
+    url TEXT NOT NULL,
+    is_safe BOOLEAN NOT NULL,
+    confidence NUMERIC NOT NULL CHECK (
+        confidence >= 0
+        AND confidence <= 100
+    ),
+    scanned_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
- 
