@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-import { scanURL } from "./api";
+import { scanURL, getStoredData } from "./api";
 import HistoricalData from "./HistoricData";
 import Navbar from "./Navbar";
 import ResultModal from "./Resultmodal";
@@ -68,9 +68,31 @@ export default function HomePage() {
   };
 
   // A Helperfunction to get the initial history from the db
-  const getHistoryFromDB = () => {
+  useEffect(() => {
+    (async () => {
+      try {
+        let data = await getStoredData();
+        console.log(storedHistory)
+        scans = Array.isArray(data["scans"]) ? data["scans"] : []
+        // Is it array?
+        // yes
+        let mapped = scans.map(s => ({
+          url: s.url,
+          timestamp: s.scanned_at,
+          isSafe: s.is_safe,
+          confidence: s.confdence
+        }))
+        setHistory(mapped)
+      }
+      catch (e) {
+        const resultElem = document.getElementById('result');
+        resultElem.textContent = e.message;
+        console.log(e);
+      }
 
-  }
+    })
+  }, []);
+
 
   const postURL = async (e) => {
     e.preventDefault();

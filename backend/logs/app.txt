@@ -1,0 +1,24 @@
+2026-04-05 00:44:06,248 - INFO - Database initialised successfully.
+2026-04-05 00:44:06,250 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-05 00:44:06,250 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 00:44:24,854 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:24] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:44:24,868 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:24] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:44:25,112 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:25] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:44:25,154 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:25] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:46:03,538 - INFO - 127.0.0.1 - - [05/Apr/2026 00:46:03] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:46:03,798 - INFO - 127.0.0.1 - - [05/Apr/2026 00:46:03] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:49:16,786 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:16] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 00:49:17,121 - INFO - <class 'dict'>
+2026-04-05 00:49:17,741 - INFO - Scan saved — id=1 is_safe=True confidence=100.0000
+2026-04-05 00:49:17,748 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:17] "POST /scan HTTP/1.1" 200 -
+2026-04-05 00:49:46,697 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:46] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 00:49:47,008 - INFO - <class 'dict'>
+2026-04-05 00:49:47,634 - INFO - Scan saved — id=2 is_safe=True confidence=100.0000
+2026-04-05 00:49:47,638 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:47] "POST /scan HTTP/1.1" 200 -
+2026-04-05 00:50:08,888 - INFO - 127.0.0.1 - - [05/Apr/2026 00:50:08] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 00:50:09,197 - INFO - <class 'dict'>
+2026-04-05 00:50:11,627 - INFO - Scan saved — id=3 is_safe=True confidence=100.0000
+2026-04-05 00:50:11,631 - INFO - 127.0.0.1 - - [05/Apr/2026 00:50:11] "POST /scan HTTP/1.1" 200 -

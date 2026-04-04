@@ -13,7 +13,7 @@ export const scanURL = async (url) => {
   return res.json();
 };
 
-export const getInitData = async () => {
+export const getStoredData = async () => {
   const res = await fetch(`${API_BASE}/list_scans`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
