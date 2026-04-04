@@ -56,6 +56,8 @@ export default function HomePage() {
   };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const moveButton = useMediaQuery('(max-width: 1173px)');
+  const urlFullText = useMediaQuery('(max-width: 930px)');
 
   const openHistoryResult = (item) => {
     setCurrentResult({
@@ -120,6 +122,7 @@ export default function HomePage() {
         Enter any URL below to instantly analyse and detect potential phishing
         threats <br /> using advanced Al-powered detection
       </p>
+
       <form onSubmit={postURL} className='url-form'>
         <span className='search-icon'>
           <svg width='25' height='25' viewBox='0 0 24 24' fill='none'>
@@ -140,24 +143,59 @@ export default function HomePage() {
             name='url-link'
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder='Enter URL to analyse (e.g., https://example.com)'
+            placeholder={
+              urlFullText
+                ? 'Enter URL to analyse'
+                : 'Enter URL to analyse (e.g, https://example.com)'
+            }
           />
         </label>
-        <button
-          type='submit'
-          className={url.trim() ? 'active-btn' : 'inactive-btn'}
-          disabled={!url.trim()}
-        >
-          {isLoading ? (
-            <span className='loader'>
-              <Loader color='white' size='sm' />
-              Analysing...
-            </span>
-          ) : (
-            'Analyse URL'
-          )}
-        </button>
+
+        {!moveButton && (
+          <button
+            type='submit'
+            className={`inline-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            disabled={!url.trim()}
+          >
+            {isLoading ? (
+              <span className='loader'>
+                <Loader color='white' size='sm' />
+                Analysing...
+              </span>
+            ) : (
+              'Analyse URL'
+            )}
+          </button>
+        )}
+
+        {moveButton && (
+          <button
+            type='submit'
+            className={`full-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            disabled={!url.trim()}
+          >
+            {isLoading ? (
+              <span className='loader'>
+                <Loader color='white' size='sm' />
+                Analysing...
+              </span>
+            ) : (
+              'Analyse URL'
+            )}
+          </button>
+        )}
       </form>
+
+      {!moveButton && (
+        <p className='privacy-text'>
+          Your privacy is protected. URLs are analysed securely and not stored
+          permanently.
+        </p>
+      )}
+
+      {moveButton && (
+        <div className='space'/>
+      )}
 
       {isModalOpen && isMobile && (
         <ResultModal
