@@ -72,15 +72,15 @@ export default function HomePage() {
     (async () => {
       try {
         let data = await getStoredData();
-        console.log(storedHistory)
-        scans = Array.isArray(data["scans"]) ? data["scans"] : []
+        console.log(data)
+        let scans = Array.isArray(data["scans"]) ? data["scans"] : []
         // Is it array?
         // yes
         let mapped = scans.map(s => ({
           url: s.url,
           timestamp: s.scanned_at,
           isSafe: s.is_safe,
-          confidence: s.confdence
+          confidence: s.confidence
         }))
         setHistory(mapped)
       }
@@ -90,7 +90,7 @@ export default function HomePage() {
         console.log(e);
       }
 
-    })
+    })();
   }, []);
 
 
