@@ -33,9 +33,9 @@ class preprocess_data:
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
     }
     # Page data should be list of lines for ease of processing
-    page_data: List[str]
-    html_data: BeautifulSoup
-    raw_html: str
+    page_data: List[str] = []
+    html_data: BeautifulSoup = None
+    raw_html: str = ""
 
     # Number of ref tags type
     num_self_ref = 0
@@ -427,6 +427,8 @@ class preprocess_data:
         pass
 
     def HasTitle(self, url) -> int:
+        if self.html_data is None:
+            return 0
         self.has_title = self.html_data.find("title") is not None
         return 1 if self.has_title is not None else 0
 
