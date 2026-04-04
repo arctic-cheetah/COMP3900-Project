@@ -6,8 +6,6 @@ export default function Navbar() {
     <nav className='navbar'>
       <img className='logo' src={logoIcon} />
       <p className='website-name'>Phishy Links</p>
-
-      <img className='user-photo' src={userIcon} />
     </nav>
   );
 }
