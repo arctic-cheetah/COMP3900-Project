@@ -1,13 +1,13 @@
 import pandas
-import backend.preprocessor as p
+import backend.ml.preprocessor as p
 
 
 def test_preprocessor():
     # https://www.southbankmosaics.com
     URL = [
         "https://www.southbankmosaics.com",
-        # "https://www.uni-mainz.de",
-        # "https://www.voicefmradio.co.uk",
+        "https://www.uni-mainz.de",
+        "https://www.voicefmradio.co.uk",
     ]
 
     out = get_output_preprocessor(URL[0])
@@ -28,7 +28,7 @@ def test_preprocessor():
 
 def get_output_preprocessor(URL):
     preprocessor = p.preprocess_data(URL)
-    url_features: pandas.DataFrame = preprocessor.get_data()
+    url_features: pandas.DataFrame = preprocessor.get_data().iloc[:, 1:]
     out = url_features.to_string(
         header=False, index=False, float_format="{:.3f}".format
     )

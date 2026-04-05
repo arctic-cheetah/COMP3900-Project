@@ -8,6 +8,21 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.11"]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: phishing_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
@@ -29,8 +44,16 @@ jobs:
             pip install playwright
             playwright install --with-deps chromium
       - name: Run Backend
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          PYTHONPATH: ${{ github.workspace }}
         run: |
-          coverage run --parallel-mode backend/app.py > backend.log 2>&1 & echo $! > backend.pid
+          coverage run --parallel-mode backend/app.py > backend.log 2>&1 &
+          echo $! > backend.pid
           sleep 10
 
       - name: Check Backend
@@ -53,6 +76,15 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: coverage run --parallel-mode -m pytest test/backend_test.py
 
+      - name: Run Tests
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest
       - name: Stop Backend (This is needed to allow coverage to finish)
         if: always()
         run: |

@@ -1,7 +1,8 @@
 import requests
 import sys
-from preprocessor import preprocess_data
 import pandas as pd
+
+from ml.preprocessor import preprocess_data
 
 
 BASE = "http://localhost:5001"
@@ -28,7 +29,7 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
         bool: Returns True if all URL features match, else returns False.
     """
     is_same = True
-    df = pd.read_csv("./backend/data/uci_phishing_url_dataset.csv")
+    df = pd.read_csv("./backend/ml/data/uci_phishing_url_dataset.csv")
     urls = df["URL"]
 
     df = df.drop(columns="IsLegit")
@@ -38,7 +39,7 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
         other=[name for func, name in preprocess_data.func_pointer]
     )
     # print(remaining_col)
-    df: pd.DataFrame = df.drop(columns=remaining_col)
+    df: pd.DataFrame = pd.DataFrame(df.drop(columns=remaining_col))
 
     for i, url in enumerate(urls):
         if i >= check_urls_num:
@@ -49,7 +50,7 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
         print(f"URL: {url}.")
 
         url_obj = preprocess_data(url)
-        url_features = url_obj.get_data()
+        url_features = url_obj.get_data().iloc[:, 1:]
         url_features_str = url_features.to_string(
             header=False, index=False, float_format="{:.3f}".format
         )

@@ -1,7 +1,7 @@
 from sklearn.linear_model import LogisticRegression
 import joblib
 import pandas as pd
-from preprocessor import preprocess_data
+from ml.preprocessor import preprocess_data
 
 
 def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[str, str]:

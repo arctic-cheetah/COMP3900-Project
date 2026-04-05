@@ -1,10 +1,13 @@
-import { scanURL } from './api';
-import { useState } from 'react';
-import HistoricalData from './HistoricData';
-import Navbar from './Navbar';
-import ResultModal from './Resultmodal';
+import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
-import './App.css';
+import { useMediaQuery } from '@mantine/hooks';
+
+import { scanURL, getStoredData } from "./api";
+import HistoricalData from "./HistoricData";
+import Navbar from "./Navbar";
+import ResultModal from "./Resultmodal";
+import "./App.css";
+import logoIcon from "../assets/logo.png";
 
 // --- DUMMY DATA FOR PREVIEW ---
 const DUMMY_HISTORY = [
@@ -40,12 +43,23 @@ const DUMMY_HISTORY = [
   },
 ];
 
+
+
 export default function HomePage() {
   const [history, setHistory] = useState(DUMMY_HISTORY);
   const [url, setUrl] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
   const [isLoading, setLoading] = useState(false);
+
+  const handleDeleteScans = (scansToDelete) => {
+    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
+    setHistory((current) => current.filter((scan) => !itemsToRemove.includes(scan)));
+  };
+
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const moveButton = useMediaQuery('(max-width: 1173px)');
+  const urlFullText = useMediaQuery('(max-width: 930px)');
 
   const openHistoryResult = (item) => {
     setCurrentResult({
@@ -56,6 +70,33 @@ export default function HomePage() {
 
     setIsModalOpen(true);
   };
+
+  // A Helperfunction to get the initial history from the db
+  useEffect(() => {
+    (async () => {
+      try {
+        let data = await getStoredData();
+        console.log(data)
+        let scans = Array.isArray(data["scans"]) ? data["scans"] : []
+        // Is it array?
+        // yes
+        let mapped = scans.map(s => ({
+          url: s.url,
+          timestamp: s.scanned_at,
+          isSafe: s.is_safe,
+          confidence: s.confidence
+        }))
+        setHistory(mapped)
+      }
+      catch (e) {
+        const resultElem = document.getElementById('result');
+        resultElem.textContent = e.message;
+        console.log(e);
+      }
+
+    })();
+  }, []);
+
 
   const postURL = async (e) => {
     e.preventDefault();
@@ -102,14 +143,15 @@ export default function HomePage() {
   return (
     <div className='homepage'>
       <Navbar />
-      <img className='logo-homepage' src='assets/logo.png' />
-      <header className='header'>
+      <img className="logo-homepage" src={logoIcon} />
+      <header className="header">
         <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
       <p className='description'>
         Enter any URL below to instantly analyse and detect potential phishing
         threats <br /> using advanced Al-powered detection
       </p>
+
       <form onSubmit={postURL} className='url-form'>
         <span className='search-icon'>
           <svg width='25' height='25' viewBox='0 0 24 24' fill='none'>
@@ -130,39 +172,75 @@ export default function HomePage() {
             name='url-link'
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder='Enter URL to analyse (e.g., https://example.com)'
+            placeholder={
+              urlFullText
+                ? 'Enter URL to analyse'
+                : 'Enter URL to analyse (e.g, https://example.com)'
+            }
           />
         </label>
-        <button
-          type='submit'
-          className={url.trim() ? 'active-btn' : 'inactive-btn'}
-          disabled={!url.trim()}
-        >
-          {isLoading ? (
-            <span className='loader'>
-              <Loader color='white' size='sm' />
-              Analysing...
-            </span>
-          ) : (
-            'Analyse URL'
-          )}
-        </button>
+
+        {!moveButton && (
+          <button
+            type='submit'
+            className={`inline-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            disabled={!url.trim()}
+          >
+            {isLoading ? (
+              <span className='loader'>
+                <Loader color='white' size='sm' />
+                Analysing...
+              </span>
+            ) : (
+              'Analyse URL'
+            )}
+          </button>
+        )}
+
+        {moveButton && (
+          <button
+            type='submit'
+            className={`full-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            disabled={!url.trim()}
+          >
+            {isLoading ? (
+              <span className='loader'>
+                <Loader color='white' size='sm' />
+                Analysing...
+              </span>
+            ) : (
+              'Analyse URL'
+            )}
+          </button>
+        )}
       </form>
 
-      <p className='privacy-text'>
-        Your privacy is protected. URLs are analysed securely and not stored
-        permanently.
-      </p>
+      {!moveButton && (
+        <p className='privacy-text'>
+          Your privacy is protected. URLs are analysed securely and not stored
+          permanently.
+        </p>
+      )}
 
-      {isModalOpen && (
+      {moveButton && (
+        <div className='space' />
+      )}
+
+      {isModalOpen && isMobile && (
         <ResultModal
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
         />
       )}
 
-      <HistoricalData history={history} onHistoryClick={openHistoryResult} />
-      <p className='privacy-text'>
+      <HistoricalData 
+      history={history} 
+      onDelete={handleDeleteScans}
+      onDeleteMultiple={handleDeleteScans}
+      onHistoryClick={openHistoryResult} 
+      />
+      
+    <p className='privacy-text'>
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
