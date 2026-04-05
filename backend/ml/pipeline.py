@@ -11,7 +11,7 @@ whitelist_path: str = "./ml/data/top_100k_domains.csv"
 model_path: str = "./ml/models/logit_model.pkl"
 
 
-def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[str, str] | None:
+def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
     """
     Run pretrained model on features.
 
@@ -26,15 +26,15 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[str, str] | 
         model_dump = joblib.load(model_path)
         features = model_dump["features"]
         model = model_dump["model"]
-        
+
         filtered_url_features = url_features[features]
-        is_safe = model.predict(filtered_url_features)[0]
-        confidence = model.predict_proba(filtered_url_features)[0] * 100.0
+        is_safe: int = model.predict(filtered_url_features)[0]
+        confidence: float = model.predict_proba(filtered_url_features)[0] * 100.0
 
         return is_safe, confidence
     except Exception as e:
         print(f'run_model error: "{e}"')
-        return None
+        return 0, 100.0
 
 
 #  Where 1 is identical and 0 is different.
@@ -66,8 +66,12 @@ def search_whitelist(domain: str, whitelist: list):
         best_jaro_winkler = 0
         best_lcs = 0
         for whitelist_domain in whitelist:
-            best_levenshtein = max(best_levenshtein, normalised_levenshtein(domain, whitelist_domain))
-            best_jaro_winkler = max(best_jaro_winkler, jaro_winkler(domain, whitelist_domain))
+            best_levenshtein = max(
+                best_levenshtein, normalised_levenshtein(domain, whitelist_domain)
+            )
+            best_jaro_winkler = max(
+                best_jaro_winkler, jaro_winkler(domain, whitelist_domain)
+            )
             best_lcs = max(best_lcs, normalised_lcs(domain, whitelist_domain))
 
         return {
@@ -82,9 +86,9 @@ def search_whitelist(domain: str, whitelist: list):
             "JaroWinkler": 0,
             "LCS": 0,
         }
-  
 
-def model_pipeline(url: str) -> tuple[str, str] | None:
+
+def model_pipeline(url: str) -> tuple[int, float]:
     """
     Process URL and runs model.
 
@@ -102,8 +106,12 @@ def model_pipeline(url: str) -> tuple[str, str] | None:
         domain = df["RootDomain"].iloc[0]
         whitelist = get_whitelist(whitelist_path)
         scores = search_whitelist(domain, whitelist)
-        if scores["Levenshtein"] == 1 and scores["JaroWinkler"] == 1 and scores["LCS"] == 1:
-            return 1, [0, 100]
+        if (
+            scores["Levenshtein"] == 1
+            and scores["JaroWinkler"] == 1
+            and scores["LCS"] == 1
+        ):
+            return 1, 100.0
 
         df["Levenshtein"] = scores["Levenshtein"]
         df["JaroWinkler"] = scores["JaroWinkler"]
@@ -113,5 +121,6 @@ def model_pipeline(url: str) -> tuple[str, str] | None:
 
         return is_safe, confidence
     except Exception as e:
+        # Model pipeline error should be flagged as not safe
         print(f'model_pipeline error: "{e}"')
-        return None
+        return 0, 100.0

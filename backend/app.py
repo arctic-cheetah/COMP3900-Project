@@ -165,8 +165,7 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
     try:
-        is_safe, confidence = model_pipeline(sanitised_url)
-        confidence_score = float(confidence[1] if is_safe == 1 else confidence[0])
+        is_safe, confidence_score = model_pipeline(sanitised_url)
 
         # persistence while maintaining anynomity
         # TODO: CHECK IF THIS VULN
