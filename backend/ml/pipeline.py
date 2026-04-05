@@ -22,6 +22,8 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
         tuple: Returns the verdict (safe = 1, phishing = 0) and confidence score.
     """
     try:
+        # TODO: WHY THE ARE WE ALWAYS LOADING THE MODEL EACH TIME IT SCANS
+        # A URL? JUST CACHE IT
         model_dump = joblib.load(model_path)
         features = model_dump["features"]
         model = model_dump["model"]
@@ -116,9 +118,9 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         ):
             return 1, 100.0
 
-        df["Levenshtein"] = scores["Levenshtein"]
-        df["JaroWinkler"] = scores["JaroWinkler"]
-        df["LCS"] = scores["LCS"]
+        # df["Levenshtein"] = scores["Levenshtein"]
+        # df["JaroWinkler"] = scores["JaroWinkler"]
+        # df["LCS"] = scores["LCS"]
 
         is_safe, confidence = run_model(df, model_path)
 

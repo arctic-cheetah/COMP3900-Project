@@ -32,6 +32,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+<<<<<<< HEAD
             python -m pip install --upgrade pip
             pip install -r backend/requirements.txt
             pip install pytest
@@ -43,6 +44,18 @@ jobs:
             pip install tldextract pytest-cov coverage
             pip install playwright
             playwright install --with-deps chromium
+=======
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install pytest
+          pip install requests
+          pip install flask
+          pip install flask_cors
+          pip install scikit-learn
+          pip install joblib
+          pip install tldextract pytest-cov coverage
+
+>>>>>>> caitlin_scrum2
       - name: Run Backend
         env:
           DB_HOST: localhost
@@ -58,15 +71,19 @@ jobs:
 
       - name: Check Backend
         run: |
-            for i in {1..10}; do
-              curl -sSf "http://127.0.0.1:5001/" >/dev/null && exit 0
-              sleep 0.5
-            done
-            echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
-            exit 1
+          for i in {1..10}; do
+            curl -sSf "http://127.0.0.1:5001/" >/dev/null && exit 0
+            sleep 0.5
+          done
+          echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
+          exit 1
 
       - name: Run Preprocessor Unit Tests
+<<<<<<< HEAD
       # Need to add github workspace environment here to get path of ai backend
+=======
+        # Need to add github workspace environment here to get path of ai backend
+>>>>>>> caitlin_scrum2
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: coverage run --parallel-mode -m pytest test/ai_test.py
@@ -111,12 +128,17 @@ jobs:
 
       - name: Generate coverage reports
         run: |
-            coverage combine
-            coverage report
-            coverage html
+          coverage combine
+          coverage report
+          coverage html
 
       - name: Print backend log on failure
         if: failure()
         run: |
+<<<<<<< HEAD
             echo "_____backend.log______"
             cat backend.log
+=======
+          echo "_____backend.log______"
+          cat backend.log
+>>>>>>> caitlin_scrum2
