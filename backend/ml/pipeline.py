@@ -34,7 +34,7 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[float, float
         return is_safe, confidence
     except Exception as e:
         print(f'run_model error: "{e}"')
-        return None
+        return 0, 100
 
 
 #  Where 1 is identical and 0 is different.
