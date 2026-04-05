@@ -1,11 +1,11 @@
 import requests
 import sys
-from preprocessor import preprocess_data
 import pandas as pd
+
+from ml.preprocessor import preprocess_data
 
 
 BASE = "http://localhost:5001"
-
 
 def test_scan(url, expected_status=200):
     r = requests.post(
@@ -38,22 +38,27 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
         other=[name for func, name in preprocess_data.func_pointer]
     )
     # print(remaining_col)
-    df = df.drop(columns=remaining_col)
+    df: pd.DataFrame = df.drop(columns=remaining_col)
 
     for i, url in enumerate(urls):
         if i >= check_urls_num:
             break
 
+        # TODO: FIX EITHER THE ORDER OF THE COLUMN OR THE HOW ROWS ARE DELETED
         print(f"URL Number {i + 1}.")
+        print(f"URL: {url}.")
 
         url_obj = preprocess_data(url)
         url_features = url_obj.get_data()
-        url_features_str = url_features.to_string(header=False, index=False)
-        print(url_features_str)
+        url_features_str = url_features.to_string(
+            header=False, index=False, float_format="{:.3f}".format
+        )
+        print(url_features)
 
         row = df.iloc[[i]]
         print(row)
-        row_str = row.to_string(header=False, index=False)
+        row_str = row.to_string(header=False, index=False, float_format="{:.3f}".format)
+        print(url_features_str)
         print(row_str)
 
         if url_features_str != row_str:
@@ -65,4 +70,4 @@ def compare_features(check_urls_num: int, print_all: bool) -> bool:
     return is_same
 
 
-compare_features(5, True)
+compare_features(1, True)

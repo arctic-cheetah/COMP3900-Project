@@ -13,3 +13,4 @@ omit =
     backend/models/*
     backend/outputs/*
     backend/model_training/*
+    backend/test.py

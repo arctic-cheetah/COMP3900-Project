@@ -7,6 +7,7 @@ This is the P133 project _Systems and Methods for Phishing and Spam Detection_
 #### Run entire stack
 
 ```bash
+docker pull nginx:alpine
 docker compose up --build
 ```
 
@@ -22,12 +23,17 @@ npm run dev
 #### Back end
 
 ```bash
-python3 backend/app.py
+cd backend
+python3 app.py
 ```
 
 #### Run database
 You actually have to install postgresql locally if one wants to run it locally
 ```bash
+#### Run test cases
+
+```bash
+docker compose -f 'docker-compose.yml' up -d --build 'test'
 ```
 
 #### Run test cases
@@ -40,9 +46,11 @@ You actually have to install postgresql locally if one wants to run it locally
 ## Usage
 
 ### Routes
+
 ```python
 POST /scan
 ```
+
 Accepts a POST request with JSON as the payload, and the only valid key is:
 
 ```
@@ -60,13 +68,16 @@ Please make sure to update tests as appropriate.
 
 We sourced data from this dataset:
 [Research paper](linkinghub.elsevier.com/retrieve/pii/S0167404823004558)
+
 [AI dataset source](https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset)
 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
 ```
 
 ## Authors
 
 Joules, Ray, Kelly, Lara, Shadab, Caitlin
+```

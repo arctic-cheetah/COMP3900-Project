@@ -7,5 +7,5 @@ if os.getenv("COVERAGE_PROCESS_START"):
 
         coverage.process_startup()
     except Exception:
-        # Don't stop app from running if coverage is unavialable
+        # Don't stop app from running if coverage is unavailable
         pass
