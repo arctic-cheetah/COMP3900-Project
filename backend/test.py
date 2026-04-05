@@ -1,11 +1,11 @@
 import requests
 import sys
-from preprocessor import preprocess_data
 import pandas as pd
+
+from ml.preprocessor import preprocess_data
 
 
 BASE = "http://localhost:5001"
-
 
 def test_scan(url, expected_status=200):
     r = requests.post(

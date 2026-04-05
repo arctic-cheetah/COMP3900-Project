@@ -12,7 +12,7 @@ import datetime
 import sys
 import tldextract
 
-from pipeline import model_pipeline
+from ml.pipeline import model_pipeline
 from database import init_db, save_scan, get_all_scans
 
 
@@ -158,17 +158,14 @@ def check_url():
         url = "http://" + url
 
     if not check_valid_url(url):
-        msg = f"{request.remote_addr}: {url}"
+        msg = f'{request.remote_addr}: Invalid URL "{url}"'
         app.logger.warning(msg)
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL format"}), 400
 
-    app.logger.info(type(request_data))
-
     sanitised_url = sanitise_url(url)
     try:
-        is_safe, confidence = model_pipeline(sanitised_url)
-        confidence_score = float(confidence[1] if is_safe == 1 else confidence[0])
+        is_safe, confidence_score = model_pipeline(sanitised_url)
 
         # persistence while maintaining anynomity
         # TODO: CHECK IF THIS VULN
