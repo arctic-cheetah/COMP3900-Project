@@ -8,50 +8,80 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.11"]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: phishing_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-  
+
       - name: Install Dependencies
         run: |
-            python -m pip install --upgrade pip
-            pip install -r backend/requirements.txt
-            pip install pytest
-            pip install requests
-            pip install flask
-            pip install flask_cors
-            pip install scikit-learn
-            pip install joblib
-            pip install tldextract pytest-cov coverage
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install pytest
+          pip install requests
+          pip install flask
+          pip install flask_cors
+          pip install scikit-learn
+          pip install joblib
+          pip install tldextract pytest-cov coverage
 
       - name: Run Backend
-        run: | 
-          coverage run --parallel-mode backend/app.py > backend.log 2>&1 & echo $! > backend.pid
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+        run: |
+          coverage run --parallel-mode backend/app.py > backend.log 2>&1 &
+          echo $! > backend.pid
           sleep 10
-      
+
       - name: Check Backend
         run: |
-            for i in {1..10}; do
-              curl -sSf "http://127.0.0.1:5001/" >/dev/null && exit 0
-              sleep 0.5
-            done
-            echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
-            exit 1
+          for i in {1..10}; do
+            curl -sSf "http://127.0.0.1:5001/" >/dev/null && exit 0
+            sleep 0.5
+          done
+          echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
+          exit 1
 
-      - name: Run Preprocessor Unit Tests 
-      # Need to add github workspace environment here to get path of ai backend
+      - name: Run Preprocessor Unit Tests
+        # Need to add github workspace environment here to get path of ai backend
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: coverage run --parallel-mode -m pytest test/ai_test.py
 
-      - name: Run Backend Integration Tests 
+      - name: Run Backend Integration Tests
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: coverage run --parallel-mode -m pytest test/backend_test.py
 
+      - name: Run Tests
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+        run: pytest
       - name: Stop Backend (This is needed to allow coverage to finish)
         if: always()
         run: |
@@ -78,13 +108,12 @@ jobs:
 
       - name: Generate coverage reports
         run: |
-            coverage combine
-            coverage report
-            coverage html
+          coverage combine
+          coverage report
+          coverage html
 
       - name: Print backend log on failure
         if: failure()
-        run: | 
-            echo "_____backend.log______"
-            cat backend.log
-            
+        run: |
+          echo "_____backend.log______"
+          cat backend.log
