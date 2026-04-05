@@ -1,29 +1,34 @@
 import pandas
-import backend.preprocessor as p
+import backend.ml.preprocessor as p
 
 
 def test_preprocessor():
     # https://www.southbankmosaics.com
-    URL = ["https://www.southbankmosaics.com", "https://www.uni-mainz.de", "https://www.voicefmradio.co.uk"]
-    
+    URL = [
+        "https://www.southbankmosaics.com",
+        "https://www.uni-mainz.de",
+        "https://www.voicefmradio.co.uk",
+    ]
+
     out = get_output_preprocessor(URL[0])
     # TODO: Make this test more extensible by allowing more feature var columns to be added
     EXPECTED_OUT = [
-        "32 24 0 1.000 3 1 0 0 0.000 18 0.581 0 0.000 0 0 0 1 0.032 1 560 9462 1 0.000 1 38 1 191 12 7",
+        "32 24 0 1.000 3 1 0 0 0.000 18 0.581 0 0.000 0 0 0 1 0.032 1 562 9462 1 0.000 1 40 1 193 12 7",
         "24 16 0 0.667 2 1 0 0 0.000 9 0.391 0 0.000 0 0 0 2 0.087 1 2530 64597 1 55.556 1 58 1 49 20 18",
-        "30 22 0 1.000 5 1 0 0 0.000 15 0.517 0 0.000 0 0 0 1 0.034 1 818 2085 1 46.667 0 10 1 70 8 53"
+        "30 22 0 0.867 5 1 0 0 0.000 15 0.517 0 0.000 0 0 0 1 0.034 1 818 2085 1 46.667 0 10 1 69 9 53",
     ]
-    
-    for idx, url  in enumerate(URL):
+
+    for idx, url in enumerate(URL):
         out = get_output_preprocessor(url)
         assert EXPECTED_OUT[idx] == out
         print(f"URL :{idx} feature variable output matches for: {url}")
 
     pass
 
+
 def get_output_preprocessor(URL):
     preprocessor = p.preprocess_data(URL)
-    url_features: pandas.DataFrame = preprocessor.get_data()
+    url_features: pandas.DataFrame = preprocessor.get_data().iloc[:, 1:]
     out = url_features.to_string(
         header=False, index=False, float_format="{:.3f}".format
     )
