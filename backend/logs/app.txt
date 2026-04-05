@@ -1,0 +1,313 @@
+<<<<<<< HEAD
+2026-03-31 19:30:13,495 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 19:30:13,496 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 19:30:15,799 - INFO - 127.0.0.1 - - [31/Mar/2026 19:30:15] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 19:30:25,644 - INFO - 127.0.0.1 - - [31/Mar/2026 19:30:25] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 19:30:43,518 - INFO - <class 'dict'>
+2026-03-31 19:30:44,020 - INFO - 127.0.0.1 - - [31/Mar/2026 19:30:44] "POST /scan HTTP/1.1" 200 -
+2026-03-31 19:32:26,099 - INFO - <class 'dict'>
+2026-03-31 19:32:26,647 - INFO - 127.0.0.1 - - [31/Mar/2026 19:32:26] "POST /scan HTTP/1.1" 200 -
+2026-03-31 20:10:21,530 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 20:10:21,531 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 20:11:08,062 - INFO - 127.0.0.1 - - [31/Mar/2026 20:11:08] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 20:11:08,406 - INFO - <class 'dict'>
+2026-03-31 20:11:08,788 - ERROR - Failed to save scan: could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+
+2026-03-31 20:11:08,788 - INFO - 127.0.0.1 - - [31/Mar/2026 20:11:08] "POST /scan HTTP/1.1" 200 -
+2026-03-31 20:12:25,578 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-03-31 20:12:25,578 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-31 20:12:32,378 - INFO - 127.0.0.1 - - [31/Mar/2026 20:12:32] "OPTIONS /scan HTTP/1.1" 200 -
+2026-03-31 20:12:32,742 - INFO - <class 'dict'>
+2026-03-31 20:12:33,000 - ERROR - Failed to save scan: could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+
+2026-03-31 20:12:33,001 - INFO - 127.0.0.1 - - [31/Mar/2026 20:12:33] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:22:21,215 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:22:21,216 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:22:50,665 - INFO - 127.0.0.1 - - [01/Apr/2026 02:22:50] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:22:50,926 - INFO - <class 'dict'>
+2026-04-01 02:22:51,491 - INFO - 127.0.0.1 - - [01/Apr/2026 02:22:51] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:23:27,805 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:23:27,805 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:23:32,436 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:32] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:23:32,592 - INFO - <class 'dict'>
+2026-04-01 02:23:33,174 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:33] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:23:42,492 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:23:42,492 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:23:51,316 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:51] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:23:51,580 - INFO - <class 'dict'>
+2026-04-01 02:23:52,214 - INFO - 127.0.0.1 - - [01/Apr/2026 02:23:52] "POST /scan HTTP/1.1" 200 -
+2026-04-01 02:24:03,662 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 02:24:03,662 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 02:24:08,349 - INFO - 127.0.0.1 - - [01/Apr/2026 02:24:08] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 02:24:08,611 - INFO - <class 'dict'>
+2026-04-01 02:24:09,179 - INFO - 127.0.0.1 - - [01/Apr/2026 02:24:09] "POST /scan HTTP/1.1" 200 -
+2026-04-01 10:06:39,629 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-01 10:06:39,629 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-01 10:10:31,332 - INFO - 127.0.0.1 - - [01/Apr/2026 10:10:31] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-01 10:10:31,592 - INFO - <class 'dict'>
+2026-04-01 10:10:32,077 - INFO - 127.0.0.1 - - [01/Apr/2026 10:10:32] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:39:10,950 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-04 02:39:10,950 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 02:39:31,865 - INFO - 127.0.0.1 - - [04/Apr/2026 02:39:31] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:39:32,117 - INFO - <class 'dict'>
+2026-04-04 02:39:32,595 - INFO - 127.0.0.1 - - [04/Apr/2026 02:39:32] "POST /scan HTTP/1.1" 200 -
+<<<<<<< HEAD
+=======
+2026-04-05 00:44:06,248 - INFO - Database initialised successfully.
+2026-04-05 00:44:06,250 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-05 00:44:06,250 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 00:44:24,854 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:24] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:44:24,868 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:24] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:44:25,112 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:25] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:44:25,154 - INFO - 127.0.0.1 - - [05/Apr/2026 00:44:25] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:46:03,538 - INFO - 127.0.0.1 - - [05/Apr/2026 00:46:03] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:46:03,798 - INFO - 127.0.0.1 - - [05/Apr/2026 00:46:03] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:49:16,786 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:16] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 00:49:17,121 - INFO - <class 'dict'>
+2026-04-05 00:49:17,741 - INFO - Scan saved — id=1 is_safe=True confidence=100.0000
+2026-04-05 00:49:17,748 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:17] "POST /scan HTTP/1.1" 200 -
+2026-04-05 00:49:46,697 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:46] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 00:49:47,008 - INFO - <class 'dict'>
+2026-04-05 00:49:47,634 - INFO - Scan saved — id=2 is_safe=True confidence=100.0000
+2026-04-05 00:49:47,638 - INFO - 127.0.0.1 - - [05/Apr/2026 00:49:47] "POST /scan HTTP/1.1" 200 -
+2026-04-05 00:50:08,888 - INFO - 127.0.0.1 - - [05/Apr/2026 00:50:08] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 00:50:09,197 - INFO - <class 'dict'>
+2026-04-05 00:50:11,627 - INFO - Scan saved — id=3 is_safe=True confidence=100.0000
+2026-04-05 00:50:11,631 - INFO - 127.0.0.1 - - [05/Apr/2026 00:50:11] "POST /scan HTTP/1.1" 200 -
+2026-04-05 00:55:43,678 - INFO - 127.0.0.1 - - [05/Apr/2026 00:55:43] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:55:43,679 - INFO - 127.0.0.1 - - [05/Apr/2026 00:55:43] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:55:43,942 - INFO - 127.0.0.1 - - [05/Apr/2026 00:55:43] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:55:44,012 - INFO - 127.0.0.1 - - [05/Apr/2026 00:55:44] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:55:51,960 - INFO - 127.0.0.1 - - [05/Apr/2026 00:55:51] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:55:52,279 - INFO - 127.0.0.1 - - [05/Apr/2026 00:55:52] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:55:53,458 - INFO - 127.0.0.1 - - [05/Apr/2026 00:55:53] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:13,247 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:13] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:13,248 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:13] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:13,517 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:13] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:13,559 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:13] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:33,459 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:33] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:33,459 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:33] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:34,266 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:34] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:56:34,303 - INFO - 127.0.0.1 - - [05/Apr/2026 00:56:34] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:57:24,211 - INFO - 127.0.0.1 - - [05/Apr/2026 00:57:24] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:57:24,506 - INFO - 127.0.0.1 - - [05/Apr/2026 00:57:24] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:57:24,518 - INFO - 127.0.0.1 - - [05/Apr/2026 00:57:24] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:57:24,824 - INFO - 127.0.0.1 - - [05/Apr/2026 00:57:24] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:57:26,234 - INFO - 127.0.0.1 - - [05/Apr/2026 00:57:26] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:57:26,235 - INFO - 127.0.0.1 - - [05/Apr/2026 00:57:26] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:59:09,572 - INFO - 127.0.0.1 - - [05/Apr/2026 00:59:09] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 00:59:09,832 - INFO - 127.0.0.1 - - [05/Apr/2026 00:59:09] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 00:59:10,832 - INFO - 127.0.0.1 - - [05/Apr/2026 00:59:10] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:00:19,608 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:19] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 01:00:19,609 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:19] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 01:00:19,863 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:19] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:00:19,921 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:19] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:00:23,586 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:23] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:00:23,891 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:23] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:00:38,484 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:38] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 01:00:38,725 - INFO - <class 'dict'>
+2026-04-05 01:00:39,180 - INFO - Scan saved — id=4 is_safe=False confidence=99.9994
+2026-04-05 01:00:39,185 - INFO - 127.0.0.1 - - [05/Apr/2026 01:00:39] "POST /scan HTTP/1.1" 200 -
+2026-04-05 01:01:07,783 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:07] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:08,083 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:08] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:08,389 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:08] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:08,697 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:08] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:10,304 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:10] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:10,304 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:10] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:13,871 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:13] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:14,178 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:14] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:25,170 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:25] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 01:01:25,427 - INFO - <class 'dict'>
+2026-04-05 01:01:25,793 - INFO - Scan saved — id=5 is_safe=False confidence=100.0000
+2026-04-05 01:01:25,796 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:25] "POST /scan HTTP/1.1" 200 -
+2026-04-05 01:01:30,940 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:30] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:31,244 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:31] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:31,248 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:31] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:31,545 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:31] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:33,068 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:33] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 01:01:33,069 - INFO - 127.0.0.1 - - [05/Apr/2026 01:01:33] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 07:31:14,679 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-05 07:49:42,809 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: FATAL:  role "marksuser" does not exist
+
+2026-04-05 07:57:37,255 - INFO - Database initialised successfully.
+2026-04-05 07:57:37,258 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-05 07:57:37,259 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 07:58:20,325 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:20,328 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:20,332 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:20,336 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:20,584 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:20,642 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:20,655 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:20,656 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:20] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 07:58:29,919 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:29] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 07:58:30,785 - INFO - Scan saved — id=1 is_safe=True confidence=100.0000
+2026-04-05 07:58:30,792 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:30] "POST /scan HTTP/1.1" 200 -
+2026-04-05 07:58:43,150 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:43] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 07:58:45,211 - INFO - Scan saved — id=2 is_safe=True confidence=100.0000
+2026-04-05 07:58:45,214 - INFO - 127.0.0.1 - - [05/Apr/2026 07:58:45] "POST /scan HTTP/1.1" 200 -
+2026-04-05 07:59:09,219 - INFO - 127.0.0.1 - - [05/Apr/2026 07:59:09] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 07:59:09,960 - ERROR - Scan failed: cannot unpack non-iterable NoneType object
+2026-04-05 07:59:09,961 - INFO - 127.0.0.1 - - [05/Apr/2026 07:59:09] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-05 08:01:17,620 - INFO - 127.0.0.1 - - [05/Apr/2026 08:01:17] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 08:01:21,206 - ERROR - Scan failed: cannot unpack non-iterable NoneType object
+2026-04-05 08:01:21,207 - INFO - 127.0.0.1 - - [05/Apr/2026 08:01:21] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-05 08:03:46,518 - INFO - Database initialised successfully.
+2026-04-05 08:03:46,524 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-05 08:03:46,524 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 08:04:11,455 - INFO - 127.0.0.1 - - [05/Apr/2026 08:04:11] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 08:04:11,459 - INFO - 127.0.0.1 - - [05/Apr/2026 08:04:11] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 08:04:11,711 - INFO - 127.0.0.1 - - [05/Apr/2026 08:04:11] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 08:04:11,818 - INFO - 127.0.0.1 - - [05/Apr/2026 08:04:11] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 08:04:23,499 - INFO - 127.0.0.1 - - [05/Apr/2026 08:04:23] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 08:04:25,496 - ERROR - Scan failed: cannot unpack non-iterable NoneType object
+2026-04-05 08:04:25,497 - INFO - 127.0.0.1 - - [05/Apr/2026 08:04:25] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-05 08:05:19,797 - INFO - Database initialised successfully.
+2026-04-05 08:05:19,800 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-05 08:05:19,800 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 08:07:55,944 - INFO - 127.0.0.1 - - [05/Apr/2026 08:07:55] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 08:07:59,035 - ERROR - Scan failed: cannot unpack non-iterable NoneType object
+2026-04-05 08:07:59,036 - INFO - 127.0.0.1 - - [05/Apr/2026 08:07:59] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-05 08:09:16,741 - INFO - 127.0.0.1 - - [05/Apr/2026 08:09:16] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 08:09:16,864 - INFO - 127.0.0.1 - - [05/Apr/2026 08:09:16] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 08:09:17,273 - INFO - Scan saved — id=3 is_safe=True confidence=100.0000
+2026-04-05 08:09:17,277 - INFO - 127.0.0.1 - - [05/Apr/2026 08:09:17] "POST /scan HTTP/1.1" 200 -
+2026-04-05 08:09:17,334 - INFO - Scan saved — id=4 is_safe=True confidence=100.0000
+2026-04-05 08:09:17,338 - INFO - 127.0.0.1 - - [05/Apr/2026 08:09:17] "POST /scan HTTP/1.1" 200 -
+2026-04-05 11:57:01,281 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 11:57:01,297 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 11:57:01,393 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 11:57:01,396 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 11:57:01,482 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 11:57:01,630 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 11:57:01,693 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 11:57:01,752 - INFO - 127.0.0.1 - - [05/Apr/2026 11:57:01] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 12:02:35,163 - INFO - 127.0.0.1 - - [05/Apr/2026 12:02:35] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 12:02:37,667 - INFO - Scan saved — id=5 is_safe=True confidence=100.0000
+2026-04-05 12:02:37,672 - INFO - 127.0.0.1 - - [05/Apr/2026 12:02:37] "POST /scan HTTP/1.1" 200 -
+2026-04-05 12:02:41,793 - INFO - 127.0.0.1 - - [05/Apr/2026 12:02:41] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 12:02:42,100 - INFO - 127.0.0.1 - - [05/Apr/2026 12:02:42] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 12:02:42,110 - INFO - 127.0.0.1 - - [05/Apr/2026 12:02:42] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 12:02:42,415 - INFO - 127.0.0.1 - - [05/Apr/2026 12:02:42] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 12:02:59,157 - INFO - 127.0.0.1 - - [05/Apr/2026 12:02:59] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 12:03:01,134 - INFO - Scan saved — id=6 is_safe=False confidence=99.9997
+2026-04-05 12:03:01,138 - INFO - 127.0.0.1 - - [05/Apr/2026 12:03:01] "POST /scan HTTP/1.1" 200 -
+2026-04-05 12:03:38,558 - INFO - 127.0.0.1 - - [05/Apr/2026 12:03:38] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 12:03:39,340 - INFO - Scan saved — id=7 is_safe=False confidence=100.0000
+2026-04-05 12:03:39,345 - INFO - 127.0.0.1 - - [05/Apr/2026 12:03:39] "POST /scan HTTP/1.1" 200 -
+2026-04-05 14:04:36,754 - INFO - Database initialised successfully.
+2026-04-05 14:04:36,758 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-05 14:04:36,758 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 14:04:51,008 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:51,012 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:51,261 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:51,335 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:52,631 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:52] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:52,935 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:52] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:05:06,594 - INFO - 127.0.0.1 - - [05/Apr/2026 14:05:06] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 14:05:07,441 - ERROR - Failed to save scan: type numpy.ndarray doesn't define __round__ method
+2026-04-05 14:05:07,441 - ERROR - Scan failed: Object of type ndarray is not JSON serializable
+2026-04-05 14:05:07,442 - INFO - 127.0.0.1 - - [05/Apr/2026 14:05:07] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+>>>>>>> 52fe6584fbb7c423d49b0fd589c116d9d41a30d1
+2026-04-05 17:32:37,492 - INFO - Database initialised successfully.
+2026-04-05 17:32:37,495 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-05 17:32:37,495 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 17:32:45,703 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:45] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 17:32:45,706 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:45] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 17:32:45,973 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:45] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 17:32:46,020 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:46] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 17:32:46,772 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:46] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 17:32:47,076 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:47] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 17:32:52,351 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:52] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 17:32:52,616 - WARNING - 127.0.0.1: Invalid URL "https://www.microsoft.com"
+2026-04-05 17:32:52,617 - INFO - 127.0.0.1 - - [05/Apr/2026 17:32:52] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-05 17:33:49,155 - INFO - Database initialised successfully.
+2026-04-05 17:33:49,158 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-05 17:33:49,158 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 17:33:52,416 - INFO - 127.0.0.1 - - [05/Apr/2026 17:33:52] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 17:33:53,195 - ERROR - Scan failed: 
+2026-04-05 17:33:53,195 - INFO - 127.0.0.1 - - [05/Apr/2026 17:33:53] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+=======
+2026-04-04 02:49:21,024 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 02:49:21,024 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 02:50:02,281 - INFO - 127.0.0.1 - - [04/Apr/2026 02:50:02] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:50:02,523 - INFO - <class 'dict'>
+2026-04-04 02:50:05,763 - INFO - 127.0.0.1 - - [04/Apr/2026 02:50:05] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:05,272 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 02:58:05,272 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 02:58:07,748 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:07] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:08,009 - INFO - <class 'dict'>
+2026-04-04 02:58:09,473 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:09] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:18,347 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:18] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:18,663 - INFO - <class 'dict'>
+2026-04-04 02:58:19,061 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:19] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:24,583 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:24] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:24,891 - INFO - <class 'dict'>
+2026-04-04 02:58:26,040 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:26] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:33,944 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:33] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:34,270 - INFO - <class 'dict'>
+2026-04-04 02:58:36,112 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:36] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:58,516 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:58] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:58,825 - INFO - <class 'dict'>
+2026-04-04 02:59:00,936 - INFO - 127.0.0.1 - - [04/Apr/2026 02:59:00] "POST /scan HTTP/1.1" 200 -
+>>>>>>> 7dfba648fdda2c7c72c01d4c57bcd64e6925405d

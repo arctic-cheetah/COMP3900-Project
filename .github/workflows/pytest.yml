@@ -8,13 +8,28 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.11"]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: phishing_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-  
+
       - name: Install Dependencies
         run: |
             python -m pip install --upgrade pip
@@ -26,12 +41,21 @@ jobs:
             pip install scikit-learn
             pip install joblib
             pip install tldextract pytest-cov coverage
-
+            pip install playwright
+            playwright install --with-deps chromium
       - name: Run Backend
-        run: | 
-          coverage run --parallel-mode backend/app.py > backend.log 2>&1 & echo $! > backend.pid
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          coverage run --parallel-mode backend/app.py > backend.log 2>&1 &
+          echo $! > backend.pid
           sleep 10
-      
+
       - name: Check Backend
         run: |
             for i in {1..10}; do
@@ -41,9 +65,26 @@ jobs:
             echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
             exit 1
 
-      - name: Run Tests
-        run: pytest
+      - name: Run Preprocessor Unit Tests
+      # Need to add github workspace environment here to get path of ai backend
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: coverage run --parallel-mode -m pytest test/ai_test.py
 
+      - name: Run Backend Integration Tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: coverage run --parallel-mode -m pytest test/backend_test.py
+
+      - name: Run Tests
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: phishing_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest
       - name: Stop Backend (This is needed to allow coverage to finish)
         if: always()
         run: |
@@ -76,7 +117,6 @@ jobs:
 
       - name: Print backend log on failure
         if: failure()
-        run: | 
+        run: |
             echo "_____backend.log______"
             cat backend.log
-            
