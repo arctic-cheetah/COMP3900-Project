@@ -41,7 +41,8 @@ jobs:
             pip install scikit-learn
             pip install joblib
             pip install tldextract pytest-cov coverage
-
+            pip install playwright
+            playwright install --with-deps chromium
       - name: Run Backend
         env:
           DB_HOST: localhost
@@ -49,6 +50,7 @@ jobs:
           DB_NAME: phishing_db
           DB_USER: postgres
           DB_PASSWORD: postgres
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           coverage run --parallel-mode backend/app.py > backend.log 2>&1 &
           echo $! > backend.pid

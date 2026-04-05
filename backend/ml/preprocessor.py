@@ -4,6 +4,8 @@ import tldextract
 import pandas as pd
 from typing import *
 from bs4 import BeautifulSoup
+from bs4 import Comment
+from bs4 import PageElement
 import requests
 import logging
 import json, datetime
@@ -11,7 +13,7 @@ from pathlib import Path as path
 from ipaddress import ip_address
 import traceback
 import unicodedata
-import re
+from playwright.sync_api import sync_playwright
 
 
 # create logger for preprocessor
@@ -19,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Given a url get these feature data
 # Then return a np.array of those features
-TIMEOUT = 10
+TIMEOUT = 8
 
 
 # def preprocess_data(self, self, url: str):
@@ -32,8 +34,9 @@ class preprocess_data:
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
     }
     # Page data should be list of lines for ease of processing
-    page_data: List[str]
-    html_data: BeautifulSoup
+    page_data: List[str] = []
+    html_data: BeautifulSoup = None
+    raw_html: str = ""
 
     # Number of ref tags type
     num_self_ref = 0
@@ -177,23 +180,100 @@ class preprocess_data:
         # TODO: REDIRECTS ARE BAD HERE
         # TODO: FIX TIMEOUT
         # TODO: NEED TO SWITCH FROM REQUESTS TO SELENIUM BROWSER API
+        # TODO: Now need to fix line of code being to big!
         # Check if request failed!
         try:
-            r = requests.get(
-                url, allow_redirects=True, timeout=TIMEOUT, headers=self.headers
-            )
             # This is the first function that is run for html feature
             # analysis so get the html data for use later
-            self.html_data = BeautifulSoup(r.text, "html.parser")
-            self.page_data = r.text.splitlines()
+            self.raw_html = self._fetch_html_playwright(url)
+            self.html_data = BeautifulSoup(self.raw_html, "html.parser")
+            self.page_data = self._html_lines_for_features(self.raw_html)
             # Count the refs
             self.ref_counts(url)
-            return len(r.text.splitlines())
+            return len(self.page_data)
         except Exception as err:
             traceback.print_exc()
             print(err)
             self.page_data = []
             return 0
+
+    # We need to use playwright to allow browser to abstract fetching url for us:
+    # Due to dynamic contetn
+    # Fetch html data
+    # NOTE: helper functions below
+
+    def _html_lines_for_features(self, html: str) -> List[str]:
+        """Return HTML ONLY as a list of lines for line-based features.
+
+        normalize the HTML and remove JS to reduce anamolous data which leads to skewing from minified pages:
+        - remove comments
+        - remove script/style/noscript tags
+        - pretty-print the DOM to introduce stable newlines
+        """
+        soup = BeautifulSoup(html, "html.parser")
+        # 1) remove comment
+        for c in soup.find_all(string=lambda t: isinstance(t, Comment)):
+            c.decompose()
+        # 2)remove script style or noscript
+        for tag in soup(["script", "style", "noscript"]):
+            tag.decompose()
+
+        # 3) prettify html code and return the actual number lines
+        pretty = soup.prettify()
+        return [line for line in (ln.strip() for ln in pretty.splitlines()) if line]
+
+    def _fetch_html_playwright(self, url: str) -> str:
+        """
+        Fetch HTML data for feature extraction particularly for dynamic content
+
+        By default it uses the playright library and not requests anymore
+        """
+        timeout_ms = TIMEOUT * 1e3
+        # NOTE: POTENTIAL BOTTLE NECK HERE
+        with sync_playwright() as pw:
+
+            # Run browser without ui
+            browser = pw.chromium.launch(headless=True)
+            context = browser.new_context(
+                user_agent=self.headers.get("User-Agent"),
+                locale="en-AU",
+                timezone_id="Australia/Sydney",
+                ignore_https_errors=True,
+            )
+            # Open a new page
+            page = context.new_page()
+            try:
+                page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
+                # https://medium.com/@anandpak108/handling-dynamic-content-and-complex-interactions-with-playwright-57e3c20e5281
+                # Wait for complete postJS DOM snapshot
+                # We use several heuristics
+                # 1) Wait for load stat to be complete
+                try:
+                    page.wait_for_load_state("load", timeout=timeout_ms)
+                except Exception:
+                    pass
+                # 2) wait for function to be complete in document.readyState
+                try:
+                    page.wait_for_function(
+                        "document.readyState == complete", timeout=timeout_ms
+                    )
+                except Exception:
+                    pass
+                # 3) Wait until input box for searching on site is visible eg: amazon.com
+                try:
+                    page.wait_for_selector("input", timeout=timeout_ms / 10)
+                except Exception:
+                    pass
+                # 4) Wait until network is idle
+                try:
+                    page.wait_for_load_state("networkidle", timeout=timeout_ms)
+                except Exception:
+                    pass
+
+                return page.content()
+            finally:
+                context.close()
+                browser.close()
 
     def LargestLineLength(self, url: str):
         """
@@ -352,6 +432,8 @@ class preprocess_data:
         pass
 
     def HasTitle(self, url) -> int:
+        if self.html_data is None:
+            return 0
         self.has_title = self.html_data.find("title") is not None
         return 1 if self.has_title is not None else 0
 

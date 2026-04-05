@@ -45,7 +45,7 @@ def model_pipeline(url: str, model_path: str) -> tuple[str, str] | None:
     try:
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
-
+        print(df)
         is_safe, confidence = run_model(df, model_path)
 
         return is_safe, confidence
