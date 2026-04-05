@@ -429,7 +429,8 @@ class preprocess_data:
         return self.num_external_ref
 
     def HasSubmitButton(self, url):
-        pass
+        has_submit_btn = self.html_data.find("button", type="submit") is not None
+        return 1 if has_submit_btn is not None else 0
 
     def HasTitle(self, url) -> int:
         if self.html_data is None:
@@ -663,12 +664,12 @@ class preprocess_data:
         (hasFavicon, "HasFavicon"),
         (robots, "Robots"),
         (HasSocialNet, "HasSocialNet"),
+        (HasSubmitButton, "HasSubmitButton"),
         (HasCopyrightInfo, "HasCopyrightInfo"),
         (NoOfJS, "NoOfJS"),
         (NoOfSelfRef, "NoOfSelfRef"),
         (NoOfEmptyRef, "NoOfEmptyRef"),
         (NoOfExternalRef, "NoOfExternalRef"),
-        # (HasSubmitButton, "HasSubmitButton")
     ]
 
     def get_data(self) -> pd.DataFrame:
