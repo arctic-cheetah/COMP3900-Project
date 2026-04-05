@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "capstone-backend"
+version = "1.0.0"
+dependencies = [
+    "flask",
+    "psycopg2-binary",
+    "flask_cors",
+    "ipykernel",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "pytest",
+    "requests",
+    "tldextract",
+    "joblib",
+    "scikit-learn",
+    "levenshtein",
+    "pylcs",
+    "bs4",
+    "pytest",
+    "requests",
+]
+
+[tool.setuptools.packages.find]
+include = ["ml*"]
