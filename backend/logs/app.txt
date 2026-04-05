@@ -154,3 +154,19 @@
 2026-04-05 12:03:38,558 - INFO - 127.0.0.1 - - [05/Apr/2026 12:03:38] "OPTIONS /scan HTTP/1.1" 200 -
 2026-04-05 12:03:39,340 - INFO - Scan saved — id=7 is_safe=False confidence=100.0000
 2026-04-05 12:03:39,345 - INFO - 127.0.0.1 - - [05/Apr/2026 12:03:39] "POST /scan HTTP/1.1" 200 -
+2026-04-05 14:04:36,754 - INFO - Database initialised successfully.
+2026-04-05 14:04:36,758 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-05 14:04:36,758 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-05 14:04:51,008 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:51,012 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:51,261 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:51,335 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:51] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:52,631 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:52] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:04:52,935 - INFO - 127.0.0.1 - - [05/Apr/2026 14:04:52] "POST /list_scans HTTP/1.1" 200 -
+2026-04-05 14:05:06,594 - INFO - 127.0.0.1 - - [05/Apr/2026 14:05:06] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-05 14:05:07,441 - ERROR - Failed to save scan: type numpy.ndarray doesn't define __round__ method
+2026-04-05 14:05:07,441 - ERROR - Scan failed: Object of type ndarray is not JSON serializable
+2026-04-05 14:05:07,442 - INFO - 127.0.0.1 - - [05/Apr/2026 14:05:07] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
