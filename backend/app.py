@@ -165,10 +165,13 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
     try:
-        is_safe, confidence_score = model_pipeline(sanitised_url)
-
+        res = model_pipeline(sanitised_url)
+        if res is None:
+            raise Exception
+        else:
+            is_safe, confidence_score = res
         # persistence while maintaining anynomity
-        # TODO: CHECK IF THIS VULN
+        # TODO: CHECK IF THIS VULN having dangling saved
         saved = save_scan(
             url=sanitised_url,
             is_safe=bool(is_safe),

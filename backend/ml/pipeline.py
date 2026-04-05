@@ -6,9 +6,8 @@ from pylcs import lcs_sequence_length
 
 from .preprocessor import preprocess_data
 
-
-whitelist_path: str = "./ml/data/top_100k_domains.csv"
-model_path: str = "./ml/models/logit_model.pkl"
+whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
+model_path: str = "backend/ml/models/logit_model.pkl"
 
 
 def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
@@ -28,8 +27,12 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
         model = model_dump["model"]
 
         filtered_url_features = url_features[features]
-        is_safe: int = model.predict(filtered_url_features)[0]
-        confidence: float = model.predict_proba(filtered_url_features)[0] * 100.0
+        is_safe: int = model.predict(filtered_url_features)[0].item()
+        # Model actually outputs an np array of prob
+        # of confidence
+        # So just get the float of confidence
+        confidence_val_safe_and_not_safe = model.predict_proba(filtered_url_features)[0]
+        confidence: float = confidence_val_safe_and_not_safe[0].item() * 100
 
         return is_safe, confidence
     except Exception as e:
@@ -88,7 +91,7 @@ def search_whitelist(domain: str, whitelist: list):
         }
 
 
-def model_pipeline(url: str) -> tuple[int, float]:
+def model_pipeline(url: str) -> tuple[int, float] | None:
     """
     Process URL and runs model.
 
@@ -123,4 +126,4 @@ def model_pipeline(url: str) -> tuple[int, float]:
     except Exception as e:
         # Model pipeline error should be flagged as not safe
         print(f'model_pipeline error: "{e}"')
-        return 0, 100.0
+        return None
