@@ -176,6 +176,7 @@ class preprocess_data:
         """
         # TODO: REDIRECTS ARE BAD HERE
         # TODO: FIX TIMEOUT
+        # TODO: NEED TO SWITCH FROM REQUESTS TO SELENIUM BROWSER API
         # Check if request failed!
         try:
             r = requests.get(

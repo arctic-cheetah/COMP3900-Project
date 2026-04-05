@@ -82,6 +82,7 @@
 2026-04-04 02:39:31,865 - INFO - 127.0.0.1 - - [04/Apr/2026 02:39:31] "OPTIONS /scan HTTP/1.1" 200 -
 2026-04-04 02:39:32,117 - INFO - <class 'dict'>
 2026-04-04 02:39:32,595 - INFO - 127.0.0.1 - - [04/Apr/2026 02:39:32] "POST /scan HTTP/1.1" 200 -
+<<<<<<< HEAD
 =======
 2026-04-05 00:44:06,248 - INFO - Database initialised successfully.
 2026-04-05 00:44:06,250 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
@@ -280,3 +281,33 @@
 2026-04-05 17:33:52,416 - INFO - 127.0.0.1 - - [05/Apr/2026 17:33:52] "OPTIONS /scan HTTP/1.1" 200 -
 2026-04-05 17:33:53,195 - ERROR - Scan failed: 
 2026-04-05 17:33:53,195 - INFO - 127.0.0.1 - - [05/Apr/2026 17:33:53] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+=======
+2026-04-04 02:49:21,024 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 02:49:21,024 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 02:50:02,281 - INFO - 127.0.0.1 - - [04/Apr/2026 02:50:02] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:50:02,523 - INFO - <class 'dict'>
+2026-04-04 02:50:05,763 - INFO - 127.0.0.1 - - [04/Apr/2026 02:50:05] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:05,272 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-04 02:58:05,272 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-04 02:58:07,748 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:07] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:08,009 - INFO - <class 'dict'>
+2026-04-04 02:58:09,473 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:09] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:18,347 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:18] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:18,663 - INFO - <class 'dict'>
+2026-04-04 02:58:19,061 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:19] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:24,583 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:24] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:24,891 - INFO - <class 'dict'>
+2026-04-04 02:58:26,040 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:26] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:33,944 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:33] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:34,270 - INFO - <class 'dict'>
+2026-04-04 02:58:36,112 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:36] "POST /scan HTTP/1.1" 200 -
+2026-04-04 02:58:58,516 - INFO - 127.0.0.1 - - [04/Apr/2026 02:58:58] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-04 02:58:58,825 - INFO - <class 'dict'>
+2026-04-04 02:59:00,936 - INFO - 127.0.0.1 - - [04/Apr/2026 02:59:00] "POST /scan HTTP/1.1" 200 -
+>>>>>>> 7dfba648fdda2c7c72c01d4c57bcd64e6925405d
