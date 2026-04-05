@@ -8,7 +8,6 @@ import Navbar from "./Navbar";
 import ResultModal from "./Resultmodal";
 import "./App.css";
 import logoIcon from "../assets/logo.png";
-import userIcon from "../assets/user.png";
 
 // --- DUMMY DATA FOR PREVIEW ---
 const DUMMY_HISTORY = [
@@ -52,6 +51,11 @@ export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
   const [isLoading, setLoading] = useState(false);
+
+  const handleDeleteScans = (scansToDelete) => {
+    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
+    setHistory((current) => current.filter((scan) => !itemsToRemove.includes(scan)));
+  };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const moveButton = useMediaQuery('(max-width: 1173px)');
@@ -229,8 +233,14 @@ export default function HomePage() {
         />
       )}
 
-      <HistoricalData history={history} onHistoryClick={openHistoryResult} />
-      <p className='privacy-text'>
+      <HistoricalData 
+      history={history} 
+      onDelete={handleDeleteScans}
+      onDeleteMultiple={handleDeleteScans}
+      onHistoryClick={openHistoryResult} 
+      />
+      
+    <p className='privacy-text'>
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
