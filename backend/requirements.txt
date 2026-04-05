@@ -12,3 +12,4 @@ joblib
 scikit-learn
 levenshtein
 pylcs
+lime
