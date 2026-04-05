@@ -21,11 +21,17 @@ npm run dev
 ```
 
 #### Back end
-
+TODO: we need to discuss whether to run via
 ```bash
 cd backend
 python3 app.py
 ```
+or
+```bash
+python3 backend/app.py
+```
+
+because the paths imply running from backend directory
 
 #### Run test cases
 

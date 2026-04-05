@@ -255,3 +255,4 @@
 2026-04-04 03:20:40,370 - INFO - <class 'dict'>
 2026-04-04 03:21:00,063 - INFO - 127.0.0.1 - - [04/Apr/2026 03:21:00] "POST /scan HTTP/1.1" 200 -
 >>>>>>> 7dfba648fdda2c7c72c01d4c57bcd64e6925405d
+2026-04-05 18:31:56,633 - INFO - Database initialised successfully.
