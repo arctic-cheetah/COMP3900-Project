@@ -11,7 +11,7 @@ whitelist_path: str = "./ml/data/top_100k_domains.csv"
 model_path: str = "./ml/models/logit_model.pkl"
 
 
-def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[float, float]:
+def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
     """
     Run pretrained model on features.
 
@@ -28,13 +28,13 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[float, float
         model = model_dump["model"]
 
         filtered_url_features = url_features[features]
-        is_safe: float = model.predict(filtered_url_features)[0]
+        is_safe: int = model.predict(filtered_url_features)[0]
         confidence: float = model.predict_proba(filtered_url_features)[0] * 100.0
 
         return is_safe, confidence
     except Exception as e:
         print(f'run_model error: "{e}"')
-        return 0, 100
+        return 0, 100.0
 
 
 #  Where 1 is identical and 0 is different.
@@ -88,7 +88,7 @@ def search_whitelist(domain: str, whitelist: list):
         }
 
 
-def model_pipeline(url: str) -> tuple[str, str] | None:
+def model_pipeline(url: str) -> tuple[int, float]:
     """
     Process URL and runs model.
 
@@ -111,7 +111,7 @@ def model_pipeline(url: str) -> tuple[str, str] | None:
             and scores["JaroWinkler"] == 1
             and scores["LCS"] == 1
         ):
-            return 1, [0, 100]
+            return 1, 100.0
 
         df["Levenshtein"] = scores["Levenshtein"]
         df["JaroWinkler"] = scores["JaroWinkler"]
@@ -121,5 +121,6 @@ def model_pipeline(url: str) -> tuple[str, str] | None:
 
         return is_safe, confidence
     except Exception as e:
+        # Model pipeline error should be flagged as not safe
         print(f'model_pipeline error: "{e}"')
-        return None
+        return 0, 100.0
