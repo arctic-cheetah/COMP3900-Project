@@ -11,7 +11,7 @@ whitelist_path: str = "./ml/data/top_100k_domains.csv"
 model_path: str = "./ml/models/logit_model.pkl"
 
 
-def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[str, str] | None:
+def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[float, float]:
     """
     Run pretrained model on features.
 
@@ -26,10 +26,10 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[str, str] | 
         model_dump = joblib.load(model_path)
         features = model_dump["features"]
         model = model_dump["model"]
-        
+
         filtered_url_features = url_features[features]
-        is_safe = model.predict(filtered_url_features)[0]
-        confidence = model.predict_proba(filtered_url_features)[0] * 100.0
+        is_safe: float = model.predict(filtered_url_features)[0]
+        confidence: float = model.predict_proba(filtered_url_features)[0] * 100.0
 
         return is_safe, confidence
     except Exception as e:
@@ -66,8 +66,12 @@ def search_whitelist(domain: str, whitelist: list):
         best_jaro_winkler = 0
         best_lcs = 0
         for whitelist_domain in whitelist:
-            best_levenshtein = max(best_levenshtein, normalised_levenshtein(domain, whitelist_domain))
-            best_jaro_winkler = max(best_jaro_winkler, jaro_winkler(domain, whitelist_domain))
+            best_levenshtein = max(
+                best_levenshtein, normalised_levenshtein(domain, whitelist_domain)
+            )
+            best_jaro_winkler = max(
+                best_jaro_winkler, jaro_winkler(domain, whitelist_domain)
+            )
             best_lcs = max(best_lcs, normalised_lcs(domain, whitelist_domain))
 
         return {
@@ -82,7 +86,7 @@ def search_whitelist(domain: str, whitelist: list):
             "JaroWinkler": 0,
             "LCS": 0,
         }
-  
+
 
 def model_pipeline(url: str) -> tuple[str, str] | None:
     """
@@ -102,7 +106,11 @@ def model_pipeline(url: str) -> tuple[str, str] | None:
         domain = df["RootDomain"].iloc[0]
         whitelist = get_whitelist(whitelist_path)
         scores = search_whitelist(domain, whitelist)
-        if scores["Levenshtein"] == 1 and scores["JaroWinkler"] == 1 and scores["LCS"] == 1:
+        if (
+            scores["Levenshtein"] == 1
+            and scores["JaroWinkler"] == 1
+            and scores["LCS"] == 1
+        ):
             return 1, [0, 100]
 
         df["Levenshtein"] = scores["Levenshtein"]
