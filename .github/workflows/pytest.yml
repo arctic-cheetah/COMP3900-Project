@@ -70,12 +70,10 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: coverage run --parallel-mode -m pytest test/ai_test.py
-
       - name: Run Backend Integration Tests
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: coverage run --parallel-mode -m pytest test/backend_test.py
-
       - name: Run Tests
         env:
           DB_HOST: localhost
