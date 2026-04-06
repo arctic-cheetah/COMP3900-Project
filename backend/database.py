@@ -5,6 +5,7 @@ import psycopg2
 import datetime
 import psycopg2.extras
 from contextlib import contextmanager
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -52,13 +53,20 @@ def init_db():
         logger.critical("schema.sql not found at %s, cannot initialise DB", schema_path)
         sys.exit(1)
 
-    try:
-        with get_cursor() as cur:
-            cur.execute(schema_sql)
-        logger.info("Database initialised successfully.")
-    except psycopg2.OperationalError as e:
-        logger.critical("Could not connect to PostgreSQL: %s", e)
-        sys.exit(1)
+    max_retries = 10
+    for attempt in range(max_retries):
+        try:
+            with get_cursor() as cur:
+                cur.execute(schema_sql)
+            logger.info("Database initialised successfully.")
+            return
+        except psycopg2.OperationalError as e:
+            if attempt < max_retries - 1:
+                logger.warning("Failed to connect to DB, retrying in 5s: %s", e)
+                time.sleep(5)
+            else:
+                logger.critical("Could not connect to PostgreSQL after retries: %s", e)
+                sys.exit(1)
 
 
 # Persist an anonymous scan result to the scans table

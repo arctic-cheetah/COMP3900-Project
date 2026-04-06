@@ -58,12 +58,12 @@ jobs:
 
       - name: Check Backend
         run: |
-            for i in {1..10}; do
-              curl -sSf "http://127.0.0.1:5001/" >/dev/null && exit 0
-              sleep 0.5
-            done
-            echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
-            exit 1
+          for i in {1..10}; do
+            curl -sSf "http://127.0.0.1:5001/" >/dev/null && exit 0
+            sleep 0.5
+          done
+          echo "Backend didn't become ready; tailing backend.log:" && tail -n 50 backend.log
+          exit 1
 
       - name: Run Preprocessor Unit Tests
       # Need to add github workspace environment here to get path of ai backend
@@ -111,9 +111,9 @@ jobs:
 
       - name: Generate coverage reports
         run: |
-            coverage combine
-            coverage report
-            coverage html
+          coverage combine
+          coverage report
+          coverage html
 
       - name: Print backend log on failure
         if: failure()
