@@ -492,3 +492,66 @@
 2026-04-06 04:59:08,842 - INFO - 127.0.0.1 - - [06/Apr/2026 04:59:08] "POST /list_scans HTTP/1.1" 200 -
 2026-04-06 04:59:08,975 - INFO - Scan saved — id=26 is_safe=True confidence=0.0001
 2026-04-06 04:59:08,979 - INFO - 127.0.0.1 - - [06/Apr/2026 04:59:08] "POST /scan HTTP/1.1" 200 -
+2026-04-06 12:14:56,729 - INFO - Database initialised successfully.
+2026-04-06 12:14:56,731 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:14:56,731 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:15:04,020 - INFO - 127.0.0.1 - - [06/Apr/2026 12:15:04] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:15:07,575 - INFO - Scan saved — id=40 is_safe=False confidence=100.0000
+2026-04-06 12:15:07,579 - INFO - 127.0.0.1 - - [06/Apr/2026 12:15:07] "POST /scan HTTP/1.1" 200 -
+2026-04-06 12:15:30,414 - INFO - 127.0.0.1 - - [06/Apr/2026 12:15:30] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:15:33,043 - INFO - Scan saved — id=41 is_safe=True confidence=0.0001
+2026-04-06 12:15:33,048 - INFO - 127.0.0.1 - - [06/Apr/2026 12:15:33] "POST /scan HTTP/1.1" 200 -
+2026-04-06 12:18:51,209 - INFO - Database initialised successfully.
+2026-04-06 12:18:51,211 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:18:51,211 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:19:45,360 - INFO - 127.0.0.1 - - [06/Apr/2026 12:19:45] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:21:35,768 - INFO - Database initialised successfully.
+2026-04-06 12:21:35,771 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:21:35,771 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:22:51,017 - INFO - 127.0.0.1 - - [06/Apr/2026 12:22:51] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:24:54,576 - INFO - Database initialised successfully.
+2026-04-06 12:24:54,578 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:24:54,579 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:25:02,292 - INFO - 127.0.0.1 - - [06/Apr/2026 12:25:02] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:25:24,737 - INFO - Database initialised successfully.
+2026-04-06 12:25:24,739 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:25:24,740 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:25:52,437 - INFO - 127.0.0.1 - - [06/Apr/2026 12:25:52] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:26:05,779 - INFO - Database initialised successfully.
+2026-04-06 12:26:05,782 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:26:05,782 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:26:08,572 - INFO - 127.0.0.1 - - [06/Apr/2026 12:26:08] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:29:31,755 - INFO - Database initialised successfully.
+2026-04-06 12:29:31,757 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:29:31,757 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:29:43,482 - INFO - 127.0.0.1 - - [06/Apr/2026 12:29:43] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:30:17,909 - INFO - Database initialised successfully.
+2026-04-06 12:30:17,911 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 12:30:17,911 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 12:30:47,765 - INFO - 127.0.0.1 - - [06/Apr/2026 12:30:47] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 12:31:15,417 - INFO - Scan saved — id=42 is_safe=True confidence=0.0001
+2026-04-06 12:31:15,421 - INFO - 127.0.0.1 - - [06/Apr/2026 12:31:15] "POST /scan HTTP/1.1" 200 -

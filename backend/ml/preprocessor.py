@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 # Given a url get these feature data
 # Then return a np.array of those features
 TIMEOUT = 8
+NUM_SLASHES = 3
 
 
 # def preprocess_data(self, self, url: str):
@@ -45,8 +46,13 @@ class preprocess_data:
     has_title: bool = False
 
     def __init__(self, url: str):
-        # We should ensure ending slashes are stripped
-        url.strip("/")
+        # Strip trailing slashes and cap total slashes to 2 (http:// + one path slash).
+        url = re.sub(r"/+$", "", url)
+        parts = url.split("/", NUM_SLASHES)
+        if len(parts) == 4:
+            parts[NUM_SLASHES] = parts[NUM_SLASHES].split("/", 1)[0]
+            url = "/".join(parts[:NUM_SLASHES])
+
         self.url_len = len(url)
         self.url = url
 
