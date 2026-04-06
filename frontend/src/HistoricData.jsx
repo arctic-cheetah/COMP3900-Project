@@ -80,7 +80,7 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
       <Table.Th>URL</Table.Th>
       <Table.Th>DATE/TIME ANALYSED</Table.Th>
       <Table.Th>RESULT</Table.Th>
-      <Table.Th ta="right">CONFIDENCE SCORE</Table.Th>
+      <Table.Th ta="right">DETAILS</Table.Th>
     </Table.Tr>
   );
 
@@ -339,14 +339,6 @@ function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
         </Table.Td>
         <Table.Td>
           <Group justify="flex-end" gap="xs" wrap="nowrap">
-            <Progress
-              value={scan.confidence}
-              color={scan.isSafe ? "green" : "red"}
-              size="sm"
-              w={60}
-              radius="xl"
-            />
-            <Text size="sm" fw={700}>{scan.confidence}%</Text>
             <IconChevronDown
               size={16}
               color="gray"
@@ -364,21 +356,40 @@ function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
         <Table.Td colSpan={5} p={0} style={{ borderBottom: opened ? undefined : 'none' }}>
           <Collapse in={opened}>
             <Box p="md" bg="gray.0" style={{ borderTop: '1px solid var(--mantine-color-gray-2)' }}>
-              <Group justify="space-between" align="flex-start">
-                <Stack gap="xs">
-                  <Text size="xs" fw={700} c="dimmed">FULL URL</Text>
-                  <Text size="sm" ff="monospace" style={{ wordBreak: "break-all" }}>{scan.url}</Text>
-                </Stack>
-                <Button
-                  color="red"
-                  variant="light"
-                  size="xs"
-                  leftSection={<IconTrash size={14} />}
-                  onClick={() => onDelete(scan)}
-                >
-                  Delete Record
-                </Button>
-              </Group>
+              <Stack gap="md">
+                <Group justify="space-between" align="flex-start">
+                  <Stack gap="xs" style={{ flex: 1 }}>
+                    <Group justify="space-between" align="flex-start" style={{ width: '100%' }}>
+                      <Stack gap="xs" style={{ flex: 1 }}>
+                        <Text size="xs" fw={700} c="dimmed">FULL URL</Text>
+                        <Text size="sm" ff="monospace" style={{ wordBreak: "break-all" }}>{scan.url}</Text>
+                      </Stack>
+                      <Stack gap="xs" style={{ minWidth: '200px' }}>
+                        <Text size="xs" fw={700} c="dimmed">CONFIDENCE SCORE</Text>
+                        <Group gap="xs" align="flex-end">
+                          <Progress
+                            value={scan.confidence}
+                            color={scan.isSafe ? "green" : "red"}
+                            size="md"
+                            w={80}
+                            radius="xl"
+                          />
+                          <Text size="sm" fw={700} style={{ minWidth: '50px' }}>{scan.confidence}%</Text>
+                        </Group>
+                      </Stack>
+                    </Group>
+                  </Stack>
+                  <Button
+                    color="red"
+                    variant="light"
+                    size="xs"
+                    leftSection={<IconTrash size={14} />}
+                    onClick={() => onDelete(scan)}
+                  >
+                    Delete Record
+                  </Button>
+                </Group>
+              </Stack>
             </Box>
           </Collapse>
         </Table.Td>
