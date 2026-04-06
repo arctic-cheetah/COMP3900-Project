@@ -59,13 +59,17 @@ def get_whitelist(whitelist_filepath: str):
 
 # helper make domain consistent
 def _normalize_domain(url: str):
-
+    url = url.strip().lower().strip(".")
+    if url.startswith("www."):
+        url = url[4:]
     return url
 
 
 # helper func to check for subdomain from whitelist
-def _is_domain_or_subdomain(url: str):
-    pass
+def _is_domain_or_subdomain(domain: str, whitelist_domain: str):
+    if domain == whitelist_domain:
+        return True
+    return domain.endswith("." + whitelist_domain)
 
 
 def search_whitelist(domain: str, whitelist: list):
@@ -76,7 +80,7 @@ def search_whitelist(domain: str, whitelist: list):
             "JaroWinkler": 1,
             "LCS": 1,
         }
-
+    # search for whitelist subdomain here!
     try:
         best_levenshtein = 0
         best_jaro_winkler = 0
