@@ -57,9 +57,30 @@ def get_whitelist(whitelist_filepath: str):
     return whitelist_df["Domain"].tolist()
 
 
+def _normalize_domain(value: str) -> str:
+    value = (value or "").strip().lower().rstrip(".")
+    if value.startswith("www."):
+        value = value[4:]
+    return value
+
+
+def _is_domain_or_subdomain(domain: str, whitelist_domain: str) -> bool:
+    if domain == whitelist_domain:
+        return True
+    return domain.endswith("." + whitelist_domain)
+
+
 def search_whitelist(domain: str, whitelist: list):
-    whitelist_set = set(whitelist)
-    if domain in whitelist_set:
+    domain = _normalize_domain(domain)
+    whitelist_set = {_normalize_domain(w) for w in whitelist}
+
+    for whitelist_domain in whitelist_set:
+        if _is_domain_or_subdomain(domain, whitelist_domain):
+            return {
+                "Levenshtein": 1,
+                "JaroWinkler": 1,
+                "LCS": 1,
+            }
         return {
             "Levenshtein": 1,
             "JaroWinkler": 1,
@@ -70,7 +91,7 @@ def search_whitelist(domain: str, whitelist: list):
         best_levenshtein = 0
         best_jaro_winkler = 0
         best_lcs = 0
-        for whitelist_domain in whitelist:
+        for whitelist_domain in whitelist_set:
             best_levenshtein = max(
                 best_levenshtein, normalised_levenshtein(domain, whitelist_domain)
             )
@@ -105,13 +126,13 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         tuple: Returns the verdict and confidence score.
     """
     try:
-
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
 
         domain = df["RootDomain"].iloc[0]
         whitelist = get_whitelist(whitelist_path)
         scores = search_whitelist(domain, whitelist)
+        # POSSIBLE VULN
         if (
             scores["Levenshtein"] == 1
             and scores["JaroWinkler"] == 1

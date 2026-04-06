@@ -660,3 +660,5 @@
  * Running on http://172.31.167.174:5001
 2026-04-06 22:03:55,237 - INFO - [33mPress CTRL+C to quit[0m
 2026-04-06 22:03:57,980 - INFO - 127.0.0.1 - - [06/Apr/2026 22:03:57] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 22:30:02,083 - INFO - Scan saved — id=50 is_safe=False confidence=96.6225
+2026-04-06 22:30:02,092 - INFO - 127.0.0.1 - - [06/Apr/2026 22:30:02] "POST /scan HTTP/1.1" 200 -
