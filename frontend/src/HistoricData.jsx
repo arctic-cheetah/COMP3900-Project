@@ -17,7 +17,7 @@ import {
   Button,
   Modal,
   Box,
-  ActionIcon,
+  Collapse,
 } from "@mantine/core";
 import {
   IconClock,
@@ -27,6 +27,7 @@ import {
   IconTrash,
   IconHistory,
   IconX,
+  IconChevronDown,
 } from "@tabler/icons-react";
 import { format } from "date-fns";
 import { useMediaQuery, useDisclosure } from "@mantine/hooks";
@@ -90,47 +91,12 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
   };
 
   const rows = filteredData.map((scan, index) => (
-    <Table.Tr
+    <DesktopScanRow
       key={index}
-      onClick={() => onHistoryClick(scan)}
-      style={{ cursor: 'pointer' }}
-    >
-      <Table.Td onClick={(e) => e.stopPropagation()}>
-        <Checkbox
-          checked={selection.includes(scan)}
-          onChange={() => toggleRow(scan)}
-        />
-      </Table.Td>
-      <Table.Td>
-        <Text size="sm" fw={500} truncate maxWidth={300}>{scan.url}</Text>
-      </Table.Td>
-      <Table.Td>
-        <Text size="xs" c="dimmed">
-          {format(new Date(scan.timestamp), "MMM d, yyyy • h:mm a")}
-        </Text>
-      </Table.Td>
-      <Table.Td>
-        <Badge
-          color={scan.isSafe ? "green" : "red"}
-          variant="light"
-          leftSection={scan.isSafe ? <IconCheck size={12} /> : <IconAlertTriangle size={12} />}
-        >
-          {scan.isSafe ? "Safe" : "Phishing"}
-        </Badge>
-      </Table.Td>
-      <Table.Td>
-        <Group justify="flex-end" gap="xs" wrap="nowrap">
-          <Progress
-            value={scan.confidence}
-            color={scan.isSafe ? "green" : "red"}
-            size="sm"
-            w={60}
-            radius="xl"
-          />
-          <Text size="sm" fw={700}>{scan.confidence}%</Text>
-        </Group>
-      </Table.Td>
-    </Table.Tr>
+      scan={scan}
+      selection={selection}
+      toggleRow={toggleRow}
+    />
   ));
 
   const MobileHistoryContent = () => (
@@ -318,7 +284,7 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
         </Group>
       )}
 
-      {/* Table Section */}
+      {/* Table Section with accordion rows*/}
       <ScrollArea h={400}>
         <Table verticalSpacing="md">
           <Table.Thead
@@ -331,6 +297,93 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
         </Table>
       </ScrollArea>
     </Paper>
+  );
+}
+
+function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
+  const [opened, { toggle }] = useDisclosure(false);
+  const isSelected = selection.includes(scan);
+
+  return (
+    <>
+      <Table.Tr
+        onClick={toggle}
+        style={{
+          cursor: 'pointer',
+          backgroundColor: opened ? 'var(--mantine-color-gray-0)' : undefined,
+          transition: "background-color 0.2s ease"
+        }}
+      >
+        <Table.Td onClick={(e) => e.stopPropagation()}>
+          <Checkbox
+            checked={isSelected}
+            onChange={() => toggleRow(scan)}
+          />
+        </Table.Td>
+        <Table.Td>
+          <Text size="sm" fw={500} truncate maxWidth={300}>{scan.url}</Text>
+        </Table.Td>
+        <Table.Td>
+          <Text size="xs" c="dimmed">
+            {format(new Date(scan.timestamp), "MMM d, yyyy • h:mm a")}
+          </Text>
+        </Table.Td>
+        <Table.Td>
+          <Badge
+            color={scan.isSafe ? "green" : "red"}
+            variant="light"
+            leftSection={scan.isSafe ? <IconCheck size={12} /> : <IconAlertTriangle size={12} />}
+          >
+            {scan.isSafe ? "Safe" : "Phishing"}
+          </Badge>
+        </Table.Td>
+        <Table.Td>
+          <Group justify="flex-end" gap="xs" wrap="nowrap">
+            <Progress
+              value={scan.confidence}
+              color={scan.isSafe ? "green" : "red"}
+              size="sm"
+              w={60}
+              radius="xl"
+            />
+            <Text size="sm" fw={700}>{scan.confidence}%</Text>
+            <IconChevronDown
+              size={16}
+              color="gray"
+              style={{
+                transform: opened ? "rotate(180deg)" : "none",
+                transition: "transform 0.2s ease",
+              }}
+            />
+          </Group>
+        </Table.Td>
+      </Table.Tr>
+
+      {/* Hidden Dropdown Row */}
+      <Table.Tr>
+        <Table.Td colSpan={5} p={0} style={{ borderBottom: opened ? undefined : 'none' }}>
+          <Collapse in={opened}>
+            <Box p="md" bg="gray.0" style={{ borderTop: '1px solid var(--mantine-color-gray-2)' }}>
+              <Group justify="space-between" align="flex-start">
+                <Stack gap="xs">
+                  <Text size="xs" fw={700} c="dimmed">FULL URL</Text>
+                  <Text size="sm" ff="monospace" style={{ wordBreak: "break-all" }}>{scan.url}</Text>
+                </Stack>
+                <Button
+                  color="red"
+                  variant="light"
+                  size="xs"
+                  leftSection={<IconTrash size={14} />}
+                  onClick={() => onDelete(scan)}
+                >
+                  Delete Record
+                </Button>
+              </Group>
+            </Box>
+          </Collapse>
+        </Table.Td>
+      </Table.Tr>
+    </>
   );
 }
 
