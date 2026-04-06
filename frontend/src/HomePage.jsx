@@ -104,7 +104,11 @@ export default function HomePage() {
       }, 500);
     } catch (e) {
       const resultElem = document.getElementById('result');
+<<<<<<< HEAD
       resultElem.textContent = e.message;
+=======
+      resultElem.textContent = e.message
+>>>>>>> 1d11b39 (feat: connected error message of route to frontend)
       console.log(e);
     }
   };
