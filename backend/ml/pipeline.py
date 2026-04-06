@@ -57,6 +57,17 @@ def get_whitelist(whitelist_filepath: str):
     return whitelist_df["Domain"].tolist()
 
 
+# helper make domain consistent
+def _normalize_domain(url: str):
+
+    return url
+
+
+# helper func to check for subdomain from whitelist
+def _is_domain_or_subdomain(url: str):
+    pass
+
+
 def search_whitelist(domain: str, whitelist: list):
     whitelist_set = set(whitelist)
     if domain in whitelist_set:
