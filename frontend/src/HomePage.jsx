@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-import { scanURL } from "./api";
+import { scanURL, getStoredData } from "./api";
 import HistoricalData from "./HistoricData";
 import Navbar from "./Navbar";
 import ResultModal from "./Resultmodal";
@@ -43,6 +43,8 @@ const DUMMY_HISTORY = [
   },
 ];
 
+
+
 export default function HomePage() {
   const [history, setHistory] = useState(DUMMY_HISTORY);
   const [url, setUrl] = useState('');
@@ -56,6 +58,8 @@ export default function HomePage() {
   };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const moveButton = useMediaQuery('(max-width: 1173px)');
+  const urlFullText = useMediaQuery('(max-width: 930px)');
 
   const openHistoryResult = (item) => {
     setCurrentResult({
@@ -66,6 +70,33 @@ export default function HomePage() {
 
     setIsModalOpen(true);
   };
+
+  // A Helperfunction to get the initial history from the db
+  useEffect(() => {
+    (async () => {
+      try {
+        let data = await getStoredData();
+        console.log(data)
+        let scans = Array.isArray(data["scans"]) ? data["scans"] : []
+        // Is it array?
+        // yes
+        let mapped = scans.map(s => ({
+          url: s.url,
+          timestamp: s.scanned_at,
+          isSafe: s.is_safe,
+          confidence: s.confidence
+        }))
+        setHistory(mapped)
+      }
+      catch (e) {
+        const resultElem = document.getElementById('result');
+        resultElem.textContent = e.message;
+        console.log(e);
+      }
+
+    })();
+  }, []);
+
 
   const postURL = async (e) => {
     e.preventDefault();
@@ -124,6 +155,7 @@ export default function HomePage() {
         Enter any URL below to instantly analyse and detect potential phishing
         threats <br /> using advanced Al-powered detection
       </p>
+
       <form onSubmit={postURL} className='url-form'>
         <span className='search-icon'>
           <svg width='25' height='25' viewBox='0 0 24 24' fill='none'>
@@ -144,24 +176,59 @@ export default function HomePage() {
             name='url-link'
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder='Enter URL to analyse (e.g., https://example.com)'
+            placeholder={
+              urlFullText
+                ? 'Enter URL to analyse'
+                : 'Enter URL to analyse (e.g, https://example.com)'
+            }
           />
         </label>
-        <button
-          type='submit'
-          className={url.trim() ? 'active-btn' : 'inactive-btn'}
-          disabled={!url.trim()}
-        >
-          {isLoading ? (
-            <span className='loader'>
-              <Loader color='white' size='sm' />
-              Analysing...
-            </span>
-          ) : (
-            'Analyse URL'
-          )}
-        </button>
+
+        {!moveButton && (
+          <button
+            type='submit'
+            className={`inline-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            disabled={!url.trim()}
+          >
+            {isLoading ? (
+              <span className='loader'>
+                <Loader color='white' size='sm' />
+                Analysing...
+              </span>
+            ) : (
+              'Analyse URL'
+            )}
+          </button>
+        )}
+
+        {moveButton && (
+          <button
+            type='submit'
+            className={`full-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            disabled={!url.trim()}
+          >
+            {isLoading ? (
+              <span className='loader'>
+                <Loader color='white' size='sm' />
+                Analysing...
+              </span>
+            ) : (
+              'Analyse URL'
+            )}
+          </button>
+        )}
       </form>
+
+      {!moveButton && (
+        <p className='privacy-text'>
+          Your privacy is protected. URLs are analysed securely and not stored
+          permanently.
+        </p>
+      )}
+
+      {moveButton && (
+        <div className='space' />
+      )}
 
       {isModalOpen && isMobile && (
         <ResultModal

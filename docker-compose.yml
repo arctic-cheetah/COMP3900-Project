@@ -1,8 +1,33 @@
 services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: phishing_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   backend:
     build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       PYTHONUNBUFFERED: "1"
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: phishing_db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
     ports:
       - "5001:5001"
 
@@ -21,3 +46,6 @@ services:
       - BACKEND_URL=http://backend:5001
     profiles:
       - debug
+
+volumes:
+  pgdata:

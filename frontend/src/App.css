@@ -24,6 +24,10 @@
   margin-bottom: 50px;
 }
 
+.space {
+  margin-bottom: 100px;
+}
+
 .url-form {
   position: relative;
   display: inline-block;
@@ -41,7 +45,7 @@
   padding-left: 55px;
 }
 
-.url-form button {
+.url-form .inline-btn {
   position: absolute;
   top: 50%;
   right: 2%;
@@ -51,6 +55,17 @@
   border-radius: 10px;
   border: none;
   color: white;
+}
+
+.url-form .full-btn {
+  position: absolute;
+  margin-top: 85px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  height: 40px;
+  padding: 0 20px;
+  right: 33%;
 }
 
 .inactive-btn {
@@ -72,17 +87,12 @@
 }
 
 .logo {
-  width: 5%;
-}
-
-.user-photo {
-  width: 5%;
-  margin-left: auto;
+  width: 55px;
 }
 
 .logo-homepage {
-  margin-top: 2%;
-  width: 10%;
+  margin-top: 20px;
+  width: 150px;
 }
 
 .website-name {
@@ -96,10 +106,8 @@
   left: 0;
   width: 100%;
   height: 60px;
-
   display: flex;
   align-items: center;
-
   padding: 0 20px;
   background: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

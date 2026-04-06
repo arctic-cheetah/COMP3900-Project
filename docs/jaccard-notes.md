@@ -1,11 +1,6 @@
 Yes—Jaccard index can be a good feature for project, but it’s only useful if choose the right 'items' to compare (tokens or n-grams) and you’re clear about whether it’s (A) a standalone ML feature or (B) a rule-based similarity gate.
 
-**What Jaccard is**
-- For two sets \(A\) and \(B\), Jaccard similarity is:
-  \[
-  J(A,B)=\frac{|A\cap B|}{|A\cup B|}
-  \]
-- It measures 'overlap', not edit operations.
+  
 
 **Is it suitable as an ML feature?**
 - Suitable if compute it on something that correlates with phishing patterns.

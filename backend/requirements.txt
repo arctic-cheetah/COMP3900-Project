@@ -12,3 +12,6 @@ joblib
 scikit-learn
 levenshtein
 pylcs
+bs4
+playwright
+chromium
