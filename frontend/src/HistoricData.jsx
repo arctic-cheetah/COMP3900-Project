@@ -17,6 +17,7 @@ import {
   Button,
   Modal,
   Box,
+  ActionIcon,
 } from "@mantine/core";
 import {
   IconClock,
@@ -25,6 +26,7 @@ import {
   IconFilter,
   IconTrash,
   IconHistory,
+  IconX,
 } from "@tabler/icons-react";
 import { format } from "date-fns";
 import { useMediaQuery, useDisclosure } from "@mantine/hooks";
@@ -234,8 +236,11 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
           View Scan History ({history.length})
         </Button>
 
-        <Modal opened={opened} onClose={close} title="Scan History" fullScreen padding="md" closeButton>
+        <Modal opened={opened} onClose={close} title="Scan History" fullScreen padding="md" closeButtonProps={{ icon: <IconX size={18} /> }}>
           <Stack gap="md">
+            <Button onClick={close} variant="light" leftSection={<IconX size={16} />}>
+              Close
+            </Button>
             <Group grow gap="xs">
               <StatCard label="Total" value={stats.total} color="blue" active={filter === 'all'} onClick={() => setFilter('all')} />
               <StatCard label="Safe" value={stats.safe} color="green" active={filter === 'safe'} onClick={() => setFilter('safe')} />
