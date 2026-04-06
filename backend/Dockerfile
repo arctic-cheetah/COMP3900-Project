@@ -12,6 +12,7 @@ RUN pip install --no-cache-dir debugpy
 RUN playwright install --with-deps chromium
 COPY . .
 
+WORKDIR /app/
 EXPOSE 5001
 
-CMD ["python", "app.py"]
+CMD ["python", "backend/app.py"]

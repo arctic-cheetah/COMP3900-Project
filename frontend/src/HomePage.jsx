@@ -135,11 +135,7 @@ export default function HomePage() {
       }, 500);
     } catch (e) {
       const resultElem = document.getElementById('result');
-<<<<<<< HEAD
       resultElem.textContent = e.message;
-=======
-      resultElem.textContent = e.message
->>>>>>> 1d11b39 (feat: connected error message of route to frontend)
       console.log(e);
     }
   };
@@ -237,14 +233,14 @@ export default function HomePage() {
         />
       )}
 
-      <HistoricalData 
-      history={history} 
-      onDelete={handleDeleteScans}
-      onDeleteMultiple={handleDeleteScans}
-      onHistoryClick={openHistoryResult} 
+      <HistoricalData
+        history={history}
+        onDelete={handleDeleteScans}
+        onDeleteMultiple={handleDeleteScans}
+        onHistoryClick={openHistoryResult}
       />
-      
-    <p className='privacy-text'>
+
+      <p className='privacy-text'>
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
