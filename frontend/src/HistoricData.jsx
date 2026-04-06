@@ -235,7 +235,7 @@ if (isMobile) {
       </Button>
 
       <Modal opened={opened} onClose={close} title="Scan History" fullScreen padding="md">
-        <Stack gap="xs" mb="md">
+        <Stack gap="md">
           <Group grow gap="xs">
             <StatCard label="Total" value={stats.total} color="blue" active={filter === 'all'} onClick={() => setFilter('all')} />
             <StatCard label="Safe" value={stats.safe} color="green" active={filter === 'safe'} onClick={() => setFilter('safe')} />
