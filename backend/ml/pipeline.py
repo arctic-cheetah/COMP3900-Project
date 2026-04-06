@@ -1,16 +1,20 @@
-from sklearn.linear_model import LogisticRegression
 import joblib
 import pandas as pd
 from Levenshtein import distance, jaro_winkler
 from pylcs import lcs_sequence_length
 
-from .preprocessor import preprocess_data
+try:
+    from .preprocessor import preprocess_data
+except ImportError:
+    from preprocessor import preprocess_data
 
 whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
 model_path: str = "backend/ml/models/logit_model.pkl"
+URL_FEATURE_WEIGHT = 0.3
+HTML_FEATURE_WEIGHT = 1e2
 
 
-def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
+def run_model(url_features: pd.DataFrame, model_filepath: str) -> tuple[int, float]:
     """
     Run pretrained model on features.
 
@@ -24,11 +28,11 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
     try:
         # TODO: WHY THE ARE WE ALWAYS LOADING THE MODEL EACH TIME IT SCANS
         # A URL? JUST CACHE IT
-        model_dump = joblib.load(model_path)
+        model_dump = joblib.load(model_filepath)
         features = model_dump["features"]
         model = model_dump["model"]
 
-        filtered_url_features = url_features[features]
+        filtered_url_features = url_features.reindex(columns=features, fill_value=0)
         is_safe: int = model.predict(filtered_url_features)[0].item()
         # Model actually outputs an np array of prob
         # of confidence
@@ -40,6 +44,22 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
     except Exception as e:
         print(f'run_model error: "{e}"')
         return 0, 100.0
+
+
+def get_safe_probability(
+    model, features_df: pd.DataFrame, expected_features: list[str]
+) -> float:
+    aligned_features = features_df.reindex(columns=expected_features, fill_value=0)
+    probabilities = model.predict_proba(aligned_features)[0]
+
+    # if hasattr(model, "classes_") and 1 in model.classes_:
+    #     safe_index = list(model.classes_).index(1)
+    #     return float(probabilities[safe_index])
+
+    # if len(probabilities) > 1:
+    #     return float(probabilities[1])
+
+    return float(probabilities[0])
 
 
 #  Where 1 is identical and 0 is different.
@@ -93,7 +113,9 @@ def search_whitelist(domain: str, whitelist: list):
         }
 
 
-def model_pipeline(url: str) -> tuple[int, float] | None:
+def model_pipeline(
+    url: str, feature_mode: str = "domain_only"
+) -> tuple[int, float] | None:
     """
     Process URL and runs model.
 
@@ -105,9 +127,34 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         tuple: Returns the verdict and confidence score.
     """
     try:
-        url_obj = preprocess_data(url)
-        df = url_obj.get_data()
+        model_dump = joblib.load(model_path)
+        features = model_dump["features"]
+        model = model_dump["model"]
 
+        if feature_mode == "domain_only":
+            url_obj = preprocess_data(url, feature_mode="domain_only")
+            df = url_obj.get_data()
+            safe_probability = get_safe_probability(model, df, features)
+        elif feature_mode == "full":
+            url_obj = preprocess_data(url, feature_mode="full")
+            df = url_obj.get_data()
+            safe_probability = get_safe_probability(model, df, features)
+        else:
+            url_obj = preprocess_data(url, feature_mode="domain_only")
+            url_df = url_obj.get_data()
+
+            html_obj = preprocess_data(url, feature_mode="full")
+            html_df = html_obj.get_data()
+
+            url_safe_probability = get_safe_probability(model, url_df, features)
+            html_safe_probability = get_safe_probability(model, html_df, features)
+            safe_probability = (
+                URL_FEATURE_WEIGHT * url_safe_probability
+                + HTML_FEATURE_WEIGHT * html_safe_probability
+            )
+
+            print(safe_probability)
+            df = html_df if HTML_FEATURE_WEIGHT >= URL_FEATURE_WEIGHT else url_df
         domain = df["RootDomain"].iloc[0]
         whitelist = get_whitelist(whitelist_path)
         scores = search_whitelist(domain, whitelist)
@@ -118,11 +165,10 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         ):
             return 1, 100.0
 
-        # df["Levenshtein"] = scores["Levenshtein"]
-        # df["JaroWinkler"] = scores["JaroWinkler"]
-        # df["LCS"] = scores["LCS"]
-
-        is_safe, confidence = run_model(df, model_path)
+        is_safe = 1 if safe_probability >= 0.5 else 0
+        confidence = round(
+            (safe_probability if is_safe else 1 - safe_probability) * 100, 2
+        )
 
         return is_safe, confidence
     except Exception as e:

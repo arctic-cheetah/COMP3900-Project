@@ -167,7 +167,7 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
     try:
-        res = model_pipeline(sanitised_url)
+        res = model_pipeline(sanitised_url, feature_mode="")
         if res is None:
             raise Exception
         else:
@@ -179,6 +179,8 @@ def check_url():
             is_safe=bool(is_safe),
             confidence=confidence_score,
         )
+        if saved is None:
+            return jsonify({"error": "Scan could not be saved"}), 500
         return (
             jsonify(
                 {

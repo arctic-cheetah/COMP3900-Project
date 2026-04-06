@@ -44,11 +44,52 @@ class preprocess_data:
     num_external_ref = 0
     has_title: bool = False
 
-    def __init__(self, url: str):
+    URL_ONLY_FEATURES = [
+        "RootDomain",
+        "URLLength",
+        "DomainLength",
+        "IsDomainIP",
+        "CharContinuationRate",
+        "TLDLength",
+        "NoOfSubDomain",
+        "HasObfuscation",
+        "NoOfObfuscatedChar",
+        "ObfuscationRatio",
+        "NoOfLettersInURL",
+        "LetterRatioInURL",
+        "NoOfDigitsInURL",
+        "DigitRatioInURL",
+        "NoOfEqualsInURL",
+        "NoOfQMarkInURL",
+        "NoOfAmpersandInURL",
+        "NoOfOtherSpecialCharsInURL",
+        "SpecialCharRatioInURL",
+        "IsHTTPS",
+    ]
+
+    HTML_FEATURES = [
+        "LineOfCode",
+        "LargestLineLength",
+        "HasTitle",
+        "URLTitleMatchScore",
+        "HasFavicon",
+        "Robots",
+        "HasSocialNet",
+        "HasSubmitButton",
+        "HasCopyrightInfo",
+        "NoOfJS",
+        "NoOfSelfRef",
+        "NoOfEmptyRef",
+        "NoOfExternalRef",
+    ]
+
+    def __init__(self, url: str, feature_mode: str = "domain_only"):
         # We should ensure ending slashes are stripped
         url.strip("/")
         self.url_len = len(url)
         self.url = url
+        self.feature_mode = feature_mode
+        self.func_pointer = self._get_func_pointer(feature_mode)
 
     def _avoid_div_zero(self, url: str) -> int:
         return max(len(url) - 1, 1)
@@ -167,6 +208,53 @@ class preprocess_data:
 
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
+
+    def _get_func_pointer(self, feature_mode: str):
+        url_only_pointer: list[tuple[str, str]] = [
+            ("get_root_domain", "RootDomain"),
+            ("url_length", "URLLength"),
+            ("domain_length", "DomainLength"),
+            ("is_domain_ip", "IsDomainIP"),
+            ("CharContinuationRate", "CharContinuationRate"),
+            ("tld_length", "TLDLength"),
+            ("no_of_sub_domain", "NoOfSubDomain"),
+            ("has_obfuscation", "HasObfuscation"),
+            ("no_of_obfuscated_char", "NoOfObfuscatedChar"),
+            ("obfuscation_ratio", "ObfuscationRatio"),
+            ("no_of_letters_in_url", "NoOfLettersInURL"),
+            ("letter_ratio_in_url", "LetterRatioInURL"),
+            ("no_of_digits_in_url", "NoOfDigitsInURL"),
+            ("digit_ratio_in_url", "DigitRatioInURL"),
+            ("no_of_equals_in_url", "NoOfEqualsInURL"),
+            ("no_of_q_mark_in_url", "NoOfQMarkInURL"),
+            ("no_of_ampersand_in_url", "NoOfAmpersandInURL"),
+            ("no_of_other_special_chars_in_url", "NoOfOtherSpecialCharsInURL"),
+            ("special_char_ratio_in_url", "SpecialCharRatioInURL"),
+            ("is_https", "IsHTTPS"),
+        ]
+
+        html_pointer: list[tuple[str, str]] = [
+            ("LineOfCode", "LineOfCode"),
+            ("LargestLineLength", "LargestLineLength"),
+            ("HasTitle", "HasTitle"),
+            ("URLTitleMatchScore", "URLTitleMatchScore"),
+            ("hasFavicon", "HasFavicon"),
+            ("robots", "Robots"),
+            ("HasSocialNet", "HasSocialNet"),
+            ("HasSubmitButton", "HasSubmitButton"),
+            ("HasCopyrightInfo", "HasCopyrightInfo"),
+            ("NoOfJS", "NoOfJS"),
+            ("NoOfSelfRef", "NoOfSelfRef"),
+            ("NoOfEmptyRef", "NoOfEmptyRef"),
+            ("NoOfExternalRef", "NoOfExternalRef"),
+        ]
+
+        if feature_mode == "domain_only":
+            return url_only_pointer
+        if feature_mode == "full":
+            return url_only_pointer + html_pointer
+
+        return url_only_pointer + html_pointer
 
     # TODO: KELLY PLZ ADD UR URL_SIMILARITY SCORE
     # def get_url_similarity_score(self, url: str):
@@ -633,45 +721,6 @@ class preprocess_data:
                     return 100.0
         return score
 
-    # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
-    # TODO: fix function convention later
-    FeatureFn = Callable[["preprocess_data", str], Any]
-    func_pointer: ClassVar[list[tuple[FeatureFn, str]]] = [
-        (get_root_domain, "RootDomain"),
-        (url_length, "URLLength"),
-        (domain_length, "DomainLength"),
-        (is_domain_ip, "IsDomainIP"),
-        (CharContinuationRate, "CharContinuationRate"),
-        (tld_length, "TLDLength"),
-        (no_of_sub_domain, "NoOfSubDomain"),
-        (has_obfuscation, "HasObfuscation"),
-        (no_of_obfuscated_char, "NoOfObfuscatedChar"),
-        (obfuscation_ratio, "ObfuscationRatio"),
-        (no_of_letters_in_url, "NoOfLettersInURL"),
-        (letter_ratio_in_url, "LetterRatioInURL"),
-        (no_of_digits_in_url, "NoOfDigitsInURL"),
-        (digit_ratio_in_url, "DigitRatioInURL"),
-        (no_of_equals_in_url, "NoOfEqualsInURL"),
-        (no_of_q_mark_in_url, "NoOfQMarkInURL"),
-        (no_of_ampersand_in_url, "NoOfAmpersandInURL"),
-        (no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"),
-        (special_char_ratio_in_url, "SpecialCharRatioInURL"),
-        (is_https, "IsHTTPS"),
-        (LineOfCode, "LineOfCode"),
-        (LargestLineLength, "LargestLineLength"),
-        (HasTitle, "HasTitle"),
-        (URLTitleMatchScore, "URLTitleMatchScore"),
-        (hasFavicon, "HasFavicon"),
-        (robots, "Robots"),
-        (HasSocialNet, "HasSocialNet"),
-        (HasSubmitButton, "HasSubmitButton"),
-        (HasCopyrightInfo, "HasCopyrightInfo"),
-        (NoOfJS, "NoOfJS"),
-        (NoOfSelfRef, "NoOfSelfRef"),
-        (NoOfEmptyRef, "NoOfEmptyRef"),
-        (NoOfExternalRef, "NoOfExternalRef"),
-    ]
-
     def get_data(self) -> pd.DataFrame:
 
         # THIS IS WHERE DF FROM URL IS MADE
@@ -679,9 +728,7 @@ class preprocess_data:
         data = {}
         for func, name in self.func_pointer:
             try:
-                # result = func(self, self.url)
-                # The methods stored in func pointer belong to class => need to bind it to the object
-                bounded_func: Callable = getattr(self, func.__name__)
+                bounded_func: Callable = getattr(self, func)
                 data[name] = [bounded_func(self.url)]
             except Exception as e:
                 print(

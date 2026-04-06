@@ -70,6 +70,10 @@ def save_scan(url: str, is_safe: bool, confidence: float):
     """
 
     try:
+        if confidence < 0 or confidence > 100:
+            logger.error("Refusing to save out-of-range confidence: %s", confidence)
+            return None
+
         with get_cursor() as cur:
             cur.execute(query, (url, is_safe, round(confidence, 4)))
             row = cur.fetchone()

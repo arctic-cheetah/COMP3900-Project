@@ -492,3 +492,156 @@
 2026-04-06 04:59:08,842 - INFO - 127.0.0.1 - - [06/Apr/2026 04:59:08] "POST /list_scans HTTP/1.1" 200 -
 2026-04-06 04:59:08,975 - INFO - Scan saved — id=26 is_safe=True confidence=0.0001
 2026-04-06 04:59:08,979 - INFO - 127.0.0.1 - - [06/Apr/2026 04:59:08] "POST /scan HTTP/1.1" 200 -
+2026-04-06 05:35:22,270 - INFO - Database initialised successfully.
+2026-04-06 05:35:22,271 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 05:35:22,271 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 05:52:05,244 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-06 05:52:24,175 - INFO - Database initialised successfully.
+2026-04-06 05:52:24,177 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 05:52:24,177 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 05:53:16,742 - INFO - 127.0.0.1 - - [06/Apr/2026 05:53:16] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-06 05:53:16,743 - INFO - 127.0.0.1 - - [06/Apr/2026 05:53:16] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-06 05:53:16,758 - INFO - 127.0.0.1 - - [06/Apr/2026 05:53:16] "POST /list_scans HTTP/1.1" 200 -
+2026-04-06 05:53:16,758 - INFO - 127.0.0.1 - - [06/Apr/2026 05:53:16] "POST /list_scans HTTP/1.1" 200 -
+2026-04-06 05:53:43,316 - INFO - 127.0.0.1 - - [06/Apr/2026 05:53:43] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 05:53:46,322 - INFO - Scan saved — id=27 is_safe=False confidence=100.0000
+2026-04-06 05:53:46,325 - INFO - 127.0.0.1 - - [06/Apr/2026 05:53:46] "POST /scan HTTP/1.1" 200 -
+2026-04-06 05:54:11,139 - INFO - Database initialised successfully.
+2026-04-06 05:54:11,140 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 05:54:11,140 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 05:54:52,615 - INFO - Database initialised successfully.
+2026-04-06 05:54:52,616 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 05:54:52,616 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 05:54:56,089 - INFO - 127.0.0.1 - - [06/Apr/2026 05:54:56] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 05:54:58,959 - INFO - Scan saved — id=28 is_safe=False confidence=100.0000
+2026-04-06 05:54:58,971 - INFO - 127.0.0.1 - - [06/Apr/2026 05:54:58] "POST /scan HTTP/1.1" 200 -
+2026-04-06 05:55:39,307 - INFO - Database initialised successfully.
+2026-04-06 05:55:39,308 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 05:55:39,308 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 05:55:49,634 - INFO - 127.0.0.1 - - [06/Apr/2026 05:55:49] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 05:55:52,318 - INFO - Scan saved — id=29 is_safe=False confidence=100.0000
+2026-04-06 05:55:52,322 - INFO - 127.0.0.1 - - [06/Apr/2026 05:55:52] "POST /scan HTTP/1.1" 200 -
+2026-04-06 05:58:05,751 - INFO - Database initialised successfully.
+2026-04-06 05:58:05,752 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 05:58:05,752 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 05:58:25,021 - INFO - 127.0.0.1 - - [06/Apr/2026 05:58:25] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 05:58:28,488 - INFO - Scan saved — id=30 is_safe=False confidence=100.0000
+2026-04-06 05:58:28,493 - INFO - 127.0.0.1 - - [06/Apr/2026 05:58:28] "POST /scan HTTP/1.1" 200 -
+2026-04-06 06:00:04,473 - INFO - Database initialised successfully.
+2026-04-06 06:00:04,474 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 06:00:04,474 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 06:00:13,556 - INFO - 127.0.0.1 - - [06/Apr/2026 06:00:13] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 06:00:16,506 - INFO - Scan saved — id=31 is_safe=False confidence=100.0000
+2026-04-06 06:00:16,511 - INFO - 127.0.0.1 - - [06/Apr/2026 06:00:16] "POST /scan HTTP/1.1" 200 -
+2026-04-06 06:00:30,272 - INFO - Database initialised successfully.
+2026-04-06 06:00:30,274 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 06:00:30,274 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 06:00:34,876 - INFO - 127.0.0.1 - - [06/Apr/2026 06:00:34] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 06:00:39,153 - ERROR - Failed to save scan: new row for relation "scans" violates check constraint "scans_confidence_check"
+DETAIL:  Failing row contains (32, https://webcms3.cse.unsw.edu.au/COMP6447/25T3/, t, 26067244088.64, 2026-04-06 06:00:39.152732+10).
+
+2026-04-06 06:00:39,155 - INFO - 127.0.0.1 - - [06/Apr/2026 06:00:39] "POST /scan HTTP/1.1" 200 -
+2026-04-06 06:00:50,515 - INFO - 127.0.0.1 - - [06/Apr/2026 06:00:50] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 06:00:53,152 - ERROR - Failed to save scan: new row for relation "scans" violates check constraint "scans_confidence_check"
+DETAIL:  Failing row contains (33, https://webcms3.cse.unsw.edu.au/COMP6447/25T3/, t, 26067244088.64, 2026-04-06 06:00:53.151234+10).
+
+2026-04-06 06:00:53,152 - INFO - 127.0.0.1 - - [06/Apr/2026 06:00:53] "POST /scan HTTP/1.1" 200 -
+2026-04-06 06:01:19,943 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:19] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 06:01:22,792 - ERROR - Failed to save scan: new row for relation "scans" violates check constraint "scans_confidence_check"
+DETAIL:  Failing row contains (34, https://webcms3.cse.unsw.edu.au/COMP6447/25T3/, t, 26067244088.64, 2026-04-06 06:01:22.791372+10).
+
+2026-04-06 06:01:22,792 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:22] "POST /scan HTTP/1.1" 200 -
+2026-04-06 06:01:45,645 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:45] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-06 06:01:45,649 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:45] "OPTIONS /list_scans HTTP/1.1" 200 -
+2026-04-06 06:01:45,653 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:45] "POST /list_scans HTTP/1.1" 200 -
+2026-04-06 06:01:45,653 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:45] "POST /list_scans HTTP/1.1" 200 -
+2026-04-06 06:01:50,857 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:50] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 06:01:53,415 - ERROR - Failed to save scan: new row for relation "scans" violates check constraint "scans_confidence_check"
+DETAIL:  Failing row contains (35, https://webcms3.cse.unsw.edu.au/COMP6447/25T3/, t, 26067244088.64, 2026-04-06 06:01:53.414789+10).
+
+2026-04-06 06:01:53,415 - INFO - 127.0.0.1 - - [06/Apr/2026 06:01:53] "POST /scan HTTP/1.1" 200 -
+2026-04-06 06:02:04,319 - INFO - Database initialised successfully.
+2026-04-06 06:02:04,320 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 06:02:04,320 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 06:02:10,256 - INFO - 127.0.0.1 - - [06/Apr/2026 06:02:10] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 06:02:12,813 - ERROR - Failed to save scan: new row for relation "scans" violates check constraint "scans_confidence_check"
+DETAIL:  Failing row contains (36, https://webcms3.cse.unsw.edu.au/COMP6447/25T3/, t, 26067244088.64, 2026-04-06 06:02:12.812289+10).
+
+2026-04-06 06:02:12,814 - INFO - 127.0.0.1 - - [06/Apr/2026 06:02:12] "POST /scan HTTP/1.1" 200 -
+2026-04-06 06:03:23,064 - INFO - 127.0.0.1 - - [06/Apr/2026 06:03:23] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 06:03:26,026 - ERROR - Failed to save scan: new row for relation "scans" violates check constraint "scans_confidence_check"
+DETAIL:  Failing row contains (37, https://webcms3.cse.unsw.edu.au/COMP6447/25T3, t, 494294559759.72, 2026-04-06 06:03:26.025509+10).
+
+2026-04-06 06:03:26,027 - INFO - 127.0.0.1 - - [06/Apr/2026 06:03:26] "POST /scan HTTP/1.1" 200 -
+2026-04-06 07:46:01,416 - INFO - 127.0.0.1 - - [06/Apr/2026 07:46:01] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 07:46:04,876 - ERROR - Failed to save scan: new row for relation "scans" violates check constraint "scans_confidence_check"
+DETAIL:  Failing row contains (38, https://webcms3.cse.unsw.edu.au/COMP6447/25T3, t, 494294559759.72, 2026-04-06 07:46:04.874533+10).
+
+2026-04-06 07:46:04,877 - INFO - 127.0.0.1 - - [06/Apr/2026 07:46:04] "POST /scan HTTP/1.1" 200 -
+2026-04-06 07:46:34,192 - INFO - Database initialised successfully.
+2026-04-06 07:46:34,195 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 07:46:34,195 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 07:46:45,271 - INFO - 127.0.0.1 - - [06/Apr/2026 07:46:45] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 07:46:45,569 - INFO - Scan saved — id=39 is_safe=False confidence=100.0000
+2026-04-06 07:46:45,573 - INFO - 127.0.0.1 - - [06/Apr/2026 07:46:45] "POST /scan HTTP/1.1" 200 -
+2026-04-06 07:49:30,309 - INFO - Database initialised successfully.
+2026-04-06 07:49:30,311 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 07:49:30,311 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 07:50:04,329 - INFO - Database initialised successfully.
+2026-04-06 07:50:04,331 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 07:50:04,331 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 07:50:58,584 - INFO - 127.0.0.1 - - [06/Apr/2026 07:50:58] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 07:52:00,978 - INFO - Database initialised successfully.
+2026-04-06 07:52:00,981 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 07:52:00,981 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 07:52:15,666 - INFO - 127.0.0.1 - - [06/Apr/2026 07:52:15] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-06 07:54:23,566 - ERROR - Refusing to save out-of-range confidence: 4.942945597597184e+21
+2026-04-06 07:54:23,568 - INFO - 127.0.0.1 - - [06/Apr/2026 07:54:23] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-04-06 07:55:47,757 - INFO - Database initialised successfully.
+2026-04-06 07:55:47,759 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-06 07:55:47,759 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-06 07:55:53,456 - INFO - 127.0.0.1 - - [06/Apr/2026 07:55:53] "OPTIONS /scan HTTP/1.1" 200 -
