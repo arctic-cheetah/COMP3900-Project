@@ -66,11 +66,7 @@ jobs:
           exit 1
 
       - name: Run Preprocessor Unit Tests
-<<<<<<< HEAD
       # Need to add github workspace environment here to get path of ai backend
-=======
-        # Need to add github workspace environment here to get path of ai backend
->>>>>>> caitlin_scrum2
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: coverage run --parallel-mode -m pytest test/ai_test.py
@@ -122,10 +118,5 @@ jobs:
       - name: Print backend log on failure
         if: failure()
         run: |
-<<<<<<< HEAD
             echo "_____backend.log______"
             cat backend.log
-=======
-          echo "_____backend.log______"
-          cat backend.log
->>>>>>> caitlin_scrum2
