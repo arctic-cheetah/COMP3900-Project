@@ -32,7 +32,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-<<<<<<< HEAD
             python -m pip install --upgrade pip
             pip install -r backend/requirements.txt
             pip install pytest
@@ -44,18 +43,6 @@ jobs:
             pip install tldextract pytest-cov coverage
             pip install playwright
             playwright install --with-deps chromium
-=======
-          python -m pip install --upgrade pip
-          pip install -r backend/requirements.txt
-          pip install pytest
-          pip install requests
-          pip install flask
-          pip install flask_cors
-          pip install scikit-learn
-          pip install joblib
-          pip install tldextract pytest-cov coverage
-
->>>>>>> caitlin_scrum2
       - name: Run Backend
         env:
           DB_HOST: localhost
