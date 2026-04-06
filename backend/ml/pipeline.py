@@ -4,7 +4,7 @@ import pandas as pd
 from Levenshtein import distance, jaro_winkler
 from pylcs import lcs_sequence_length
 
-from .preprocessor import preprocess_data
+from ml.preprocessor import preprocess_data
 
 whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
 model_path: str = "backend/ml/models/logit_model.pkl"
@@ -105,6 +105,7 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         tuple: Returns the verdict and confidence score.
     """
     try:
+
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
 
@@ -118,9 +119,9 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         ):
             return 1, 100.0
 
-        # df["Levenshtein"] = scores["Levenshtein"]
-        # df["JaroWinkler"] = scores["JaroWinkler"]
-        # df["LCS"] = scores["LCS"]
+        df["Levenshtein"] = scores["Levenshtein"]
+        df["JaroWinkler"] = scores["JaroWinkler"]
+        df["LCS"] = scores["LCS"]
 
         is_safe, confidence = run_model(df, model_path)
 

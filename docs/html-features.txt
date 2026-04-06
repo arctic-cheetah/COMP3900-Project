@@ -9,7 +9,6 @@ HasSocialNet             0.784255
 
 HasSubmitButton          0.578561
 IsResponsive             0.548608
-
 HasTitle                 0.459725
 
 
