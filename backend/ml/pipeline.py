@@ -72,15 +72,20 @@ def _is_domain_or_subdomain(domain: str, whitelist_domain: str):
     return domain.endswith("." + whitelist_domain)
 
 
-def search_whitelist(domain: str, whitelist: list):
-    whitelist_set = set(whitelist)
-    if domain in whitelist_set:
-        return {
-            "Levenshtein": 1,
-            "JaroWinkler": 1,
-            "LCS": 1,
-        }
+def search_whitelist(domain: str, whitelist: list[str]):
+    domain = _normalize_domain(domain)
+    whitelist_set = {_normalize_domain(w) for w in whitelist}
+    # We need to normalise the domain
     # search for whitelist subdomain here!
+    # make a set of whitelist subdomain
+    for whitelist_domain in whitelist_set:
+        if _is_domain_or_subdomain(domain, whitelist_domain):
+            return {
+                "Levenshtein": 1,
+                "JaroWinkler": 1,
+                "LCS": 1,
+            }
+
     try:
         best_levenshtein = 0
         best_jaro_winkler = 0
