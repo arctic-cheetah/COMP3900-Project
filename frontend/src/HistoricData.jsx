@@ -96,6 +96,7 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
       scan={scan}
       selection={selection}
       toggleRow={toggleRow}
+      onDelete={onDelete}
     />
   ));
 
@@ -202,9 +203,9 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
           View Scan History ({history.length})
         </Button>
 
-        <Modal opened={opened} onClose={close} title="Scan History" fullScreen padding="md" closeButtonProps={{ icon: <IconX size={18} /> }}>
+        <Modal opened={opened} onClose={close} title="Scan History" fullScreen padding="md" closeButtonProps={{ icon: <IconX size={18} />, color: 'red' }}>
           <Stack gap="md">
-            <Button onClick={close} variant="light" leftSection={<IconX size={16} />}>
+            <Button onClick={close} color="red" variant="light" leftSection={<IconX size={16} />}>
               Close
             </Button>
             <Group grow gap="xs">
@@ -384,7 +385,12 @@ function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
                     variant="light"
                     size="xs"
                     leftSection={<IconTrash size={14} />}
-                    onClick={() => onDelete(scan)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (window.confirm(`Are you sure you want to delete this scan for ${scan.url}?`)) {
+                        onDelete(scan);
+                      }
+                    }}
                   >
                     Delete Record
                   </Button>
