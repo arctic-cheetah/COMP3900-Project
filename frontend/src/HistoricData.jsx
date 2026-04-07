@@ -23,7 +23,7 @@ import {
 } from "@tabler/icons-react";
 import { format } from "date-fns";
 
-export default function HistoricalData({ history, onHistoryClick }) {
+export default function HistoricalData({ history, onHistoryClick, onDelete }) {
   const [filter, setFilter] = useState("all");
 
   const filteredData = history.filter((item) => {
