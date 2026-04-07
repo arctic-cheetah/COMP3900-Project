@@ -115,3 +115,19 @@ def get_all_scans(limit: int = 500, offset: int = 0):
     except Exception as e:
         logger.error("Unable to retrieve scans: %s", e)
         return None
+    
+# Delete scan by ID, return true if deleted, else return false 
+def delete_scan(scan_id: int) -> bool:
+    query = "DELETE FROM scans WHERE id = %s RETURNING id;"
+    try:
+        with get_cursor() as cur:
+            cur.execute(query, (scan_id,))
+            deleted = cur.fetchone()
+            if not deleted:
+                logger.warning("Delete called on nonexistent scan id=%s", scan_id)
+                return False
+            logger.info("Scan deleted id=%s", scan_id)
+            return True
+    except Exception as e:
+        logger.error("Failed to delete scan: %s", e)
+        return False

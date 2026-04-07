@@ -13,7 +13,7 @@ import sys
 import tldextract
 
 from pipeline import model_pipeline
-from database import init_db, save_scan, get_all_scans
+from database import init_db, save_scan, get_all_scans, delete_scan
 
 
 app = Flask(__name__)
@@ -194,6 +194,7 @@ def check_url():
 
 @app.route("/list_scans", methods=["POST"])
 # Return paginated scan history from scans table with most recent first
+@app.route("/scans", methods=["GET"]) 
 def list_scans():
     try:
         limit = int(request.args.get("limit", 100))
@@ -249,8 +250,16 @@ def log_error():
 
     return jsonify(True), 200
 
+# Delete scan by ID, return 404 if not found, else return deleted ID
+@app.route("/scans/<int:scan_id>", methods=["DELETE"])
+def remove_scan(scan_id):
+    success = delete_scan(scan_id)
+    if not success:
+        return jsonify({"error": "scan not found"}), 404
+    return jsonify({"deleted": scan_id}), 200
 
 if __name__ == "__main__":
     app.logger.setLevel(logging.INFO)
     init_db()
     app.run(host="0.0.0.0", port=5001)
+
