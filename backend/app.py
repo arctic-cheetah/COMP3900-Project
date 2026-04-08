@@ -18,10 +18,6 @@ from database import init_db, save_scan, get_all_scans
 
 
 app = Flask(__name__)
-# TODO:
-# DONT FUCKING ALLOW ALL ROUTES TO BE CROSS ORIGIN RESOURCE SHARED
-# ADD WHITELIST
-# CORS for frontend only
 CORS(app)
 
 allowed_origins = [

@@ -47,11 +47,11 @@ class preprocess_data:
 
     def __init__(self, url: str):
         # Strip trailing slashes and cap total slashes to 2 (http:// + one path slash).
-        url = re.sub(r"/+$", "", url)
-        parts = url.split("/", NUM_SLASHES)
-        if len(parts) == 4:
-            parts[NUM_SLASHES] = parts[NUM_SLASHES].split("/", 1)[0]
-            url = "/".join(parts[:NUM_SLASHES])
+        # url = re.sub(r"/+$", "", url)
+        # parts = url.split("/", NUM_SLASHES)
+        # if len(parts) == 4:
+        #     parts[NUM_SLASHES] = parts[NUM_SLASHES].split("/", 1)[0]
+        #     url = "/".join(parts[:NUM_SLASHES])
 
         self.url_len = len(url)
         self.url = url
