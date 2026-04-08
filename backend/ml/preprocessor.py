@@ -706,8 +706,8 @@ class preprocess_data:
 
                 with open(LOG_DIR / "preprocessor_errors.txt", "a") as f:
                     f.write(json.dumps(entry) + "\n")
-
-                data[name] = [None]
+                # Should not be None here set to nothing
+                data[name] = [0]
 
         return pd.DataFrame(data)
 
