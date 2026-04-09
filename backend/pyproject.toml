@@ -21,10 +21,7 @@ dependencies = [
     "levenshtein",
     "pylcs",
     "bs4",
-    "pytest",
-    "requests",
-    "playwright",
-    "chromium"
+    "playwright"
 ]
 
 [tool.setuptools.packages.find]

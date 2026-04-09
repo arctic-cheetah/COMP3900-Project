@@ -4,11 +4,14 @@ WORKDIR /app/backend
 RUN apt-get update && apt-get install -y build-essential
 
 COPY pyproject.toml .
+
 RUN apt-get update && apt-get install -y build-essential \
     && rm -rf /var/lib/apt/lists/*
+
 RUN pip install -e .
 RUN pip install --no-cache-dir debugpy
 RUN playwright install --with-deps chromium
+
 COPY . .
 
 WORKDIR /app/
