@@ -16,7 +16,4 @@ Requires-Dist: scikit-learn
 Requires-Dist: levenshtein
 Requires-Dist: pylcs
 Requires-Dist: bs4
-Requires-Dist: pytest
-Requires-Dist: requests
 Requires-Dist: playwright
-Requires-Dist: chromium
