@@ -60,8 +60,8 @@ class preprocess_data:
         return max(len(url) - 1, 1)
 
     def get_root_domain(self, url: str):
-        domain = urlparse(url).netloc.split(":")[0]
-        return domain.removeprefix("www.")
+        ext = tldextract.extract(url)
+        return ext.domain + "." + ext.suffix
 
     def url_length(self, url: str):
         return len(url)
