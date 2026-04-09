@@ -6,6 +6,7 @@ from pylcs import lcs_sequence_length
 
 from ml.preprocessor import preprocess_data
 
+
 whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
 model_path: str = "backend/ml/models/logit_model.pkl"
 
@@ -125,7 +126,7 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         tuple: Returns the verdict and confidence score.
     """
     try:
-
+        print(f'model_pipeline: checking URL "{url}" with whitelist')
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
 
@@ -137,12 +138,14 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
             and scores["JaroWinkler"] == 1
             and scores["LCS"] == 1
         ):
+            print(f'model_pipeline: URL "{url}" is on whitelist')
             return 1, 100.0
 
         df["Levenshtein"] = scores["Levenshtein"]
         df["JaroWinkler"] = scores["JaroWinkler"]
         df["LCS"] = scores["LCS"]
 
+        print(f'model_pipeline: checking URL "{url}" with model')
         is_safe, confidence = run_model(df, model_path)
 
         return is_safe, confidence
