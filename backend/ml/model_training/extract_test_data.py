@@ -17,7 +17,7 @@ sys.path.insert(0, "./backend/ml/model_training")
 from preprocessor import preprocess_data
 from LCS import get_whitelist, search_whitelist, whitelist_path
 
-NUM_ROWS = 50
+NUM_ROWS = 10
 
 df = pd.read_csv("backend/ml/data/phishing_site_urls.csv", index_col=False)
 # randomise data
