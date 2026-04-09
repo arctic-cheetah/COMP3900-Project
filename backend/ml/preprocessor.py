@@ -60,8 +60,8 @@ class preprocess_data:
         return max(len(url) - 1, 1)
 
     def get_root_domain(self, url: str):
-        domain = urlparse(url).netloc.split(":")[0]
-        return domain.removeprefix("www.")
+        ext = tldextract.extract(url)
+        return ext.domain + "." + ext.suffix
 
     def url_length(self, url: str):
         return len(url)
@@ -647,7 +647,7 @@ class preprocess_data:
         (url_length, "URLLength"),
         (domain_length, "DomainLength"),
         (is_domain_ip, "IsDomainIP"),
-        (CharContinuationRate, "CharContinuationRate"),
+        # (CharContinuationRate, "CharContinuationRate"),
         (tld_length, "TLDLength"),
         (no_of_sub_domain, "NoOfSubDomain"),
         (has_obfuscation, "HasObfuscation"),
@@ -663,14 +663,14 @@ class preprocess_data:
         (no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"),
         (special_char_ratio_in_url, "SpecialCharRatioInURL"),
         (is_https, "IsHTTPS"),
-        (LineOfCode, "LineOfCode"),
+        # (LineOfCode, "LineOfCode"),
         (LargestLineLength, "LargestLineLength"),
         (HasTitle, "HasTitle"),
         (URLTitleMatchScore, "URLTitleMatchScore"),
         (hasFavicon, "HasFavicon"),
         (robots, "Robots"),
         (HasSocialNet, "HasSocialNet"),
-        (HasSubmitButton, "HasSubmitButton"),
+        # (HasSubmitButton, "HasSubmitButton"),
         (HasCopyrightInfo, "HasCopyrightInfo"),
         (NoOfJS, "NoOfJS"),
         (NoOfSelfRef, "NoOfSelfRef"),
