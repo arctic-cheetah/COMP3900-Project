@@ -7,9 +7,11 @@ source = backend
 [report]
 show_missing = True
 skip_covered = True
-omit = 
+omit =
     */__pycache__/*
-    backend/data/*
+    backend/ml/data/*
+    backend/ml/models/*
+    backend/ml/outputs/*
+    backend/ml/model_training/*
+    backend/test.py
     backend/models/*
-    backend/outputs/*
-    backend/model_training/*

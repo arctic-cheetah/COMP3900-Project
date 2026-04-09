@@ -4,7 +4,7 @@ import pandas as pd
 from Levenshtein import distance, jaro_winkler
 from pylcs import lcs_sequence_length
 
-from .preprocessor import preprocess_data
+from ml.preprocessor import preprocess_data
 
 whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
 model_path: str = "backend/ml/models/logit_model.pkl"
@@ -22,6 +22,8 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
         tuple: Returns the verdict (safe = 1, phishing = 0) and confidence score.
     """
     try:
+        # TODO: WHY THE ARE WE ALWAYS LOADING THE MODEL EACH TIME IT SCANS
+        # A URL? JUST CACHE IT
         model_dump = joblib.load(model_path)
         features = model_dump["features"]
         model = model_dump["model"]
@@ -55,14 +57,34 @@ def get_whitelist(whitelist_filepath: str):
     return whitelist_df["Domain"].tolist()
 
 
-def search_whitelist(domain: str, whitelist: list):
-    whitelist_set = set(whitelist)
-    if domain in whitelist_set:
-        return {
-            "Levenshtein": 1,
-            "JaroWinkler": 1,
-            "LCS": 1,
-        }
+# helper make domain consistent
+def _normalize_domain(url: str):
+    url = url.strip().lower().strip(".")
+    if url.startswith("www."):
+        url = url[4:]
+    return url
+
+
+# helper func to check for subdomain from whitelist
+def _is_domain_or_subdomain(domain: str, whitelist_domain: str):
+    if domain == whitelist_domain:
+        return True
+    return domain.endswith("." + whitelist_domain)
+
+
+def search_whitelist(domain: str, whitelist: list[str]):
+    domain = _normalize_domain(domain)
+    whitelist_set = {_normalize_domain(w) for w in whitelist}
+    # We need to normalise the domain
+    # search for whitelist subdomain here!
+    # make a set of whitelist subdomain
+    for whitelist_domain in whitelist_set:
+        if _is_domain_or_subdomain(domain, whitelist_domain):
+            return {
+                "Levenshtein": 1,
+                "JaroWinkler": 1,
+                "LCS": 1,
+            }
 
     try:
         best_levenshtein = 0
@@ -103,6 +125,7 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         tuple: Returns the verdict and confidence score.
     """
     try:
+
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
 

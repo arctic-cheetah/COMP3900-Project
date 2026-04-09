@@ -8,7 +8,6 @@ import Navbar from "./Navbar";
 import ResultModal from "./Resultmodal";
 import "./App.css";
 import logoIcon from "../assets/logo.png";
-import userIcon from "../assets/user.png";
 
 // --- DUMMY DATA FOR PREVIEW ---
 const DUMMY_HISTORY = [
@@ -47,11 +46,38 @@ const DUMMY_HISTORY = [
 
 
 export default function HomePage() {
-  const [history, setHistory] = useState(DUMMY_HISTORY);
+  const [history, setHistory] = useState(() => {
+    // Load from localStorage on initial mount
+    const stored = localStorage.getItem('scanHistory');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        // Convert timestamps back to Date objects
+        return parsed.map(item => ({
+          ...item,
+          timestamp: new Date(item.timestamp)
+        }));
+      } catch (e) {
+        console.error('Failed to parse stored history:', e);
+        return DUMMY_HISTORY;
+      }
+    }
+    return DUMMY_HISTORY;
+  });
   const [url, setUrl] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
   const [isLoading, setLoading] = useState(false);
+
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('scanHistory', JSON.stringify(history));
+  }, [history]);
+
+  const handleDeleteScans = (scansToDelete) => {
+    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
+    setHistory((current) => current.filter((scan) => !itemsToRemove.includes(scan)));
+  };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   const moveButton = useMediaQuery('(max-width: 1173px)');
@@ -67,15 +93,16 @@ export default function HomePage() {
     setIsModalOpen(true);
   };
 
-  // A Helperfunction to get the initial history from the db
+  // Fetch from backend only if localStorage is empty
   useEffect(() => {
+    const stored = localStorage.getItem('scanHistory');
+    if (stored) return; // Skip if we have local data
+
     (async () => {
       try {
         let data = await getStoredData();
         console.log(data)
         let scans = Array.isArray(data["scans"]) ? data["scans"] : []
-        // Is it array?
-        // yes
         let mapped = scans.map(s => ({
           url: s.url,
           timestamp: s.scanned_at,
@@ -229,7 +256,13 @@ export default function HomePage() {
         />
       )}
 
-      <HistoricalData history={history} onHistoryClick={openHistoryResult} />
+      <HistoricalData
+        history={history}
+        onDelete={handleDeleteScans}
+        onDeleteMultiple={handleDeleteScans}
+        onHistoryClick={openHistoryResult}
+      />
+
       <p className='privacy-text'>
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.
