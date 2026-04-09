@@ -23,6 +23,8 @@ dependencies = [
     "bs4",
     "pytest",
     "requests",
+    "playwright",
+    "chromium"
 ]
 
 [tool.setuptools.packages.find]
