@@ -435,6 +435,8 @@ class preprocess_data:
         return self.num_external_ref
 
     def HasSubmitButton(self, url):
+        if self.html_data is None:
+            return 0
         has_submit_btn = self.html_data.find("button", type="submit") is not None
         return 1 if has_submit_btn is not None else 0
 
@@ -706,8 +708,8 @@ class preprocess_data:
 
                 with open(LOG_DIR / "preprocessor_errors.txt", "a") as f:
                     f.write(json.dumps(entry) + "\n")
-
-                data[name] = [None]
+                # Should not be None here set to nothing
+                data[name] = [0]
 
         return pd.DataFrame(data)
 
