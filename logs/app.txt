@@ -721,3 +721,14 @@
  * Running on http://172.31.167.174:5001
 2026-04-10 13:00:41,871 - INFO - [33mPress CTRL+C to quit[0m
 2026-04-10 13:01:44,911 - INFO - 127.0.0.1 - - [10/Apr/2026 13:01:44] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-10 14:01:56,429 - INFO - Database initialised successfully.
+2026-04-10 14:01:56,431 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-10 14:01:56,431 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-10 14:02:29,444 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-10 14:02:29,447 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-10 14:02:29,449 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-10 14:02:29,451 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-10 14:02:29,453 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
