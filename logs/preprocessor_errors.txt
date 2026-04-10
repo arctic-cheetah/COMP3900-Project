@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {"timestamp": "2026-03-26T14:07:33.608523", "log_type": "PREPROCESSOR_ERROR", "message": "PREPROCESSOR ERROR: Feature 'LetterRatioInURL' failed on url 'https://www.southbankmosaics.com' with error object of type 'type' has no len()"}
 {"timestamp": "2026-03-26T14:07:33.608742", "log_type": "PREPROCESSOR_ERROR", "message": "PREPROCESSOR ERROR: Feature 'DigitRatioInURL' failed on url 'https://www.southbankmosaics.com' with error object of type 'type' has no len()"}
 {"timestamp": "2026-03-26T14:07:33.613126", "log_type": "PREPROCESSOR_ERROR", "message": "PREPROCESSOR ERROR: Feature 'LetterRatioInURL' failed on url 'https://www.uni-mainz.de' with error object of type 'type' has no len()"}
@@ -481,3 +482,5 @@
 {"timestamp": "2026-04-09T00:59:20.992919", "log_type": "PREPROCESSOR_ERROR", "message": "PREPROCESSOR ERROR: Feature 'HasSubmitButton' failed on url 'https://fortycooola.top/read.php' with error 'NoneType' object has no attribute 'find'"}
 {"timestamp": "2026-04-09T01:04:30.510814", "log_type": "PREPROCESSOR_ERROR", "message": "PREPROCESSOR ERROR: Feature 'HasSubmitButton' failed on url 'https://stephaniesilvers.com/wp-content/box1/index.php' with error 'NoneType' object has no attribute 'find'"}
 {"timestamp": "2026-04-09T01:04:35.117420", "log_type": "PREPROCESSOR_ERROR", "message": "PREPROCESSOR ERROR: Feature 'HasSubmitButton' failed on url 'https://barrelandfare.com/wp-includes/file/files/db/file.dropbox/' with error 'NoneType' object has no attribute 'find'"}
+=======
+>>>>>>> master

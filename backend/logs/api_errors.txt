@@ -1,1 +1,0 @@
-{"timestamp": "2026-04-05T07:32:52.616685", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL \"https://www.microsoft.com\""}

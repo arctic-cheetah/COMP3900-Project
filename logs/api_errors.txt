@@ -1,3 +1,0 @@
-{"timestamp": "2026-03-30T14:03:22.428270", "log_type": "ERROR", "message": "Invalid URL from 127.0.0.1: https://www.saffronart.com"}
-{"timestamp": "2026-03-30T14:03:29.309033", "log_type": "ERROR", "message": "Invalid URL from 127.0.0.1: https://www.saffronart.com"}
-{"timestamp": "2026-03-30T14:03:55.820810", "log_type": "ERROR", "message": "Invalid URL from 127.0.0.1: https://saffronart.com"}

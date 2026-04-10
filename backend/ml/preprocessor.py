@@ -60,8 +60,8 @@ class preprocess_data:
         return max(len(url) - 1, 1)
 
     def get_root_domain(self, url: str):
-        domain = urlparse(url).netloc.split(":")[0]
-        return domain.removeprefix("www.")
+        ext = tldextract.extract(url)
+        return ext.domain + "." + ext.suffix
 
     def url_length(self, url: str):
         return len(url)
@@ -435,6 +435,8 @@ class preprocess_data:
         return self.num_external_ref
 
     def HasSubmitButton(self, url):
+        if self.html_data is None:
+            return 0
         has_submit_btn = self.html_data.find("button", type="submit") is not None
         return 1 if has_submit_btn is not None else 0
 

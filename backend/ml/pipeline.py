@@ -6,6 +6,7 @@ from pylcs import lcs_sequence_length
 
 from ml.preprocessor import preprocess_data
 
+
 whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
 model_path: str = "backend/ml/models/logit_model.pkl"
 
@@ -57,34 +58,23 @@ def get_whitelist(whitelist_filepath: str):
     return whitelist_df["Domain"].tolist()
 
 
-# helper make domain consistent
-def _normalize_domain(url: str):
-    url = url.strip().lower().strip(".")
-    if url.startswith("www."):
-        url = url[4:]
-    return url
-
-
 # helper func to check for subdomain from whitelist
-def _is_domain_or_subdomain(domain: str, whitelist_domain: str):
+def is_same_domain(domain: str, whitelist_domain: str):
     if domain == whitelist_domain:
         return True
-    return domain.endswith("." + whitelist_domain)
+    elif domain.endswith("." + whitelist_domain):
+        return True
+    else:
+        return False
 
 
 def search_whitelist(domain: str, whitelist: list[str]):
-    domain = _normalize_domain(domain)
-    whitelist_set = {_normalize_domain(w) for w in whitelist}
-    # We need to normalise the domain
-    # search for whitelist subdomain here!
-    # make a set of whitelist subdomain
-    for whitelist_domain in whitelist_set:
-        if _is_domain_or_subdomain(domain, whitelist_domain):
-            return {
-                "Levenshtein": 1,
-                "JaroWinkler": 1,
-                "LCS": 1,
-            }
+    if domain in whitelist:
+        return {
+            "Levenshtein": 1,
+            "JaroWinkler": 1,
+            "LCS": 1,
+        }
 
     try:
         best_levenshtein = 0
@@ -125,7 +115,7 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         tuple: Returns the verdict and confidence score.
     """
     try:
-
+        print(f'model_pipeline: checking URL "{url}" with whitelist')
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
 
@@ -137,12 +127,14 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
             and scores["JaroWinkler"] == 1
             and scores["LCS"] == 1
         ):
+            print(f'model_pipeline: URL "{url}" is on whitelist')
             return 1, 100.0
 
         df["Levenshtein"] = scores["Levenshtein"]
         df["JaroWinkler"] = scores["JaroWinkler"]
         df["LCS"] = scores["LCS"]
 
+        print(f'model_pipeline: checking URL "{url}" with model')
         is_safe, confidence = run_model(df, model_path)
 
         return is_safe, confidence
