@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 # Given a url get these feature data
 # Then return a np.array of those features
-TIMEOUT = 8
+TIMEOUT = 4
 NUM_SLASHES = 3
 
 

@@ -166,6 +166,15 @@ def check_url():
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL format"}), 400
 
+    try:
+        res = urlopen(url, timeout=5)
+        if res.getcode() < 400:
+            print("Url is alive!")
+        else:
+            return jsonify({"error": f"URL is does not exist: {res.getcode()}"}), 400
+    except Exception as e:
+        return jsonify({"error": f"{e}"}), 400
+
     sanitised_url = sanitise_url(url)
     try:
         res = model_pipeline(sanitised_url)
