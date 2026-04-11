@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import App from "../App";
 
-jest.mock("../src/HomePage", () => () => (
-    <div data-testid="hp-mock">Home</div>
-));
+vi.mock("../HomePage", () => ({
+    default: () => <div data-testid="hp-mock">Home</div>
+}));
 
 describe("Root App Component", () => {
     it("should mount the HomePage on initial load", () => {

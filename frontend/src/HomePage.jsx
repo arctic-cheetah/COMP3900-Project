@@ -233,13 +233,13 @@ export default function HomePage() {
         />
       )}
 
-      <HistoricalData 
-      history={history} 
+      <HistoricalData
+      history={history}
       onDelete={handleDeleteScans}
       onDeleteMultiple={handleDeleteScans}
-      onHistoryClick={openHistoryResult} 
+      onHistoryClick={openHistoryResult}
       />
-      
+
     <p className='privacy-text'>
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.

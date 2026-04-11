@@ -1,23 +1,44 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import HomePage from "../HomePage";
 import * as api from "../api";
+import { vi } from "vitest";
 
-jest.mock("../src/api", () => ({
-    scanURL: jest.fn(),
-}))
+beforeEach(() => {
+    const el = document.createElement("div");
+    el.id = "result";
+    document.body.appendChild(el);
+});
+
+afterEach(() => {
+    document.body.innerHTML = "";
+});
+
+vi.mock("../api", () => ({
+    scanURL: vi.fn(),
+}));
 
 // kill the stuff we aren't testing in this file
-jest.mock("../src/Navbar", () => () => <nav />);
-jest.mock("../src/HistoricData", () => () => <section>History Section</section>);
-jest.mock("../src/Resultmodal", () => ({ result }) => (
-    <div id="modal-result">{result?.is_safe ? "Verified" : "Danger"}</div>
-));
+vi.mock("../Navbar", () => ({
+    default: () => <nav />,
+}));
 
-jest.mock("@mantine/core", () => ({
+vi.mock("../HistoricData", () => ({
+    default: () => <section>History Section</section>,
+}));
+
+vi.mock("../Resultmodal", () => ({
+    default: ({ result }) => (
+        <div id="modal-result">
+            {result?.isSafe ? "Verified" : "Danger"}
+        </div>
+    ),
+}));
+
+vi.mock("@mantine/core", () => ({
     Loader: () => <span>loading...</span>,
 }));
 
-jest.mock("@mantine/hooks", () => ({
+vi.mock("@mantine/hooks", () => ({
     useMediaQuery: () => true,
 }));
 
@@ -68,7 +89,8 @@ describe("HomePage Logic", () => {
 
         fireEvent.click(screen.getByRole("button", { name: /analyse/i }));
 
-        const result = await screen.findByText(/verified/i);
-        expect(result).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText(/verified/i)).toBeInTheDocument();
+        });
     });
 });
