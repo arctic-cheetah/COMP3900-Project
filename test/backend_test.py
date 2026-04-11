@@ -34,7 +34,7 @@ def test_invalid_body_scan():
 
 
 def test_invalid_url_to_scan():
-    req = requests.Request("POST", URL + SCAN, headers=headers, data={"urls": 123})
+    req = requests.Request("POST", URL + SCAN, headers=headers, json={"urls": 123})
     prep = s.prepare_request(req)
     res = s.send(prep)
     assert res.status_code == 400
@@ -54,4 +54,14 @@ def test_backend_reject_malformed():
     prep = s.prepare_request(req)
     res = s.send(prep)
     assert res.status_code == 400
+    print(res.text)
+
+
+def test_backend_google_url():
+    req = requests.Request(
+        "POST", URL + SCAN, headers=headers, json={"url": "https://google.com"}
+    )
+    prep = s.prepare_request(req)
+    res = s.send(prep)
+    assert res.status_code == 200
     print(res.text)
