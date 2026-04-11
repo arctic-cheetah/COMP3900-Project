@@ -157,6 +157,8 @@ def check_url():
         app.logger.warning(msg)
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL scheme"}), 400
+    # TODO: Fix bug! if the scheme is not found we should not assume HTTP
+    # WE NEED TO CHECK IF TLS IS SUPPORTED!
     if not url_scheme:
         url = "http://" + url
 

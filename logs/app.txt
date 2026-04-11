@@ -735,3 +735,63 @@
 2026-04-10 15:06:43,462 - INFO - 127.0.0.1 - - [10/Apr/2026 15:06:43] "OPTIONS /scan HTTP/1.1" 200 -
 2026-04-10 15:06:50,294 - INFO - Scan saved — id=84 is_safe=True confidence=100.0000
 2026-04-10 15:06:50,297 - INFO - 127.0.0.1 - - [10/Apr/2026 15:06:50] "POST /scan HTTP/1.1" 200 -
+2026-04-11 04:34:46,767 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-11 04:34:59,136 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-11 04:37:23,407 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-11 05:00:43,319 - INFO - Database initialised successfully.
+2026-04-11 05:00:43,323 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-11 05:00:43,323 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-11 05:07:19,568 - INFO - 127.0.0.1 - - [11/Apr/2026 05:07:19] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:07:28,551 - ERROR - Failed to save scan: permission denied for table scans
+
+2026-04-11 05:07:28,552 - INFO - 127.0.0.1 - - [11/Apr/2026 05:07:28] "POST /scan HTTP/1.1" 200 -
+2026-04-11 05:09:39,749 - INFO - 127.0.0.1 - - [11/Apr/2026 05:09:39] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:09:48,336 - INFO - Scan saved — id=1 is_safe=True confidence=100.0000
+2026-04-11 05:09:48,348 - INFO - 127.0.0.1 - - [11/Apr/2026 05:09:48] "POST /scan HTTP/1.1" 200 -
+2026-04-11 05:10:21,047 - INFO - 127.0.0.1 - - [11/Apr/2026 05:10:21] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:10:36,002 - INFO - Scan saved — id=2 is_safe=True confidence=100.0000
+2026-04-11 05:10:36,013 - INFO - 127.0.0.1 - - [11/Apr/2026 05:10:36] "POST /scan HTTP/1.1" 200 -
+2026-04-11 05:11:30,661 - INFO - 127.0.0.1 - - [11/Apr/2026 05:11:30] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:11:37,446 - INFO - Scan saved — id=3 is_safe=False confidence=100.0000
+2026-04-11 05:11:37,457 - INFO - 127.0.0.1 - - [11/Apr/2026 05:11:37] "POST /scan HTTP/1.1" 200 -
+2026-04-11 05:11:58,471 - INFO - 127.0.0.1 - - [11/Apr/2026 05:11:58] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:12:17,805 - INFO - Scan saved — id=4 is_safe=True confidence=100.0000
+2026-04-11 05:12:17,808 - INFO - 127.0.0.1 - - [11/Apr/2026 05:12:17] "POST /scan HTTP/1.1" 200 -
+2026-04-11 05:12:45,052 - INFO - 127.0.0.1 - - [11/Apr/2026 05:12:45] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:12:46,194 - INFO - 127.0.0.1 - - [11/Apr/2026 05:12:46] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-11 05:13:36,601 - INFO - 127.0.0.1 - - [11/Apr/2026 05:13:36] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:13:36,962 - INFO - 127.0.0.1 - - [11/Apr/2026 05:13:36] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-11 05:13:45,093 - INFO - 127.0.0.1 - - [11/Apr/2026 05:13:45] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:13:45,430 - INFO - 127.0.0.1 - - [11/Apr/2026 05:13:45] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-11 05:13:52,896 - INFO - Database initialised successfully.
+2026-04-11 05:13:52,900 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-11 05:13:52,900 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-11 05:13:56,068 - INFO - 127.0.0.1 - - [11/Apr/2026 05:13:56] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:13:56,409 - INFO - 127.0.0.1 - - [11/Apr/2026 05:13:56] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-11 05:14:30,826 - INFO - 127.0.0.1 - - [11/Apr/2026 05:14:30] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:14:31,157 - INFO - 127.0.0.1 - - [11/Apr/2026 05:14:31] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-11 05:14:38,119 - INFO - 127.0.0.1 - - [11/Apr/2026 05:14:38] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:14:38,458 - INFO - 127.0.0.1 - - [11/Apr/2026 05:14:38] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-11 05:15:41,737 - INFO - Database initialised successfully.
+2026-04-11 05:15:41,742 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-11 05:15:41,742 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-11 05:15:47,590 - INFO - 127.0.0.1 - - [11/Apr/2026 05:15:47] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:16:10,029 - INFO - 127.0.0.1 - - [11/Apr/2026 05:16:10] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-11 05:19:51,009 - INFO - 127.0.0.1 - - [11/Apr/2026 05:19:51] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-11 05:20:07,837 - INFO - Scan saved — id=5 is_safe=False confidence=100.0000
+2026-04-11 05:20:07,845 - INFO - 127.0.0.1 - - [11/Apr/2026 05:20:07] "POST /scan HTTP/1.1" 200 -
