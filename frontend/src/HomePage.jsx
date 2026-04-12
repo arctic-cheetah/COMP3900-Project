@@ -160,6 +160,7 @@ export default function HomePage() {
       // const resultElem = document.getElementById('result');
       console.log(e);
       alert(e);
+      setLoading(false);
       // resultElem.textContent = e.message;
     }
   };
