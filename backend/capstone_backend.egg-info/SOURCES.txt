@@ -11,4 +11,3 @@ ml/model_training/extract_test_data.py
 ml/model_training/gridSearch.py
 ml/model_training/model_testing.py
 ml/model_training/preprocessor_research_paper.py
-ml/model_training/t.py
