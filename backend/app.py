@@ -18,6 +18,7 @@ from database import init_db, save_scan, get_all_scans
 
 
 app = Flask(__name__)
+CORS(app)
 
 allowed_origins = [
     "http://127.0.0.1:80",

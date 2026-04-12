@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 # Given a url get these feature data
 # Then return a np.array of those features
 TIMEOUT = 8
+NUM_SLASHES = 3
 
 
 # def preprocess_data(self, self, url: str):
@@ -45,8 +46,13 @@ class preprocess_data:
     has_title: bool = False
 
     def __init__(self, url: str):
-        # We should ensure ending slashes are stripped
-        url.strip("/")
+        # Strip trailing slashes and cap total slashes to 2 (http:// + one path slash).
+        # url = re.sub(r"/+$", "", url)
+        # parts = url.split("/", NUM_SLASHES)
+        # if len(parts) == 4:
+        #     parts[NUM_SLASHES] = parts[NUM_SLASHES].split("/", 1)[0]
+        #     url = "/".join(parts[:NUM_SLASHES])
+
         self.url_len = len(url)
         self.url = url
 
@@ -54,8 +60,8 @@ class preprocess_data:
         return max(len(url) - 1, 1)
 
     def get_root_domain(self, url: str):
-        domain = urlparse(url).netloc.split(":")[0]
-        return domain.removeprefix("www.")
+        ext = tldextract.extract(url)
+        return ext.domain + "." + ext.suffix
 
     def url_length(self, url: str):
         return len(url)
@@ -429,7 +435,10 @@ class preprocess_data:
         return self.num_external_ref
 
     def HasSubmitButton(self, url):
-        pass
+        if self.html_data is None:
+            return 0
+        has_submit_btn = self.html_data.find("button", type="submit") is not None
+        return 1 if has_submit_btn is not None else 0
 
     def HasTitle(self, url) -> int:
         if self.html_data is None:
@@ -438,22 +447,93 @@ class preprocess_data:
         return 1 if self.has_title is not None else 0
 
     def pay(self, url):
-        pass
+        # checks for financial redflag  keywords like asking for bank info
+        if not hasattr(self, "page_data") or not self.page_data:
+            return 0
+
+        # join everything to make a string to scan whole page at once
+        visible_text = "\n".join(self.page_data).lower()
+
+        # added some keywords to look out for
+        red_flag_words = [
+            "bank",
+            "pay",
+            "transfer",
+            "fee",
+            "credit card",
+            "payment",
+            "billing",
+        ]
+
+        if any(term in visible_text for term in red_flag_words):
+            return 1
+        return 0
 
     def HasHiddenFields(self, url):
-        pass
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+
+        try:
+            hidden_tags = self.html_data.find_all("input", type="hidden")
+            return 1 if len(hidden_tags) > 0 else 0
+        except Exception:
+            return 0
 
     def IsResponsive(self, url):
         pass
 
     def HasDescription(self, url):
-        pass
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
 
-    def HasCopyRightInfo(self, url):
-        pass
+        try:
+            desc = self.html_data.find("meta", attrs={"name": "description"})
+            if desc and desc.get("content"):
+                return 1
+        except Exception:
+            pass
+        return 0
+
+    def HasCopyrightInfo(self, url):
+        # Regex check for copyright info (symbol or word)
+        if not hasattr(self, "page_data") or not self.page_data:
+            return 0
+
+        # join all lines to one large string to scan
+        full_html = "\n".join(self.page_data).lower()
+
+        copyright_regex = r"(copyright|©|&copy;)\s*(d{4})?"
+
+        if re.search(copyright_regex, full_html):
+            return 1
+        return 0
 
     def HasSocialNet(self, url):
-        pass
+        # check for social links
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+        # TODO: there are more social networks! ADD THEME HERE
+        platforms = [
+            "facebook",
+            "instagram",
+            "youtube",
+            "x",
+            "twitter",
+            "linkedin",
+            "discord",
+            "tiktok",
+            "reddit",
+        ]
+
+        try:
+            links = self.html_data.find_all("a", href=True)
+            for link in links:
+                href = link["href"].lower()
+                if any(plat in href for plat in platforms):
+                    return 1
+        except Exception:
+            pass
+        return 0
 
     def CharContinuationRate(self, url: str):
         # Return the length of the longest congitguous sequence of:
@@ -590,12 +670,14 @@ class preprocess_data:
         (HasTitle, "HasTitle"),
         (URLTitleMatchScore, "URLTitleMatchScore"),
         (hasFavicon, "HasFavicon"),
-        (NoOfJS, "NoOfJS"),
         (robots, "Robots"),
+        (HasSocialNet, "HasSocialNet"),
+        (HasSubmitButton, "HasSubmitButton"),
+        (HasCopyrightInfo, "HasCopyrightInfo"),
+        (NoOfJS, "NoOfJS"),
         (NoOfSelfRef, "NoOfSelfRef"),
         (NoOfEmptyRef, "NoOfEmptyRef"),
         (NoOfExternalRef, "NoOfExternalRef"),
-        # (HasSubmitButton, "HasSubmitButton")
     ]
 
     def get_data(self) -> pd.DataFrame:
@@ -626,8 +708,8 @@ class preprocess_data:
 
                 with open(LOG_DIR / "preprocessor_errors.txt", "a") as f:
                     f.write(json.dumps(entry) + "\n")
-
-                data[name] = [None]
+                # Should not be None here set to nothing
+                data[name] = [0]
 
         return pd.DataFrame(data)
 
