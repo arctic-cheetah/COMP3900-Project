@@ -1,7 +1,9 @@
 import './ResultModal.css';
+import { useMantineTheme } from '@mantine/core';
 
 const ResultModal = ({ result, onClose }) => {
   if (!result) return null;
+  const theme = useMantineTheme();
 
   return (
     <div className='overlay' onClick={onClose}>
@@ -25,9 +27,14 @@ const ResultModal = ({ result, onClose }) => {
             <div className='confidence-row'>
               <div className='confidence-bar'>
                 <div
-                  className={`confidence-fill ${result.isSafe ? 'safe' : 'phishing'}`}
-                  style={{ width: `${result.confidence}%` }}
-                ></div>
+                  className='confidence-fill'
+                  style={{
+                    width: `${result.confidence}%`,
+                    backgroundColor: result.isSafe
+                      ? theme.colors.green[6]
+                      : theme.colors.red[6],
+                  }}
+                />
               </div>
 
               <span className='confidence-value'>
