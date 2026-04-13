@@ -75,9 +75,9 @@ if __name__ == "__main__":
             elif result_type == "valid":
                 valid_urls.loc[len(valid_urls)] = [url, value]
 
-            if i % 100 == 0 and i > 0:
+            if (i + 1) % 100 == 0:
                 print("\033[K", end="")
-                print(f"Processed {start_index + i} in {round(time.time() - start_time)}s")
+                print(f"Processed {start_index + i + 1} in {round(time.time() - start_time)}s")
                 print("\033[K", end="")
                 print(f"\tInvalid urls: {len(invalid_urls)}")
                 print("\033[K", end="")
@@ -86,7 +86,11 @@ if __name__ == "__main__":
                 print(f"\tValid urls: {len(valid_urls)}")
                 print("\033[4F", end="")
 
-            if i % 1000 == 0 and i > 0:
+            if (i + 1) % 1000 == 0:
                 invalid_urls.to_csv(INVALID_FILE, index=False)
                 timed_out_urls.to_csv(TIMED_OUT_FILE, index=False)
                 valid_urls.to_csv(VALID_FILE, index=False)
+
+    invalid_urls.to_csv(INVALID_FILE, index=False)
+    timed_out_urls.to_csv(TIMED_OUT_FILE, index=False)
+    valid_urls.to_csv(VALID_FILE, index=False)
