@@ -480,7 +480,18 @@ class preprocess_data:
             return 0
 
     def IsResponsive(self, url):
-        pass
+        # Hmm better to use heuristic analysis on css or viewport meta
+        # to determine if responsive. Cheap and quick
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+        try:
+            has_viewport = (
+                self.html_data.find("meta", attrs={"name": "viewport"}) is not None
+            )
+            has_media = "@media" in self.raw_html.lower()
+            return 1 if (has_media or has_viewport) else 0
+        except Exception:
+            pass
 
     def HasDescription(self, url):
         if not hasattr(self, "html_data") or not self.html_data:
