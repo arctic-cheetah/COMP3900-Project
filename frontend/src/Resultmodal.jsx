@@ -1,5 +1,6 @@
 import './ResultModal.css';
-import { useMantineTheme } from '@mantine/core';
+import { useMantineTheme, Badge } from '@mantine/core';
+import { IconCheck, IconAlertTriangle } from '@tabler/icons-react';
 
 const ResultModal = ({ result, onClose }) => {
   if (!result) return null;
@@ -11,7 +12,20 @@ const ResultModal = ({ result, onClose }) => {
         <p className='analysis-result-text'>Analysis Results</p>
 
         <div className='result-icon'>
-          {result.isSafe ? '✅ URL IS SAFE!' : '⚠️ URL IS PHISHING'}
+          <Badge
+            color={result.isSafe ? 'green' : 'red'}
+            variant='light'
+            size='lg'
+            leftSection={
+              result.isSafe ? (
+                <IconCheck size={22} />
+              ) : (
+                <IconAlertTriangle size={22} />
+              )
+            }
+          >
+            {result.isSafe ? 'Safe' : 'Phishing'}
+          </Badge>
         </div>
 
         <div className='result-text'>
