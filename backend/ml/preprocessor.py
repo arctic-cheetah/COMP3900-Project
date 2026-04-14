@@ -493,6 +493,15 @@ class preprocess_data:
         except Exception:
             pass
 
+    def NoOfiFrame(self, url):
+        pass
+
+    def NoOfImage(self, url):
+        pass
+
+    def KolmogorovScore(self, url):
+        pass
+
     def HasDescription(self, url):
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
