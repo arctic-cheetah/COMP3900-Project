@@ -13,6 +13,7 @@ from pathlib import Path as path
 from ipaddress import ip_address
 import traceback
 import unicodedata
+import zlib
 from playwright.sync_api import sync_playwright
 
 
@@ -514,8 +515,13 @@ class preprocess_data:
         except Exception:
             return 0
 
-    def KolmogorovScore(self, url):
-        pass
+    def KolmogorovScore(self, url: str):
+        # Note I need to convert url to bytes
+        # Then compress / total_url_bytes
+        # Precondition, url is always valid
+        raw = url.encode("utf-8", errors="ignore")
+        compressed = zlib.compress(url)
+        return len(compressed) / len(raw)
 
     def HasDescription(self, url):
         if not hasattr(self, "html_data") or not self.html_data:
