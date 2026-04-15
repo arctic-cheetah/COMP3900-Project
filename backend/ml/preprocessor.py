@@ -494,10 +494,25 @@ class preprocess_data:
             pass
 
     def NoOfiFrame(self, url):
-        pass
+        """
+        Return the number of iFrame present
+        """
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+        try:
+            iframes = self.html_data.find_all("iframe")
+            return len(iframes)
+        except Exception:
+            return 0
 
     def NoOfImage(self, url):
-        pass
+        if not hasattr(self, "html_data") or not self.html_data:
+            return 0
+        try:
+            images = self.html_data.find_all("img")
+            return len(images)
+        except Exception:
+            return 0
 
     def KolmogorovScore(self, url):
         pass
