@@ -157,9 +157,11 @@ export default function HomePage() {
         setLoading(false);
       }, 500);
     } catch (e) {
-      const resultElem = document.getElementById('result');
-      resultElem.textContent = e.message;
+      // const resultElem = document.getElementById('result');
       console.log(e);
+      alert(e);
+      setLoading(false);
+      // resultElem.textContent = e.message;
     }
   };
 

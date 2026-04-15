@@ -9,11 +9,11 @@ sys.path.insert(0, "./backend/ml/model_training")
 from preprocessor import preprocess_data
 from LCS import get_whitelist, search_whitelist, whitelist_path
 
-NUM_ROWS = 40
+NUM_ROWS = 5_000
 WHICH_DATA = 1
 CSV_FILE = "backend/ml/data/phishing_site_urls.csv"
 # CSV_FILE = "backend/ml/data/StealthPhisher2025.csv"
-TIMEOUT_EXTRACT_DATA = 5
+TIMEOUT_EXTRACT_DATA = 4
 
 
 df = pd.read_csv(CSV_FILE, index_col=False)
@@ -44,7 +44,7 @@ for idx, row_data in select_rows.iterrows():
     # Check that the url is responsive:
     try:
         res = urlopen(row_data["URL"], timeout=TIMEOUT_EXTRACT_DATA)
-        if res.getcode() < 400:
+        if res.getcode() < 404:
             print("url is alive!")
         else:
             continue

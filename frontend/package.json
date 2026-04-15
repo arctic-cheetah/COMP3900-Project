@@ -10,8 +10,8 @@
     "debug": ""
   },
   "dependencies": {
-    "@mantine/core": "^8.3.16",
-    "@mantine/hooks": "^8.3.16",
+    "@mantine/core": "^8.3.18",
+    "@mantine/hooks": "^8.3.18",
     "@tabler/icons-react": "^3.40.0",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.577.0",
@@ -20,6 +20,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.2"
   }
 }

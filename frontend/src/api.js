@@ -8,7 +8,7 @@ export const scanURL = async (url) => {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || "Failed to scan website url");
+    throw new Error(res.statusText + `${res.status}`|| "Failed to scan website url");
   }
   return res.json();
 };
