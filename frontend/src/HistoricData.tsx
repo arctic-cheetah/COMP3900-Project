@@ -33,7 +33,7 @@ import { format } from "date-fns";
 import { useMediaQuery, useDisclosure } from "@mantine/hooks";
 
 // Types and interfaces
-interface Scan {
+export interface Scan {
   url: string;
   isSafe: boolean;
   timestamp: string | number | Date;
