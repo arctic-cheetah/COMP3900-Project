@@ -2,7 +2,18 @@ import './ResultModal.css';
 import { useMantineTheme, Badge } from '@mantine/core';
 import { IconCheck, IconAlertTriangle } from '@tabler/icons-react';
 
-const ResultModal = ({ result, onClose }) => {
+type Result = {
+  isSafe: boolean;
+  confidence: number;
+  url: string;
+};
+
+type ResultModalVars = {
+  result: Result | null;
+  onClose: () => void;
+};
+
+const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
   if (!result) return null;
   const theme = useMantineTheme();
 
