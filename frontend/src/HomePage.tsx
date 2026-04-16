@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-import { scanURL, getStoredData } from "./api";
-import HistoricalData from "./HistoricData";
-import Navbar from "./Navbar";
-import ResultModal from "./Resultmodal";
+import { scanURL, getStoredData } from "./api.js";
+import HistoricalData from "./HistoricData.js";
+import Navbar from "./Navbar.jsx";
+import ResultModal from "./Resultmodal.jsx";
 import "./App.css";
 import logoIcon from "../assets/logo.png";
 

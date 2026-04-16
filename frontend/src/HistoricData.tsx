@@ -1,6 +1,6 @@
 import "./App.css";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Table,
   Badge,
@@ -32,12 +32,31 @@ import {
 import { format } from "date-fns";
 import { useMediaQuery, useDisclosure } from "@mantine/hooks";
 
-export default function HistoricalData({ history, onDelete, onDeleteMultiple, onHistoryClick }) {
-  const [filter, setFilter] = useState("all");
+// Types and interfaces
+interface Scan {
+  url: string;
+  isSafe: boolean;
+  timestamp: string | number | Date;
+  confidence: number;
+};
 
-  const [selection, setSelection] = useState([]);
+interface HistoricalDataProps {
+  history: Scan[];
+  onDelete: (scan: Scan) => void;
+  onDeleteMultiple: (scans: Scan[]) => void;
+  onHistoryClick: (scan: Scan) => void;
+};
 
-  const isMobile = useMediaQuery('(max-width: 768px)');
+export default function HistoricalData({
+  history,
+  onDelete,
+  onDeleteMultiple,
+  onHistoryClick,
+}: HistoricalDataProps) {
+  const [filter, setFilter] = useState<string | null>("all");
+  const [selection, setSelection] = useState<Scan[]>([]);
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [opened, { open, close }] = useDisclosure(false);
 
   const filteredData = history.filter((item) => {
@@ -45,11 +64,11 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
     return filter === "safe" ? item.isSafe : !item.isSafe;
   });
 
-  const toggleRow = (scan) => {
+  const toggleRow = (scan: Scan) => {
     setSelection((current) =>
       current.includes(scan)
-        ? current.filter((item) => item !== scan)
-        : [...current, scan]
+      ? current.filter((item) => item !== scan)
+      : [...current, scan]
     );
   };
 
@@ -62,7 +81,9 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
   const handleBulkDelete = () => {
     if (selection.length === 0) return;
 
-    if (window.confirm(`Are you sure you want to delete ${selection.length} selected scans?`)) {
+    if (window.confirm(
+      `Are you sure you want to delete ${selection.length} selected scans?`
+    )) {
       onDeleteMultiple(selection);
       setSelection([]);
     }
@@ -155,7 +176,7 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
     </Stack>
   );
 
-  const BulkActionBar = ({ isMobileView = false }) => {
+  const BulkActionBar = ({ isMobileView = false }: { isMobileView?: boolean }) => {
     if (selection.length === 0) return null;
 
     return (
@@ -225,7 +246,6 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
 
   return (
     <Paper p="xl" radius="md" withBorder shadow="sm">
-      {/* Header Section */}
       <Group justify="space-between" mb="xl" align="flex-start">
         <Stack gap={4}>
           <Title order={3}>Past URLs Analysed</Title>
@@ -245,7 +265,6 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
         />
       </Group>
 
-      {/* Stats Cards Section */}
       <Group grow mb="xl">
         <StatCard
           label="Total Scans"
@@ -285,7 +304,6 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
         </Group>
       )}
 
-      {/* Table Section with accordion rows*/}
       <ScrollArea h={400}>
         <Table verticalSpacing="md">
           <Table.Thead
@@ -301,7 +319,20 @@ export default function HistoricalData({ history, onDelete, onDeleteMultiple, on
   );
 }
 
-function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
+interface DesktopRowProps {
+  scan: Scan;
+  selection: Scan[];
+  toggleRow: (scan: Scan) => void;
+  onDelete: (scan: Scan) => void;
+};
+
+function DesktopScanRow({
+  scan,
+  selection,
+  toggleRow,
+  onDelete
+}: DesktopRowProps){
+
   const [opened, { toggle }] = useDisclosure(false);
   const isSelected = selection.includes(scan);
 
@@ -322,7 +353,7 @@ function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
           />
         </Table.Td>
         <Table.Td>
-          <Text size="sm" fw={500} truncate maxWidth={300}>{scan.url}</Text>
+          <Text size="sm" fw={500} truncate maw={300}>{scan.url}</Text>
         </Table.Td>
         <Table.Td>
           <Text size="xs" c="dimmed">
@@ -344,7 +375,7 @@ function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
               size={16}
               color="gray"
               style={{
-                transform: opened ? "rotate(180deg)" : "none",
+                transform: opened ? "rotate(180deg)" : "nowe",
                 transition: "transform 0.2s ease",
               }}
             />
@@ -352,7 +383,6 @@ function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
         </Table.Td>
       </Table.Tr>
 
-      {/* Hidden Dropdown Row */}
       <Table.Tr>
         <Table.Td colSpan={5} p={0} style={{ borderBottom: opened ? undefined : 'none' }}>
           <Collapse in={opened}>
@@ -404,12 +434,25 @@ function DesktopScanRow({ scan, selection, toggleRow, onDelete }) {
   );
 }
 
-function StatCard({ label, value, color, active, onClick }) {
+interface StatCardProps {
+  label: string;
+  value: number;
+  color: string;
+  active: boolean;
+  onClick: () => void;
+}
+function StatCard({
+  label,
+  value,
+  color,
+  active,
+  onClick
+}: StatCardProps) {
   return (
     <UnstyledButton
       onClick={onClick}
       p="lg"
-      radius="md"
+      //radius="md"
       style={{
         backgroundColor: `var(--mantine-color-${color}-light)`,
         border: `2px solid ${active ? `var(--mantine-color-${color}-filled)` : "var(--mantine-color-gray-2)"}`,
