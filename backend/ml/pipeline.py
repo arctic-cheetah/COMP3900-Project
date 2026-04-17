@@ -4,11 +4,11 @@ import pandas as pd
 from Levenshtein import distance, jaro_winkler
 from pylcs import lcs_sequence_length
 
-from .preprocessor import preprocess_data
+from ml.preprocessor import preprocess_data
 
 
-whitelist_path: str = "./ml/data/top_100k_domains.csv"
-model_path: str = "./ml/models/logit_model.pkl"
+whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
+model_path: str = "backend/ml/models/logit_model.pkl"
 
 
 def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
@@ -23,13 +23,19 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
         tuple: Returns the verdict (safe = 1, phishing = 0) and confidence score.
     """
     try:
+        # TODO: WHY THE ARE WE ALWAYS LOADING THE MODEL EACH TIME IT SCANS
+        # A URL? JUST CACHE IT
         model_dump = joblib.load(model_path)
         features = model_dump["features"]
         model = model_dump["model"]
 
         filtered_url_features = url_features[features]
-        is_safe: int = model.predict(filtered_url_features)[0]
-        confidence: float = model.predict_proba(filtered_url_features)[0] * 100.0
+        is_safe: int = model.predict(filtered_url_features)[0].item()
+        # Model actually outputs an np array of prob
+        # of confidence
+        # So just get the float of confidence
+        confidence_val_safe_and_not_safe = model.predict_proba(filtered_url_features)[0]
+        confidence: float = confidence_val_safe_and_not_safe[0].item() * 100
 
         return is_safe, confidence
     except Exception as e:
@@ -52,9 +58,18 @@ def get_whitelist(whitelist_filepath: str):
     return whitelist_df["Domain"].tolist()
 
 
-def search_whitelist(domain: str, whitelist: list):
-    whitelist_set = set(whitelist)
-    if domain in whitelist_set:
+# helper func to check for subdomain from whitelist
+def is_same_domain(domain: str, whitelist_domain: str):
+    if domain == whitelist_domain:
+        return True
+    elif domain.endswith("." + whitelist_domain):
+        return True
+    else:
+        return False
+
+
+def search_whitelist(domain: str, whitelist: list[str]):
+    if domain in whitelist:
         return {
             "Levenshtein": 1,
             "JaroWinkler": 1,
@@ -88,7 +103,7 @@ def search_whitelist(domain: str, whitelist: list):
         }
 
 
-def model_pipeline(url: str) -> tuple[int, float]:
+def model_pipeline(url: str) -> tuple[int, float] | None:
     """
     Process URL and runs model.
 
@@ -100,6 +115,7 @@ def model_pipeline(url: str) -> tuple[int, float]:
         tuple: Returns the verdict and confidence score.
     """
     try:
+        print(f'model_pipeline: checking URL "{url}" with whitelist')
         url_obj = preprocess_data(url)
         df = url_obj.get_data()
 
@@ -111,16 +127,18 @@ def model_pipeline(url: str) -> tuple[int, float]:
             and scores["JaroWinkler"] == 1
             and scores["LCS"] == 1
         ):
+            print(f'model_pipeline: URL "{url}" is on whitelist')
             return 1, 100.0
 
         df["Levenshtein"] = scores["Levenshtein"]
         df["JaroWinkler"] = scores["JaroWinkler"]
         df["LCS"] = scores["LCS"]
 
+        print(f'model_pipeline: checking URL "{url}" with model')
         is_safe, confidence = run_model(df, model_path)
 
         return is_safe, confidence
     except Exception as e:
         # Model pipeline error should be flagged as not safe
         print(f'model_pipeline error: "{e}"')
-        return 0, 100.0
+        return None

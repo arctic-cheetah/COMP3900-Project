@@ -10,13 +10,15 @@ from sklearn.linear_model import LogisticRegression
 from pathlib import Path as path
 import datetime
 import sys
+from urllib.request import urlopen, URLError
+from urllib.parse import urlparse
 import tldextract
-
 from ml.pipeline import model_pipeline
 from database import init_db, save_scan, get_all_scans
 
 
 app = Flask(__name__)
+CORS(app)
 
 allowed_origins = [
     "http://127.0.0.1:80",
@@ -70,6 +72,7 @@ def check_valid_url(url):
     if not url or not isinstance(url, str):
         return False
 
+    # BUG We should not test validity of url with reachability
     try:
         ext = tldextract.extract(url)
 
@@ -165,10 +168,13 @@ def check_url():
 
     sanitised_url = sanitise_url(url)
     try:
-        is_safe, confidence_score = model_pipeline(sanitised_url)
-
+        res = model_pipeline(sanitised_url)
+        if res is None:
+            raise Exception
+        else:
+            is_safe, confidence_score = res
         # persistence while maintaining anynomity
-        # TODO: CHECK IF THIS VULN
+        # TODO: CHECK IF THIS VULN having dangling saved
         saved = save_scan(
             url=sanitised_url,
             is_safe=bool(is_safe),
@@ -183,7 +189,6 @@ def check_url():
             ),
             200,
         )
-
     except Exception as e:
         app.logger.error("Scan failed: %s", e)
         return jsonify({"error": "URL could not be scanned"}), 400

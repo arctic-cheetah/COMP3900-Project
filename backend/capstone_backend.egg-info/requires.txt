@@ -1,0 +1,17 @@
+flask
+psycopg2-binary
+flask_cors
+ipykernel
+pandas
+matplotlib
+seaborn
+pytest
+requests
+tldextract
+joblib
+scikit-learn
+levenshtein
+pylcs
+lime
+bs4
+playwright
