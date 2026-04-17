@@ -11,6 +11,8 @@ from pathlib import Path as path
 import datetime
 import sys
 import tldextract
+import csv
+import io
 
 from pipeline import model_pipeline
 from database import init_db, save_scan, get_all_scans, delete_scan
@@ -257,6 +259,23 @@ def remove_scan(scan_id):
     if not success:
         return jsonify({"error": "scan not found"}), 404
     return jsonify({"deleted": scan_id}), 200
+
+# Export scan history as scan_history.csv, return 500 if scan history unable to be retrieved
+@app.route("/scans/export", methods=["GET"])
+def export_scans():
+    scans = get_all_scans(limit=10000, offset=0)
+    if scans is None:
+        return jsonify({"error": "could not retrieve scan history"}), 500
+
+    output = io.StringIO()
+    writer = csv.DictWriter(output, fieldnames=["id", "url", "is_safe", "confidence", "timestamp"])
+    writer.writeheader()
+    writer.writerows(scans)
+    headers = {
+        "Content-Type": "text/csv",
+        "Content-Disposition": "attachment; filename=scan_history.csv",
+    }
+    return output.getvalue(), 200, headers
 
 if __name__ == "__main__":
     app.logger.setLevel(logging.INFO)
