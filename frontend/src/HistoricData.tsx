@@ -47,6 +47,13 @@ interface HistoricalDataProps {
   onHistoryClick: (scan: Scan) => void;
 };
 
+interface Stats {
+  total: number;
+  safe: number;
+  phishing: number;
+}
+
+// Main component logic
 export default function HistoricalData({
   history,
   onDelete,
@@ -59,12 +66,13 @@ export default function HistoricalData({
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [opened, { open, close }] = useDisclosure(false);
 
+  // stuff derived from state
   const filteredData = history.filter((item) => {
     if (filter === "all") return true;
     return filter === "safe" ? item.isSafe : !item.isSafe;
   });
 
-  const toggleRow = (scan: Scan) => {
+    const toggleRow = (scan: Scan) => {
     setSelection((current) =>
       current.includes(scan)
       ? current.filter((item) => item !== scan)
@@ -89,113 +97,33 @@ export default function HistoricalData({
     }
   };
 
-  const renderTableHeader = () => (
-    <Table.Tr>
-      <Table.Th w={40}>
-        <Checkbox
-          checked={selection.length > 0 && selection.length === filteredData.length}
-          indeterminate={selection.length > 0 && selection.length < filteredData.length}
-          onChange={toggleAll}
-        />
-      </Table.Th>
-      <Table.Th>URL</Table.Th>
-      <Table.Th>DATE/TIME ANALYSED</Table.Th>
-      <Table.Th>RESULT</Table.Th>
-      <Table.Th ta="right">DETAILS</Table.Th>
-    </Table.Tr>
-  );
-
-  const stats = {
+  const stats: Stats = {
     total: history.length,
     safe: history.filter((h) => h.isSafe).length,
     phishing: history.filter((h) => !h.isSafe).length,
   };
 
-  const rows = filteredData.map((scan, index) => (
-    <DesktopScanRow
-      key={index}
-      scan={scan}
-      selection={selection}
-      toggleRow={toggleRow}
-      onDelete={onDelete}
-    />
-  ));
-
-  const MobileHistoryContent = () => (
-    <Stack gap="md" py="md">
-      {filteredData.length === 0 ? (
-        <Text ta="center" py="xl" c="dimmed">No scans found</Text>
-      ) : (
-        filteredData.map((scan, index) => (
-          <Paper
-            key={index}
-            p="md"
-            withBorder
-            radius="md"
-            onClick={() => onHistoryClick(scan)}
-            style={{
-              cursor: 'pointer',
-              borderLeft: `4px solid ${scan.isSafe ? 'var(--mantine-color-green-6)' : 'var(--mantine-color-red-6)'}`
-            }}
-          >
-            <Group justify="space-between" mb="xs" wrap="nowrap">
-              <Checkbox
-                checked={selection.includes(scan)}
-                onChange={() => toggleRow(scan)}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <Badge
-                color={scan.isSafe ? "green" : "red"}
-                variant="light"
-                leftSection={scan.isSafe ? <IconCheck size={12} /> : <IconAlertTriangle size={12} />}
-              >
-                {scan.isSafe ? "Safe" : "Phishing"}
-              </Badge>
-            </Group>
-
-            <Text size="sm" ff="monospace" style={{ wordBreak: 'break-all' }} mb="xs" fw={500}>
-              {scan.url}
-            </Text>
-
-            <Group justify="space-between">
-              <Group gap={4}>
-                <IconClock size={14} color="gray" />
-                <Text size="xs" c="dimmed">{format(new Date(scan.timestamp), "MMM d, h:mm a")}</Text>
-              </Group>
-              <Text size="xs" fw={700}>{scan.confidence}% Score</Text>
-            </Group>
-          </Paper>
-        ))
-      )}
-
-      {selection.length > 0 && (
-        <Button color="red" fullWidth leftSection={<IconTrash size={16} />} onClick={handleBulkDelete}>
-          Delete {selection.length} Selected
-        </Button>
-      )}
-    </Stack>
-  );
+  const allSelected = selection.length > 0 && selection.length === filteredData.length;
+  const partiallySelected = selection.length > 0 && selection.length < filteredData.length;
 
   const BulkActionBar = ({ isMobileView = false }: { isMobileView?: boolean }) => {
     if (selection.length === 0) return null;
-
     return (
       <Group
         justify="space-between"
         p="xs"
         mb="md"
+        bg="red.0"
         style={{
-          backgroundColor: 'var(--mantine-color-red-0)',
           borderRadius: '8px',
           border: '1px solid var(--mantine-color-red-2)',
-          width: '100%'
         }}
       >
         <Group gap="xs">
           <Checkbox
             size="xs"
-            checked={selection.length === filteredData.length && filteredData.length > 0}
-            indeterminate={selection.length > 0 && selection.length < filteredData.length}
+            checked={allSelected}
+            indeterminate={partiallySelected}
             onChange={toggleAll}
             label={isMobileView ? "All" : "Select All"}
           />
@@ -217,10 +145,12 @@ export default function HistoricalData({
     );
   };
 
+  // Mobile version uses modal with a card layout
   if (isMobile) {
     return (
       <>
-        <Button onClick={open} fullWidth size="lg" variant="light" leftSection={<IconHistory size={20} />}>
+        <Button
+          onClick={open} fullWidth size="lg" variant="light" leftSection={<IconHistory size={20} />}>
           View Scan History ({history.length})
         </Button>
 
@@ -229,21 +159,69 @@ export default function HistoricalData({
             <Button onClick={close} color="red" variant="light" leftSection={<IconX size={16} />}>
               Close
             </Button>
-            <Group grow gap="xs">
-              <StatCard label="Total" value={stats.total} color="blue" active={filter === 'all'} onClick={() => setFilter('all')} />
-              <StatCard label="Safe" value={stats.safe} color="green" active={filter === 'safe'} onClick={() => setFilter('safe')} />
-              <StatCard label="Phishing" value={stats.phishing} color="red" active={filter === 'phishing'} onClick={() => setFilter('phishing')} />
-            </Group>
-            <BulkActionBar isMobileView={true} />
+            <StatsSection stats={stats} filter={filter} setFilter={setFilter} />
+            <BulkActionBar isMobileView />
           </Stack>
+
           <ScrollArea.Autosize mah="calc(100vh - 220px)">
-            <MobileHistoryContent />
+            <Stack gap="md" py="md">
+              {filteredData.length === 0 ? (<Text ta="center" py="xl" c="dimmed">No scans found</Text>) : (
+                filteredData.map((scan, i) => (
+                  <Paper
+                    key={i}
+                    p="md"
+                    withBorder
+                    radius="md"
+                    onClick={() => onHistoryClick(scan)}
+                    style={{
+                      cursor: "pointer",
+                      borderLeft: `4px solid ${scan.isSafe ? "var(--mantine-color-green-6)" : "var(--mantine-color-red-6)"}`,
+                    }}
+                  >
+                    <Group justify="space-between" mb="xs" wrap="nowrap">
+                      <Checkbox
+                        checked={selection.includes(scan)}
+                        onChange={() => toggleRow(scan)}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                      <Badge
+                        color={scan.isSafe ? "green" : "red"}
+                        variant="light"
+                        leftSection={scan.isSafe ? <IconCheck size={12} /> : <IconAlertTriangle size={12} />}
+                      >
+                        {scan.isSafe ? "Safe" : "Phishing"}
+                      </Badge>
+                    </Group>
+
+                    <Text size="sm" ff="monospace" style={{ wordBreak: "break-all" }} mb="xs" fw={500}>
+                      {scan.url}
+                    </Text>
+
+                    <Group justify="space-between">
+                      <Group gap={4}>
+                        <IconClock size={14} color="gray" />
+                        <Text size="xs" c="dimmed">
+                          {format(new Date(scan.timestamp), "MMM d, h:mm a")}
+                        </Text>
+                      </Group>
+                      <Text size="xs" fw={700}>{scan.confidence}% Score</Text>
+                    </Group>
+                  </Paper>
+                ))
+              )}
+              {selection.length > 0 && (
+                <Button color="red" fullWidth leftSection={<IconTrash size={16} />} onClick={handleBulkDelete}>
+                  Delete {selection.length} Selected
+                </Button>
+              )}
+            </Stack>
           </ScrollArea.Autosize>
         </Modal>
       </>
     );
   }
 
+  // If its not mobile it will be desktop
   return (
     <Paper p="xl" radius="md" withBorder shadow="sm">
       <Group justify="space-between" mb="xl" align="flex-start">
@@ -265,60 +243,102 @@ export default function HistoricalData({
         />
       </Group>
 
-      <Group grow mb="xl">
-        <StatCard
-          label="Total Scans"
-          value={stats.total}
-          color="blue"
-          active={filter === "all"}
-          onClick={() => setFilter("all")}
-        />
-        <StatCard
-          label="Safe URLs"
-          value={stats.safe}
-          color="green"
-          active={filter === "safe"}
-          onClick={() => setFilter("safe")}
-        />
-        <StatCard
-          label="Phishing Detected"
-          value={stats.phishing}
-          color="red"
-          active={filter === "phishing"}
-          onClick={() => setFilter("phishing")}
-        />
-      </Group>
+      <StatsSection
+        stats={stats}
+        filter={filter}
+        setFilter={setFilter}
+        labels={{ total: "Total Scans", safe: "Safe URLs", phishing: "Phishing Detected" }}
+      />
 
-      {selection.length > 0 && (
-        <Group justify="flex-start" mb="md" p="xs" bg="red.0" style={{ borderRadius: '8px' }}>
-          <Text size="sm" fw={500} c="red.7">{selection.length} items selected</Text>
-          <Button
-            color="red"
-            size="xs"
-            variant="light"
-            leftSection={<IconTrash size={14} />}
-            onClick={handleBulkDelete}
-          >
-            Delete Selected
-          </Button>
-        </Group>
-      )}
+      <BulkActionBar />
 
       <ScrollArea h={400}>
         <Table verticalSpacing="md">
-          <Table.Thead
-            bg="gray.0"
-            style={{ position: "sticky", top: 0, zIndex: 1 }}
-          >
-            {renderTableHeader()}
+          <Table.Thead bg="gray.0" style={{ position: "sticky", top: 0, zIndex: 1 }}>
+            <Table.Tr>
+              <Table.Th w={40}>
+                <Checkbox
+                  checked={allSelected}
+                  indeterminate={partiallySelected}
+                  onChange={toggleAll}
+                />
+              </Table.Th>
+              <Table.Th>URL</Table.Th>
+              <Table.Th>DATE/TIME ANALYSED</Table.Th>
+              <Table.Th>RESULT</Table.Th>
+              <Table.Th ta="right">DETAILS</Table.Th>
+            </Table.Tr>
           </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
+          <Table.Tbody>
+            {filteredData.map((scan, i) => (
+              <DesktopScanRow
+                key={i}
+                scan={scan}
+                selection={selection}
+                toggleRow={toggleRow}
+                onDelete={onDelete}
+              />
+            ))}
+          </Table.Tbody>
         </Table>
       </ScrollArea>
     </Paper>
   );
 }
 
+// Reusable components to reduce duplicated code
+function StatsSection({ stats, filter, setFilter }: any) {
+  return (
+    <Group grow mb="xl">
+      <StatCard label="Total" value={stats.total} color="blue" active={filter === "all"} onClick={() => setFilter("all")} />
+      <StatCard label="Safe" value={stats.safe} color="green" active={filter === "safe"} onClick={() => setFilter("safe")} />
+      <StatCard label="Phishing" value={stats.phishing} color="red" active={filter === "phishing"} onClick={() => setFilter("phishing")} />
+    </Group>
+  );
+}
+
+interface StatCardProps {
+  label: string;
+  value: number;
+  color: string;
+  active: boolean;
+  onClick: () => void;
+}
+
+function StatCard({
+  label,
+  value,
+  color,
+  active,
+  onClick
+}: StatCardProps) {
+  return (
+    <UnstyledButton
+      onClick={onClick}
+      p="lg"
+      style={{
+        backgroundColor: `var(--mantine-color-${color}-light)`,
+        border: `2px solid ${active ? `var(--mantine-color-${color}-filled)` : "var(--mantine-color-gray-2)"}`,
+        transition: "all 0.2s ease",
+        borderRadius: "8px",
+        cursor: "pointer",
+        "&:hover": {
+          borderColor: `var(--mantine-color-${color}-filled)`,
+          backgroundColor: `var(--mantine-color-${color}-light)`,
+        },
+      }}
+    >
+      <Text fw={700} size="xl" c={active ? `${color}.7` : "dark"}>
+        {value}
+      </Text>
+      <Text size="xs" fw={600} c="dimmed" tt="uppercase">
+        {label}
+      </Text>
+    </UnstyledButton>
+  );
+}
+
+// desktop row
 interface DesktopRowProps {
   scan: Scan;
   selection: Scan[];
@@ -331,7 +351,7 @@ function DesktopScanRow({
   selection,
   toggleRow,
   onDelete
-}: DesktopRowProps){
+}: DesktopRowProps) {
 
   const [opened, { toggle }] = useDisclosure(false);
   const isSelected = selection.includes(scan);
@@ -347,10 +367,7 @@ function DesktopScanRow({
         }}
       >
         <Table.Td onClick={(e) => e.stopPropagation()}>
-          <Checkbox
-            checked={isSelected}
-            onChange={() => toggleRow(scan)}
-          />
+          <Checkbox checked={isSelected} onChange={() => toggleRow(scan)} />
         </Table.Td>
         <Table.Td>
           <Text size="sm" fw={500} truncate maw={300}>{scan.url}</Text>
@@ -431,46 +448,5 @@ function DesktopScanRow({
         </Table.Td>
       </Table.Tr>
     </>
-  );
-}
-
-interface StatCardProps {
-  label: string;
-  value: number;
-  color: string;
-  active: boolean;
-  onClick: () => void;
-}
-function StatCard({
-  label,
-  value,
-  color,
-  active,
-  onClick
-}: StatCardProps) {
-  return (
-    <UnstyledButton
-      onClick={onClick}
-      p="lg"
-      //radius="md"
-      style={{
-        backgroundColor: `var(--mantine-color-${color}-light)`,
-        border: `2px solid ${active ? `var(--mantine-color-${color}-filled)` : "var(--mantine-color-gray-2)"}`,
-        transition: "all 0.2s ease",
-        borderRadius: "8px",
-        cursor: "pointer",
-        "&:hover": {
-          borderColor: `var(--mantine-color-${color}-filled)`,
-          backgroundColor: `var(--mantine-color-${color}-light)`,
-        },
-      }}
-    >
-      <Text fw={700} size="xl" c={active ? `${color}.7` : "dark"}>
-        {value}
-      </Text>
-      <Text size="xs" fw={600} c="dimmed" tt="uppercase">
-        {label}
-      </Text>
-    </UnstyledButton>
   );
 }
