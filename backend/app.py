@@ -5,20 +5,21 @@ from flask_cors import CORS
 import logging
 import re
 from urllib.parse import urlparse, urlunparse, quote
-import joblib
 from sklearn.linear_model import LogisticRegression
 from pathlib import Path as path
 import datetime
 import sys
+from urllib.request import urlopen, URLError
+from urllib.parse import urlparse
 import tldextract
 import csv
 import io
-
-from pipeline import model_pipeline
+from ml.pipeline import model_pipeline
 from database import init_db, save_scan, get_all_scans, delete_scan
 
 
 app = Flask(__name__)
+CORS(app)
 
 allowed_origins = [
     "http://127.0.0.1:80",
@@ -72,6 +73,7 @@ def check_valid_url(url):
     if not url or not isinstance(url, str):
         return False
 
+    # BUG We should not test validity of url with reachability
     try:
         ext = tldextract.extract(url)
 
@@ -160,35 +162,36 @@ def check_url():
         url = "http://" + url
 
     if not check_valid_url(url):
-        msg = f"{request.remote_addr}: {url}"
+        msg = f'{request.remote_addr}: Invalid URL "{url}"'
         app.logger.warning(msg)
         write_log(msg, "ERROR")
         return jsonify({"error": "Invalid URL format"}), 400
 
-    app.logger.info(type(request_data))
-
     sanitised_url = sanitise_url(url)
     try:
-        is_safe, confidence = model_pipeline(sanitised_url)
-        confidence_score = float(confidence[1] if is_safe == 1 else confidence[0])
-
+        res = model_pipeline(sanitised_url)
+        if res is None:
+            raise Exception
+        else:
+            is_safe, confidence_score, explanations = res
         # persistence while maintaining anynomity
-        # TODO: CHECK IF THIS VULN
+        # TODO: CHECK IF THIS VULN having dangling saved
         saved = save_scan(
             url=sanitised_url,
             is_safe=bool(is_safe),
             confidence=confidence_score,
         )
+
         return (
             jsonify(
                 {
                     "is_safe": bool(is_safe),
                     "confidence": confidence_score,
+                    "explanations": explanations
                 }
             ),
             200,
         )
-
     except Exception as e:
         app.logger.error("Scan failed: %s", e)
         return jsonify({"error": "URL could not be scanned"}), 400

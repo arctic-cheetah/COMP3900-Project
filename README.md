@@ -7,6 +7,7 @@ This is the P133 project _Systems and Methods for Phishing and Spam Detection_
 #### Run entire stack
 
 ```bash
+docker pull nginx:alpine
 docker compose up --build
 ```
 
@@ -20,15 +21,17 @@ npm run dev
 ```
 
 #### Back end
-
+TODO: we need to discuss whether to run via
 ```bash
 python3 backend/app.py
 ```
 
-#### Run database
+because the paths imply running from backend directory
+
+#### Run test cases
 
 ```bash
-docker compose -f 'docker-compose.yml' up -d --build 'test' 
+docker compose -f 'docker-compose.yml' up -d --build 'test'
 ```
 
 #### Run test cases
@@ -41,9 +44,11 @@ docker compose -f 'docker-compose.yml' up -d --build 'test'
 ## Usage
 
 ### Routes
+
 ```python
-POST /scan 
+POST /scan
 ```
+
 Accepts a POST request with JSON as the payload, and the only valid key is:
 
 ```
@@ -57,17 +62,20 @@ to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
-## AI documentation 
+## AI documentation
 
 We sourced data from this dataset:
 [Research paper](linkinghub.elsevier.com/retrieve/pii/S0167404823004558)
+
 [AI dataset source](https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset)
 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
 ```
 
 ## Authors
 
 Joules, Ray, Kelly, Lara, Shadab, Caitlin
+```

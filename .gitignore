@@ -5,3 +5,6 @@ __pycache__/**
 .pytest_cache/
 backend/logs
 logs
+
+.vscode/**
+.vscode/
