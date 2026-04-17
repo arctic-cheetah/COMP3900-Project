@@ -180,6 +180,7 @@ def check_url():
             url=sanitised_url,
             is_safe=bool(is_safe),
             confidence=confidence_score,
+            explanation=explanations,
         )
 
         return (
