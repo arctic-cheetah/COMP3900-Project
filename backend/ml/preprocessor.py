@@ -514,13 +514,15 @@ class preprocess_data:
         except Exception:
             return 0
 
-    def KolmogorovScore(self, url: str):
-        # Note I need to convert url to bytes
-        # Then compress / total_url_bytes
-        # Precondition, url is always valid
-        raw = url.encode("utf-8", errors="ignore")
-        compressed = zlib.compress(url)
-        return len(compressed) / len(raw)
+    # NOTE: Marked Kolmogorov for deprecation due to issue
+    # with zlib compression headers
+    # def KolmogorovScore(self, url: str):
+    #     # Note I need to convert url to bytes
+    #     # Then compress / total_url_bytes
+    #     # Precondition, url is always valid
+    #     raw = url.encode("utf-8", errors="ignore")
+    #     compressed = zlib.compress(url.encode("utf-8", errors="ignore"))
+    #     return len(compressed) / len(raw)
 
     def HasDescription(self, url):
         if not hasattr(self, "html_data") or not self.html_data:
