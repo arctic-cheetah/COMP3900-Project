@@ -4,9 +4,7 @@ import { useMediaQuery } from '@mantine/hooks';
 
 import { scanURL, getStoredData } from "./api.js";
 import HistoricalData, { type Scan } from "./HistoricData.js";
-// @ts-ignore
 import Navbar from "./Navbar.js";
-// @ts-ignore
 import ResultModal from "./Resultmodal.js";
 import "./App.css";
 import logoIcon from "../assets/logo.png";
