@@ -711,14 +711,16 @@ class preprocess_data:
         (URLTitleMatchScore, "URLTitleMatchScore"),
         (hasFavicon, "HasFavicon"),
         (robots, "Robots"),
+        (IsResponsive, "IsResponsive"),
+        (NoOfiFrame, "NoOfiFrame"),
         (HasSocialNet, "HasSocialNet"),
         (HasSubmitButton, "HasSubmitButton"),
         (HasCopyrightInfo, "HasCopyrightInfo"),
+        (NoOfImage, "NoOfImage"),
         (NoOfJS, "NoOfJS"),
         (NoOfSelfRef, "NoOfSelfRef"),
         (NoOfEmptyRef, "NoOfEmptyRef"),
         (NoOfExternalRef, "NoOfExternalRef"),
-        (NoOfImage, "NoOfImage"),
     ]
 
     def get_data(self) -> pd.DataFrame:
