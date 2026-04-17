@@ -1,4 +1,4 @@
-import './ResultModal.css';
+import './ResultAnalysis.css';
 import { useMantineTheme, Badge } from '@mantine/core';
 import { IconCheck, IconAlertTriangle } from '@tabler/icons-react';
 
@@ -39,12 +39,6 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
           </Badge>
         </div>
 
-        <div className='result-text'>
-          {result.isSafe
-            ? 'This URL appears to be legitimate and safe to visit.'
-            : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
-        </div>
-
         <div className='result-cards'>
           <div className='confidence-result-card'>
             <p className='card-title'>Confidence Score</p>
@@ -67,6 +61,14 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
               </span>
             </div>
           </div>
+
+          <div className='result-text'>
+            {result.isSafe
+              ? 'This URL appears to be legitimate and safe to visit.'
+              : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
+          </div>
+
+          <p>WILL INSERT XAI BADGES HERE</p>
 
           <div className='result-card'>
             <p className='card-title'>Analysed URL</p>
