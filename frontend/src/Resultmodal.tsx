@@ -1,7 +1,21 @@
 import './ResultModal.css';
+import { useMantineTheme, Badge } from '@mantine/core';
+import { IconCheck, IconAlertTriangle } from '@tabler/icons-react';
 
-const ResultModal = ({ result, onClose }) => {
+type Result = {
+  isSafe: boolean;
+  confidence: number;
+  url: string;
+};
+
+type ResultModalVars = {
+  result: Result | null;
+  onClose: () => void;
+};
+
+const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
   if (!result) return null;
+  const theme = useMantineTheme();
 
   return (
     <div className='overlay' onClick={onClose}>
@@ -9,7 +23,20 @@ const ResultModal = ({ result, onClose }) => {
         <p className='analysis-result-text'>Analysis Results</p>
 
         <div className='result-icon'>
-          {result.isSafe ? '✅ URL IS SAFE!' : '⚠️ URL IS PHISHING'}
+          <Badge
+            color={result.isSafe ? 'green' : 'red'}
+            variant='light'
+            size='lg'
+            leftSection={
+              result.isSafe ? (
+                <IconCheck size={22} />
+              ) : (
+                <IconAlertTriangle size={22} />
+              )
+            }
+          >
+            {result.isSafe ? 'Safe' : 'Phishing'}
+          </Badge>
         </div>
 
         <div className='result-text'>
@@ -25,9 +52,14 @@ const ResultModal = ({ result, onClose }) => {
             <div className='confidence-row'>
               <div className='confidence-bar'>
                 <div
-                  className={`confidence-fill ${result.isSafe ? 'safe' : 'phishing'}`}
-                  style={{ width: `${result.confidence}%` }}
-                ></div>
+                  className='confidence-fill'
+                  style={{
+                    width: `${result.confidence}%`,
+                    backgroundColor: result.isSafe
+                      ? theme.colors.green[6]
+                      : theme.colors.red[6],
+                  }}
+                />
               </div>
 
               <span className='confidence-value'>
