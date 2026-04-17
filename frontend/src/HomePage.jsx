@@ -43,8 +43,6 @@ const DUMMY_HISTORY = [
   },
 ];
 
-
-
 export default function HomePage() {
   const [history, setHistory] = useState(() => {
     // Load from localStorage on initial mount
