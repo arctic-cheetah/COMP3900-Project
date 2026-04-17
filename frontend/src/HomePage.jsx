@@ -5,7 +5,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { scanURL, getStoredData } from "./api";
 import HistoricalData from "./HistoricData";
 import Navbar from "./Navbar";
-import ResultModal from "./Resultmodal";
+import ResultAnalysis from './ResultAnalysis';
 import "./App.css";
 import logoIcon from "../assets/logo.png";
 
@@ -164,8 +164,8 @@ export default function HomePage() {
   return (
     <div className='homepage'>
       <Navbar />
-      <img className="logo-homepage" src={logoIcon} />
-      <header className="header">
+      <img className='logo-homepage' src={logoIcon} />
+      <header className='header'>
         <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
       <p className='description'>
@@ -243,12 +243,10 @@ export default function HomePage() {
         </p>
       )}
 
-      {moveButton && (
-        <div className='space' />
-      )}
+      {moveButton && <div className='space' />}
 
       {isModalOpen && isMobile && (
-        <ResultModal
+        <ResultAnalysis
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
         />
