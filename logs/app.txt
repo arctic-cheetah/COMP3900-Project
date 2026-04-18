@@ -732,3 +732,18 @@
 2026-04-10 14:02:29,449 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
 2026-04-10 14:02:29,451 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
 2026-04-10 14:02:29,453 - INFO - 127.0.0.1 - - [10/Apr/2026 14:02:29] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-18 13:23:20,043 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-18 13:23:35,021 - INFO - Database initialised successfully.
+2026-04-18 13:23:35,027 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-18 13:23:35,027 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-18 18:29:31,078 - INFO - Database initialised successfully.
+2026-04-18 18:29:31,083 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.115.149:5001
+2026-04-18 18:29:31,084 - INFO - [33mPress CTRL+C to quit[0m
