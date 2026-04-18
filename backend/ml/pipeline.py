@@ -10,9 +10,9 @@ from ml.preprocessor import preprocess_data
 
 # TODO: Waaah only kelly model's work and not mine after implementing XAI 😭
 WHITELIST_PATH: str = "backend/ml/data/top_100k_domains.csv"
-# MODEL_PATH: str = "backend/ml/models/random_forest_model.pkl"
+MODEL_PATH: str = "backend/ml/models/random_forest_model.pkl"
 # MODEL_PATH: str = "backend/ml/models/logit_model.pkl"
-MODEL_PATH: str = "backend/ml/models/logit_model.joblib"
+XAI_MODEL_PATH: str = "backend/ml/models/logit_model.joblib"
 
 TRAINING_DATA_PATH: str = "backend/ml/models/lime_training_data.joblib"
 NUM_TOP_FEATURES = 50
@@ -242,18 +242,32 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
 
         print(f'model_pipeline: checking URL "{url}" with model')
 
-        model_dump = joblib.load(MODEL_PATH)
+        # Use Kelly's xai model separate from my model
+        model_xai_pkg = joblib.load(XAI_MODEL_PATH)
+        model_predict_pkg = joblib.load(MODEL_PATH)
 
-        features = model_dump["features"]
-        model = model_dump["model"]
-        is_safe, confidence = run_model(url_data, model, features)
+        # I gotta get the model and features out the pkg
+        features_predict = model_predict_pkg["features"]
+        model_predict = model_predict_pkg["model"]
+
+        features_xai = model_xai_pkg["features"]
+        model_xai = model_xai_pkg["model"]
+
+        is_safe, confidence = run_model(
+            url_data,
+            model_predict,
+            features_predict,
+        )
         # I realise using LIME means that our model needs to be also updated on the LIME end!
         X_train = joblib.load(TRAINING_DATA_PATH)
         explainer_lime = LimeTabularExplainer(
-            X_train.values, feature_names=features, mode="regression", random_state=0
+            X_train.values,
+            feature_names=features_xai,
+            mode="regression",
+            random_state=0,
         )
         explanations = get_explanations(
-            explainer_lime, url_data, model, features, is_safe
+            explainer_lime, url_data, model_xai, features_xai, is_safe
         )
 
         return is_safe, confidence, explanations
