@@ -948,3 +948,29 @@ ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
 2026-04-19 00:53:30,062 - INFO - 127.0.0.1 - - [19/Apr/2026 00:53:30] "GET /scans/export HTTP/1.1" 200 -
 2026-04-19 00:53:37,989 - INFO - 127.0.0.1 - - [19/Apr/2026 00:53:37] "GET /scans/export HTTP/1.1" 200 -
 2026-04-19 00:53:47,358 - INFO - 127.0.0.1 - - [19/Apr/2026 00:53:47] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 00:55:45,523 - INFO - Database initialised successfully.
+2026-04-19 00:55:45,524 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 00:55:45,524 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 00:55:56,246 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,258 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,260 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,263 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,264 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:56:02,539 - INFO - Scan saved — id=7 is_safe=True confidence=100.0000
+2026-04-19 00:56:02,543 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:56:02,548 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:02,554 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:02,559 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "GET /scans?limit=2&offset=0 HTTP/1.1" 200 -
+2026-04-19 00:56:02,561 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "[31m[1mGET /scans?limit=abc HTTP/1.1[0m" 400 -
+2026-04-19 00:56:13,633 - INFO - Scan saved — id=8 is_safe=True confidence=100.0000
+2026-04-19 00:56:13,636 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:56:13,640 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:13,644 - INFO - Scan deleted id=8
+2026-04-19 00:56:13,647 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "DELETE /scans/8 HTTP/1.1" 200 -
+2026-04-19 00:56:13,651 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:13,655 - WARNING - Delete called on nonexistent scan id=999999
+2026-04-19 00:56:13,655 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "[33mDELETE /scans/999999 HTTP/1.1[0m" 404 -
+2026-04-19 00:56:13,660 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "GET /scans/export HTTP/1.1" 200 -

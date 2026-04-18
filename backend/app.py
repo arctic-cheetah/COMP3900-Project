@@ -173,14 +173,14 @@ def check_url():
         if res is None:
             raise Exception
         else:
-            is_safe, confidence_score, explanations = res
+            is_safe, confidence_score, explanation = res
         # persistence while maintaining anynomity
         # TODO: CHECK IF THIS VULN having dangling saved
         saved = save_scan(
             url=sanitised_url,
             is_safe=bool(is_safe),
             confidence=confidence_score,
-            explanation=explanations,
+            explanation=explanation,
         )
 
         return (
@@ -188,7 +188,7 @@ def check_url():
                 {
                     "is_safe": bool(is_safe),
                     "confidence": confidence_score,
-                    "explanations": explanations,
+                    "explanation": explanation,
                 }
             ),
             200,
