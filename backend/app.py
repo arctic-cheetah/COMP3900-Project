@@ -188,7 +188,7 @@ def check_url():
                 {
                     "is_safe": bool(is_safe),
                     "confidence": confidence_score,
-                    "explanations": explanations
+                    "explanations": explanations,
                 }
             ),
             200,
@@ -200,7 +200,7 @@ def check_url():
 
 @app.route("/list_scans", methods=["POST"])
 # Return paginated scan history from scans table with most recent first
-@app.route("/scans", methods=["GET"]) 
+@app.route("/scans", methods=["GET"])
 def list_scans():
     try:
         limit = int(request.args.get("limit", 100))
@@ -256,6 +256,7 @@ def log_error():
 
     return jsonify(True), 200
 
+
 # Delete scan by ID, return 404 if not found, else return deleted ID
 @app.route("/scans/<int:scan_id>", methods=["DELETE"])
 def remove_scan(scan_id):
@@ -263,6 +264,7 @@ def remove_scan(scan_id):
     if not success:
         return jsonify({"error": "scan not found"}), 404
     return jsonify({"deleted": scan_id}), 200
+
 
 # Export scan history as scan_history.csv, return 500 if scan history unable to be retrieved
 @app.route("/scans/export", methods=["GET"])
@@ -272,7 +274,10 @@ def export_scans():
         return jsonify({"error": "could not retrieve scan history"}), 500
 
     output = io.StringIO()
-    writer = csv.DictWriter(output, fieldnames=["id", "url", "is_safe", "confidence", "timestamp"])
+    writer = csv.DictWriter(
+        output,
+        fieldnames=["id", "url", "is_safe", "confidence", "scanned_at", "explanation"],
+    )
     writer.writeheader()
     writer.writerows(scans)
     headers = {
@@ -281,8 +286,8 @@ def export_scans():
     }
     return output.getvalue(), 200, headers
 
+
 if __name__ == "__main__":
     app.logger.setLevel(logging.INFO)
     init_db()
     app.run(host="0.0.0.0", port=5001)
-

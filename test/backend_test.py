@@ -56,6 +56,7 @@ def test_backend_reject_malformed():
     assert res.status_code == 400
     print(res.text)
 
+
 def test_scan_is_persistent():
     res = s.post(URL + SCAN, json={"url": "https://www.microsoft.com/"})
     assert res.status_code == 200
@@ -114,5 +115,5 @@ def test_export_returns_csv():
     assert "text/csv" in res.headers.get("Content-Type", "")
 
     lines = res.text.strip().split("\n")
-    assert lines[0] == "id,url,is_safe,confidence,timestamp"
+    assert lines[0] == "id,url,is_safe,confidence,scanned_at,explanation\r"
     print(f"exported {len(lines) - 1} rows")
