@@ -8,23 +8,28 @@ import re
 
 from ml.preprocessor import preprocess_data
 
-
+# TODO: Waaah only kelly model's work and not mine after implementing XAI 😭
 WHITELIST_PATH: str = "backend/ml/data/top_100k_domains.csv"
+# MODEL_PATH: str = "backend/ml/models/random_forest_model.pkl"
+# MODEL_PATH: str = "backend/ml/models/logit_model.pkl"
 MODEL_PATH: str = "backend/ml/models/logit_model.joblib"
+
 TRAINING_DATA_PATH: str = "backend/ml/models/lime_training_data.joblib"
 NUM_TOP_FEATURES = 50
 
 SPECIAL_CONVERSIONS = {
     "no of": "number of",
     "Q mark": "question marks",
-    "TLD":"top level domain",
+    "TLD": "top level domain",
     "levenshtein": "Levenshtein",
     "jaro winkler": "Jaro Winkler",
     "LCS": "longest common subsequence",
 }
 
 
-def run_model(url_features: pd.DataFrame, model: LogisticRegression, features: list) -> tuple[int, float]:
+def run_model(
+    url_features: pd.DataFrame, model: LogisticRegression, features: list
+) -> tuple[int, float]:
     """
     Run pretrained model on features.
 
@@ -121,14 +126,16 @@ def remove_is_prefix(string: str, does_have: bool):
 
     return string
 
+
 def pascal_case_to_text(string: str):
-    str_split = re.findall(r'[A-Z]+(?=[A-Z][a-z])|[A-Z][a-z]+|[A-Z]+', string)
+    str_split = re.findall(r"[A-Z]+(?=[A-Z][a-z])|[A-Z][a-z]+|[A-Z]+", string)
     text = " ".join([s if s.upper() == s else s.lower() for s in str_split])
 
     for k, v in SPECIAL_CONVERSIONS.items():
         text = text.replace(k, v)
 
     return text
+
 
 def explanation_to_text(explanation: str):
     explanation_split = explanation.split(" ")
@@ -155,9 +162,13 @@ def explanation_to_text(explanation: str):
         string = explanation_split[2]
 
         lower_bound = float(explanation_split[0])
-        lower_bound = int(lower_bound) if lower_bound.is_integer() else round(lower_bound, 2)
+        lower_bound = (
+            int(lower_bound) if lower_bound.is_integer() else round(lower_bound, 2)
+        )
         upper_bound = float(explanation_split[4])
-        upper_bound = int(upper_bound) if upper_bound.is_integer() else round(upper_bound, 2)
+        upper_bound = (
+            int(upper_bound) if upper_bound.is_integer() else round(upper_bound, 2)
+        )
 
         readable_text = pascal_case_to_text(string)
         readable_text += f" is between {lower_bound} and {upper_bound}"
@@ -165,11 +176,21 @@ def explanation_to_text(explanation: str):
     return readable_text
 
 
-def get_explanations(explainer: LimeTabularExplainer, url_data: pd.DataFrame, model: LogisticRegression, features: list, is_safe: int):
+def get_explanations(
+    explainer: LimeTabularExplainer,
+    url_data: pd.DataFrame,
+    model: LogisticRegression,
+    features: list,
+    is_safe: int,
+):
     url_data = url_data[features].iloc[0]
     url_data = url_data.to_numpy()
 
-    explanations = explainer.explain_instance(url_data, lambda x: model.predict_proba(pd.DataFrame(x, columns=features)), num_features=NUM_TOP_FEATURES)
+    explanations = explainer.explain_instance(
+        url_data,
+        lambda x: model.predict_proba(pd.DataFrame(x, columns=features)),
+        num_features=NUM_TOP_FEATURES,
+    )
 
     explanations = explanations.as_list()
 
@@ -226,10 +247,14 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         features = model_dump["features"]
         model = model_dump["model"]
         is_safe, confidence = run_model(url_data, model, features)
-
+        # I realise using LIME means that our model needs to be also updated on the LIME end!
         X_train = joblib.load(TRAINING_DATA_PATH)
-        explainer_lime = LimeTabularExplainer(X_train.values, feature_names=features,  mode="regression", random_state=0)
-        explanations = get_explanations(explainer_lime, url_data, model, features, is_safe)
+        explainer_lime = LimeTabularExplainer(
+            X_train.values, feature_names=features, mode="regression", random_state=0
+        )
+        explanations = get_explanations(
+            explainer_lime, url_data, model, features, is_safe
+        )
 
         return is_safe, confidence, explanations
     except Exception as e:
