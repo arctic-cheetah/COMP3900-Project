@@ -1,11 +1,11 @@
-import { vi } from "vitest";
-import { scanURL } from "../api";
+import { vi, describe, beforeEach, afterEach, it, expect, type Mock } from "vitest";
+import { scanURL } from "../api.js";
 
 describe("API Service Layer", () => {
     const MOCK_URL = "https://fake-url.test";
 
     beforeEach(() => {
-        global.fetch = vi.fn();
+        global.fetch = vi.fn() as Mock;
     });
 
     afterEach(() => {
@@ -15,7 +15,7 @@ describe("API Service Layer", () => {
     it("successfully parses data on valid response", async () => {
         const mockData = { is_safe: false, score: 0.2 };
 
-        global.fetch.mockResolvedValue({
+        (global.fetch as Mock).mockResolvedValue({
             ok: true,
             json: async () => mockData,
         });
@@ -27,7 +27,7 @@ describe("API Service Layer", () => {
     });
 
     it("throws error when response is not ok", async () => {
-        global.fetch.mockResolvedValue({
+        (global.fetch as Mock).mockResolvedValue({
             ok: false,
             json: async () => ({ error: "Network Error 400" }),
         });
