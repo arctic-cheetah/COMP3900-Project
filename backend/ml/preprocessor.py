@@ -198,7 +198,6 @@ class preprocess_data:
             self.ref_counts(url)
             return len(self.page_data)
         except Exception as err:
-            traceback.print_exc()
             print(err)
             self.page_data = []
             return 0
