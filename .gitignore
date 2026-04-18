@@ -3,5 +3,8 @@ node_modules/
 __pycache__/
 __pycache__/**
 .pytest_cache/
+backend/logs
+logs
+
 .vscode/**
 .vscode/

@@ -199,7 +199,6 @@ class preprocess_data:
             self.ref_counts(url)
             return len(self.page_data)
         except Exception as err:
-            traceback.print_exc()
             print(err)
             self.page_data = []
             return 0
@@ -719,6 +718,7 @@ class preprocess_data:
         (NoOfSelfRef, "NoOfSelfRef"),
         (NoOfEmptyRef, "NoOfEmptyRef"),
         (NoOfExternalRef, "NoOfExternalRef"),
+        (NoOfImage, "NoOfImage"),
     ]
 
     def get_data(self) -> pd.DataFrame:

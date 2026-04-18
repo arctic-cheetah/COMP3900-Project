@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Loader } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
+import { Loader } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 import { scanURL, getStoredData } from "./api";
 import HistoricalData from "./HistoricData";
@@ -12,76 +12,78 @@ import logoIcon from "../assets/logo.png";
 // --- DUMMY DATA FOR PREVIEW ---
 const DUMMY_HISTORY = [
   {
-    url: 'https://example-bank-secure.com',
+    url: "https://example-bank-secure.com",
     timestamp: new Date(2026, 2, 1, 14, 30),
     isSafe: true,
     confidence: 95,
   },
   {
-    url: 'http://paypa1-verify.tk/login',
+    url: "http://paypa1-verify.tk/login",
     timestamp: new Date(2026, 2, 1, 12, 15),
     isSafe: false,
     confidence: 98,
   },
   {
-    url: 'https://microsoft.com',
+    url: "https://microsoft.com",
     timestamp: new Date(2026, 2, 1, 16, 45),
     isSafe: true,
     confidence: 99,
   },
   {
-    url: 'http://amaz0n-account-verify.xyz',
+    url: "http://amaz0n-account-verify.xyz",
     timestamp: new Date(2026, 2, 1, 10, 20),
     isSafe: false,
     confidence: 97,
   },
   {
-    url: 'https://github.com',
+    url: "https://github.com",
     timestamp: new Date(2026, 1, 28, 13, 10),
     isSafe: true,
     confidence: 99,
   },
 ];
 
-
-
 export default function HomePage() {
   const [history, setHistory] = useState(() => {
     // Load from localStorage on initial mount
-    const stored = localStorage.getItem('scanHistory');
+    const stored = localStorage.getItem("scanHistory");
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
         // Convert timestamps back to Date objects
-        return parsed.map(item => ({
+        return parsed.map((item) => ({
           ...item,
-          timestamp: new Date(item.timestamp)
+          timestamp: new Date(item.timestamp),
         }));
       } catch (e) {
-        console.error('Failed to parse stored history:', e);
+        console.error("Failed to parse stored history:", e);
         return DUMMY_HISTORY;
       }
     }
     return DUMMY_HISTORY;
   });
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentResult, setCurrentResult] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
   // Save history to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('scanHistory', JSON.stringify(history));
+    localStorage.setItem("scanHistory", JSON.stringify(history));
   }, [history]);
 
   const handleDeleteScans = (scansToDelete) => {
-    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
-    setHistory((current) => current.filter((scan) => !itemsToRemove.includes(scan)));
+    const itemsToRemove = Array.isArray(scansToDelete)
+      ? scansToDelete
+      : [scansToDelete];
+    setHistory((current) =>
+      current.filter((scan) => !itemsToRemove.includes(scan)),
+    );
   };
 
-  const isMobile = useMediaQuery('(max-width: 768px)');
-  const moveButton = useMediaQuery('(max-width: 1173px)');
-  const urlFullText = useMediaQuery('(max-width: 930px)');
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const moveButton = useMediaQuery("(max-width: 1173px)");
+  const urlFullText = useMediaQuery("(max-width: 930px)");
 
   const openHistoryResult = (item) => {
     setCurrentResult({
@@ -95,31 +97,39 @@ export default function HomePage() {
 
   // Fetch from backend only if localStorage is empty
   useEffect(() => {
-    const stored = localStorage.getItem('scanHistory');
+    const stored = localStorage.getItem("scanHistory");
     if (stored) return; // Skip if we have local data
 
     (async () => {
       try {
         let data = await getStoredData();
-        console.log(data)
-        let scans = Array.isArray(data["scans"]) ? data["scans"] : []
-        let mapped = scans.map(s => ({
+        console.log(data);
+        let scans = Array.isArray(data["scans"]) ? data["scans"] : [];
+        let mapped = scans.map((s) => ({
+          id: s.id,
           url: s.url,
           timestamp: s.scanned_at,
           isSafe: s.is_safe,
-          confidence: s.confidence
-        }))
-        setHistory(mapped)
-      }
-      catch (e) {
-        const resultElem = document.getElementById('result');
+          confidence: s.confidence,
+        }));
+        setHistory(mapped);
+      } catch (e) {
+        const resultElem = document.getElementById("result");
         resultElem.textContent = e.message;
         console.log(e);
       }
-
     })();
   }, []);
 
+  // Delete URL from DB and update state 
+  const deleteItem = async (scan) => {
+    try {
+      await fetch(`http://localhost:5001/scans/${scan.id}`, { method: "DELETE" });
+      setHistory(current => current.filter(h => h.id !== scan.id));
+    } catch (e) {
+      console.error("Failed to delete scan", e);
+    }
+  };
 
   const postURL = async (e) => {
     e.preventDefault();
@@ -130,15 +140,15 @@ export default function HomePage() {
     if (formData == null) {
       return;
     }
-    const url = formData.get('url-link');
-    if (url == null || url == '') {
-      console.log('invalid URL');
+    const url = formData.get("url-link");
+    if (url == null || url == "") {
+      console.log("invalid URL");
       return;
     }
     try {
       const scanResult = await scanURL(url);
       console.log(scanResult);
-      let { is_safe: isSafe, confidence } = scanResult;
+      let { is_safe: isSafe, confidence, explanations } = scanResult;
 
       setTimeout(() => {
         setCurrentResult({ url, isSafe, confidence });
@@ -157,7 +167,12 @@ export default function HomePage() {
         setLoading(false);
       }, 500);
     } catch (e) {
+<<<<<<< HEAD
       // const resultElem = document.getElementById('result');
+=======
+      const resultElem = document.getElementById("result");
+      resultElem.textContent = e.message;
+>>>>>>> d44060e9924be3296c3420c0a40c9e026d25b599
       console.log(e);
       alert(e);
       setLoading(false);
@@ -166,90 +181,88 @@ export default function HomePage() {
   };
 
   return (
-    <div className='homepage'>
+    <div className="homepage">
       <Navbar />
       <img className="logo-homepage" src={logoIcon} />
       <header className="header">
         <h1>Protect Yourself from Phishing Attacks</h1>
       </header>
-      <p className='description'>
+      <p className="description">
         Enter any URL below to instantly analyse and detect potential phishing
         threats <br /> using advanced Al-powered detection
       </p>
 
-      <form onSubmit={postURL} className='url-form'>
-        <span className='search-icon'>
-          <svg width='25' height='25' viewBox='0 0 24 24' fill='none'>
-            <circle cx='11' cy='11' r='7' stroke='#9aa4b2' strokeWidth='1.5' />
+      <form onSubmit={postURL} className="url-form">
+        <span className="search-icon">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="#9aa4b2" strokeWidth="1.5" />
             <line
-              x1='16.5'
-              y1='16.5'
-              x2='21'
-              y2='21'
-              stroke='#9aa4b2'
-              strokeWidth='1.5'
+              x1="16.5"
+              y1="16.5"
+              x2="21"
+              y2="21"
+              stroke="#9aa4b2"
+              strokeWidth="1.5"
             />
           </svg>
         </span>
 
         <label>
           <input
-            name='url-link'
+            name="url-link"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder={
               urlFullText
-                ? 'Enter URL to analyse'
-                : 'Enter URL to analyse (e.g, https://example.com)'
+                ? "Enter URL to analyse"
+                : "Enter URL to analyse (e.g, https://example.com)"
             }
           />
         </label>
 
         {!moveButton && (
           <button
-            type='submit'
-            className={`inline-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            type="submit"
+            className={`inline-btn ${url.trim() ? "active-btn" : "inactive-btn"}`}
             disabled={!url.trim()}
           >
             {isLoading ? (
-              <span className='loader'>
-                <Loader color='white' size='sm' />
+              <span className="loader">
+                <Loader color="white" size="sm" />
                 Analysing...
               </span>
             ) : (
-              'Analyse URL'
+              "Analyse URL"
             )}
           </button>
         )}
 
         {moveButton && (
           <button
-            type='submit'
-            className={`full-btn ${url.trim() ? 'active-btn' : 'inactive-btn'}`}
+            type="submit"
+            className={`full-btn ${url.trim() ? "active-btn" : "inactive-btn"}`}
             disabled={!url.trim()}
           >
             {isLoading ? (
-              <span className='loader'>
-                <Loader color='white' size='sm' />
+              <span className="loader">
+                <Loader color="white" size="sm" />
                 Analysing...
               </span>
             ) : (
-              'Analyse URL'
+              "Analyse URL"
             )}
           </button>
         )}
       </form>
 
       {!moveButton && (
-        <p className='privacy-text'>
+        <p className="privacy-text">
           Your privacy is protected. URLs are analysed securely and not stored
           permanently.
         </p>
       )}
 
-      {moveButton && (
-        <div className='space' />
-      )}
+      {moveButton && <div className="space" />}
 
       {isModalOpen && isMobile && (
         <ResultModal
@@ -265,10 +278,11 @@ export default function HomePage() {
         onHistoryClick={openHistoryResult}
       />
 
-      <p className='privacy-text'>
+      <p className="privacy-text">
         Your privacy is protected. URLs are analysed securely and not stored
         permanently.
       </p>
     </div>
   );
 }
+

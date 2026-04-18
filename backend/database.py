@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import logging
 import psycopg2
 import datetime
@@ -62,16 +63,23 @@ def init_db():
 
 
 # Persist an anonymous scan result to the scans table
-def save_scan(url: str, is_safe: bool, confidence: float):
+def save_scan(url: str, is_safe: bool, confidence: float, explanation: list = None):
     query = """
-        INSERT INTO scans (url, is_safe, confidence)
-        VALUES (%s, %s, %s)
+        INSERT INTO scans (url, is_safe, confidence, explanation)
+        VALUES (%s, %s, %s, %s)
         RETURNING id, scanned_at;
     """
 
+    explanation_json = None
+    if explanation:
+        parts = []
+        for e in explanation:
+            parts.append(e)
+        explanation_json = json.dumps(parts)
+
     try:
         with get_cursor() as cur:
-            cur.execute(query, (url, is_safe, round(confidence, 4)))
+            cur.execute(query, (url, is_safe, round(confidence, 4), explanation_json))
             row = cur.fetchone()
             scan_id = row["id"] if row else None
             logger.info(
@@ -92,7 +100,7 @@ def get_all_scans(limit: int = 500, offset: int = 0):
     # server side cap to prevent abuse from frontend
     limit = min(limit, 500)
     query = """
-        SELECT id, url, is_safe, confidence, scanned_at
+        SELECT id, url, is_safe, confidence, scanned_at, explanation
         FROM scans
         ORDER BY scanned_at DESC
         LIMIT %s OFFSET %s;
@@ -108,6 +116,7 @@ def get_all_scans(limit: int = 500, offset: int = 0):
                     "is_safe": row["is_safe"],
                     "confidence": float(row["confidence"]),
                     "scanned_at": row["scanned_at"].isoformat(),
+                    "explanation": json.loads(row["explanation"]) if row["explanation"] else None,
                 }
                 for row in rows
             ]
@@ -115,3 +124,19 @@ def get_all_scans(limit: int = 500, offset: int = 0):
     except Exception as e:
         logger.error("Unable to retrieve scans: %s", e)
         return None
+    
+# Delete scan by ID, return true if deleted, else return false 
+def delete_scan(scan_id: int) -> bool:
+    query = "DELETE FROM scans WHERE id = %s RETURNING id;"
+    try:
+        with get_cursor() as cur:
+            cur.execute(query, (scan_id,))
+            deleted = cur.fetchone()
+            if not deleted:
+                logger.warning("Delete called on nonexistent scan id=%s", scan_id)
+                return False
+            logger.info("Scan deleted id=%s", scan_id)
+            return True
+    except Exception as e:
+        logger.error("Failed to delete scan: %s", e)
+        return False
