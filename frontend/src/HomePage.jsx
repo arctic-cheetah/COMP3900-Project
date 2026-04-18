@@ -121,7 +121,7 @@ export default function HomePage() {
     })();
   }, []);
 
-  // Delete URL from DB and update state 
+  // Delete URL from DB and update state
   const deleteItem = async (scan) => {
     try {
       await fetch(`http://localhost:5001/scans/${scan.id}`, { method: "DELETE" });
@@ -167,12 +167,8 @@ export default function HomePage() {
         setLoading(false);
       }, 500);
     } catch (e) {
-<<<<<<< HEAD
-      // const resultElem = document.getElementById('result');
-=======
       const resultElem = document.getElementById("result");
       resultElem.textContent = e.message;
->>>>>>> d44060e9924be3296c3420c0a40c9e026d25b599
       console.log(e);
       alert(e);
       setLoading(false);
@@ -285,4 +281,3 @@ export default function HomePage() {
     </div>
   );
 }
-
