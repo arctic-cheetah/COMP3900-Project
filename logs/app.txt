@@ -770,3 +770,207 @@
 2026-04-18 20:31:43,811 - INFO - Scan saved — id=87 is_safe=False confidence=100.0000
 2026-04-18 20:31:43,816 - INFO - 127.0.0.1 - - [18/Apr/2026 20:31:43] "POST /scan HTTP/1.1" 200 -
 2026-04-18 20:31:52,449 - INFO - 127.0.0.1 - - [18/Apr/2026 20:31:52] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 00:36:04,503 - INFO - Database initialised successfully.
+2026-04-19 00:36:04,505 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 00:36:04,506 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 00:37:29,512 - INFO - 127.0.0.1 - - [19/Apr/2026 00:37:29] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 00:37:38,726 - INFO - Scan saved — id=1 is_safe=True confidence=100.0000
+2026-04-19 00:37:38,730 - INFO - 127.0.0.1 - - [19/Apr/2026 00:37:38] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:38:58,393 - INFO - 127.0.0.1 - - [19/Apr/2026 00:38:58] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 00:39:03,135 - INFO - Scan saved — id=2 is_safe=True confidence=100.0000
+2026-04-19 00:39:03,138 - INFO - 127.0.0.1 - - [19/Apr/2026 00:39:03] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:45:34,685 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:34] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:45:38,710 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:38] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:45:38,712 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:38] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:45:38,714 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:38] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:45:38,715 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:38] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:45:38,717 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:38] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:45:45,263 - INFO - Scan saved — id=3 is_safe=True confidence=100.0000
+2026-04-19 00:45:45,266 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:45] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:45:45,270 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:45] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:45:45,275 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:45] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:45:45,280 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:45] "GET /scans?limit=2&offset=0 HTTP/1.1" 200 -
+2026-04-19 00:45:45,282 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:45] "[31m[1mGET /scans?limit=abc HTTP/1.1[0m" 400 -
+2026-04-19 00:45:52,237 - INFO - Scan saved — id=4 is_safe=True confidence=100.0000
+2026-04-19 00:45:52,240 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:52] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:45:52,245 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:52] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:45:52,250 - INFO - Scan deleted id=4
+2026-04-19 00:45:52,253 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:52] "DELETE /scans/4 HTTP/1.1" 200 -
+2026-04-19 00:45:52,257 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:52] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:45:52,262 - WARNING - Delete called on nonexistent scan id=999999
+2026-04-19 00:45:52,263 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:52] "[33mDELETE /scans/999999 HTTP/1.1[0m" 404 -
+2026-04-19 00:45:52,268 - ERROR - Exception on /scans/export [GET]
+Traceback (most recent call last):
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/khalifa/capstone-project-26t1-3900-m18b-date/backend/app.py", line 277, in export_scans
+    writer.writerows(scans)
+    ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 228, in writerows
+    return self.writer.writerows(map(self._dict_to_list, rowdicts))
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 220, in _dict_to_list
+    raise ValueError("dict contains fields not in fieldnames: "
+                     + ", ".join([repr(x) for x in wrong_fields]))
+ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
+2026-04-19 00:45:52,271 - INFO - 127.0.0.1 - - [19/Apr/2026 00:45:52] "[35m[1mGET /scans/export HTTP/1.1[0m" 500 -
+2026-04-19 00:51:13,762 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:13] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:51:13,764 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:13] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:51:13,767 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:13] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:51:13,769 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:13] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:51:13,771 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:13] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:51:21,243 - INFO - Scan saved — id=5 is_safe=True confidence=100.0000
+2026-04-19 00:51:21,246 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:21] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:51:21,251 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:21] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:51:21,257 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:21] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:51:21,263 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:21] "GET /scans?limit=2&offset=0 HTTP/1.1" 200 -
+2026-04-19 00:51:21,265 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:21] "[31m[1mGET /scans?limit=abc HTTP/1.1[0m" 400 -
+2026-04-19 00:51:28,456 - INFO - Scan saved — id=6 is_safe=True confidence=100.0000
+2026-04-19 00:51:28,459 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:28] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:51:28,463 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:28] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:51:28,467 - INFO - Scan deleted id=6
+2026-04-19 00:51:28,470 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:28] "DELETE /scans/6 HTTP/1.1" 200 -
+2026-04-19 00:51:28,474 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:28] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:51:28,478 - WARNING - Delete called on nonexistent scan id=999999
+2026-04-19 00:51:28,479 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:28] "[33mDELETE /scans/999999 HTTP/1.1[0m" 404 -
+2026-04-19 00:51:28,483 - ERROR - Exception on /scans/export [GET]
+Traceback (most recent call last):
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/khalifa/capstone-project-26t1-3900-m18b-date/backend/app.py", line 277, in export_scans
+    writer = csv.DictWriter(
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 228, in writerows
+    return self.writer.writerows(map(self._dict_to_list, rowdicts))
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 220, in _dict_to_list
+    raise ValueError("dict contains fields not in fieldnames: "
+                     + ", ".join([repr(x) for x in wrong_fields]))
+ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
+2026-04-19 00:51:28,484 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:28] "[35m[1mGET /scans/export HTTP/1.1[0m" 500 -
+2026-04-19 00:51:46,878 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:46] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:51:47,925 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:47] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:51:49,308 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:49] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:51:52,376 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:52] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:51:54,224 - INFO - 127.0.0.1 - - [19/Apr/2026 00:51:54] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:52:05,918 - ERROR - Exception on /scans/export [GET]
+Traceback (most recent call last):
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/khalifa/capstone-project-26t1-3900-m18b-date/backend/app.py", line 277, in export_scans
+    writer = csv.DictWriter(
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 228, in writerows
+    return self.writer.writerows(map(self._dict_to_list, rowdicts))
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 220, in _dict_to_list
+    raise ValueError("dict contains fields not in fieldnames: "
+                     + ", ".join([repr(x) for x in wrong_fields]))
+ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
+2026-04-19 00:52:05,919 - INFO - 127.0.0.1 - - [19/Apr/2026 00:52:05] "[35m[1mGET /scans/export HTTP/1.1[0m" 500 -
+2026-04-19 00:52:41,612 - ERROR - Exception on /scans/export [GET]
+Traceback (most recent call last):
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ~^^^^^^^^^^^^^^^^^
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/khalifa/pythonPackages/lib/python3.14/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/khalifa/capstone-project-26t1-3900-m18b-date/backend/app.py", line 277, in export_scans
+    writer = csv.DictWriter(
+    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 228, in writerows
+    return self.writer.writerows(map(self._dict_to_list, rowdicts))
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/csv.py", line 220, in _dict_to_list
+    raise ValueError("dict contains fields not in fieldnames: "
+                     + ", ".join([repr(x) for x in wrong_fields]))
+ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
+2026-04-19 00:52:41,613 - INFO - 127.0.0.1 - - [19/Apr/2026 00:52:41] "[35m[1mGET /scans/export HTTP/1.1[0m" 500 -
+2026-04-19 00:53:00,871 - INFO - Database initialised successfully.
+2026-04-19 00:53:00,873 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 00:53:00,873 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 00:53:03,568 - INFO - 127.0.0.1 - - [19/Apr/2026 00:53:03] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 00:53:30,062 - INFO - 127.0.0.1 - - [19/Apr/2026 00:53:30] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 00:53:37,989 - INFO - 127.0.0.1 - - [19/Apr/2026 00:53:37] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 00:53:47,358 - INFO - 127.0.0.1 - - [19/Apr/2026 00:53:47] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 00:55:45,523 - INFO - Database initialised successfully.
+2026-04-19 00:55:45,524 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 00:55:45,524 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 00:55:56,246 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,258 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,260 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,263 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:55:56,264 - INFO - 127.0.0.1 - - [19/Apr/2026 00:55:56] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 00:56:02,539 - INFO - Scan saved — id=7 is_safe=True confidence=100.0000
+2026-04-19 00:56:02,543 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:56:02,548 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:02,554 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:02,559 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "GET /scans?limit=2&offset=0 HTTP/1.1" 200 -
+2026-04-19 00:56:02,561 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:02] "[31m[1mGET /scans?limit=abc HTTP/1.1[0m" 400 -
+2026-04-19 00:56:13,633 - INFO - Scan saved — id=8 is_safe=True confidence=100.0000
+2026-04-19 00:56:13,636 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "POST /scan HTTP/1.1" 200 -
+2026-04-19 00:56:13,640 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:13,644 - INFO - Scan deleted id=8
+2026-04-19 00:56:13,647 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "DELETE /scans/8 HTTP/1.1" 200 -
+2026-04-19 00:56:13,651 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "GET /scans HTTP/1.1" 200 -
+2026-04-19 00:56:13,655 - WARNING - Delete called on nonexistent scan id=999999
+2026-04-19 00:56:13,655 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "[33mDELETE /scans/999999 HTTP/1.1[0m" 404 -
+2026-04-19 00:56:13,660 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "GET /scans/export HTTP/1.1" 200 -

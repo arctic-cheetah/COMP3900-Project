@@ -106,6 +106,7 @@ export default function HomePage() {
         console.log(data);
         let scans = Array.isArray(data["scans"]) ? data["scans"] : [];
         let mapped = scans.map((s) => ({
+          id: s.id,
           url: s.url,
           timestamp: s.scanned_at,
           isSafe: s.is_safe,
@@ -119,6 +120,16 @@ export default function HomePage() {
       }
     })();
   }, []);
+
+  // Delete URL from DB and update state 
+  const deleteItem = async (scan) => {
+    try {
+      await fetch(`http://localhost:5001/scans/${scan.id}`, { method: "DELETE" });
+      setHistory(current => current.filter(h => h.id !== scan.id));
+    } catch (e) {
+      console.error("Failed to delete scan", e);
+    }
+  };
 
   const postURL = async (e) => {
     e.preventDefault();
@@ -267,3 +278,4 @@ export default function HomePage() {
     </div>
   );
 }
+

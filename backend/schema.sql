@@ -9,5 +9,6 @@ CREATE TABLE IF NOT EXISTS scans (
         confidence >= 0
         AND confidence <= 100
     ),
-    scanned_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    scanned_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), 
+    explanation TEXT
 );

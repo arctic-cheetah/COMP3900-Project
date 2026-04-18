@@ -2,7 +2,7 @@ import requests
 import sys
 import pandas as pd
 
-from ml.preprocessor import preprocess_data
+from backend.ml.preprocessor import preprocess_data
 
 
 BASE = "http://localhost:5001"
