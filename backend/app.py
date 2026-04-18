@@ -5,7 +5,6 @@ from flask_cors import CORS
 import logging
 import re
 from urllib.parse import urlparse, urlunparse, quote
-import joblib
 from sklearn.linear_model import LogisticRegression
 from pathlib import Path as path
 import datetime
@@ -172,7 +171,7 @@ def check_url():
         if res is None:
             raise Exception
         else:
-            is_safe, confidence_score = res
+            is_safe, confidence_score, explanations = res
         # persistence while maintaining anynomity
         # TODO: CHECK IF THIS VULN having dangling saved
         saved = save_scan(
@@ -180,11 +179,13 @@ def check_url():
             is_safe=bool(is_safe),
             confidence=confidence_score,
         )
+
         return (
             jsonify(
                 {
                     "is_safe": bool(is_safe),
                     "confidence": confidence_score,
+                    "explanations": explanations
                 }
             ),
             200,

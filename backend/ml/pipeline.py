@@ -3,15 +3,28 @@ import joblib
 import pandas as pd
 from Levenshtein import distance, jaro_winkler
 from pylcs import lcs_sequence_length
+from lime.lime_tabular import LimeTabularExplainer
+import re
 
 from ml.preprocessor import preprocess_data
 
 
-whitelist_path: str = "backend/ml/data/top_100k_domains.csv"
-model_path: str = "backend/ml/models/logit_model.pkl"
+WHITELIST_PATH: str = "backend/ml/data/top_100k_domains.csv"
+MODEL_PATH: str = "backend/ml/models/logit_model.joblib"
+TRAINING_DATA_PATH: str = "backend/ml/models/lime_training_data.joblib"
+NUM_TOP_FEATURES = 50
+
+SPECIAL_CONVERSIONS = {
+    "no of": "number of",
+    "Q mark": "question marks",
+    "TLD":"top level domain",
+    "levenshtein": "Levenshtein",
+    "jaro winkler": "Jaro Winkler",
+    "LCS": "longest common subsequence",
+}
 
 
-def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
+def run_model(url_features: pd.DataFrame, model: LogisticRegression, features: list) -> tuple[int, float]:
     """
     Run pretrained model on features.
 
@@ -25,10 +38,6 @@ def run_model(url_features: pd.DataFrame, model_path: str) -> tuple[int, float]:
     try:
         # TODO: WHY THE ARE WE ALWAYS LOADING THE MODEL EACH TIME IT SCANS
         # A URL? JUST CACHE IT
-        model_dump = joblib.load(model_path)
-        features = model_dump["features"]
-        model = model_dump["model"]
-
         filtered_url_features = url_features[features]
         is_safe: int = model.predict(filtered_url_features)[0].item()
         # Model actually outputs an np array of prob
@@ -103,6 +112,82 @@ def search_whitelist(domain: str, whitelist: list[str]):
         }
 
 
+def remove_is_prefix(string: str, does_have: bool):
+    string = string.removeprefix("is ")
+    if does_have:
+        string = "does have " + string
+    else:
+        string = "does not have " + string
+
+    return string
+
+def pascal_case_to_text(string: str):
+    str_split = re.findall(r'[A-Z]+(?=[A-Z][a-z])|[A-Z][a-z]+|[A-Z]+', string)
+    text = " ".join([s if s.upper() == s else s.lower() for s in str_split])
+
+    for k, v in SPECIAL_CONVERSIONS.items():
+        text = text.replace(k, v)
+
+    return text
+
+def explanation_to_text(explanation: str):
+    explanation_split = explanation.split(" ")
+    readable_text = ""
+    if len(explanation_split) == 3:
+        string = explanation_split[0]
+        readable_text = pascal_case_to_text(string)
+
+        inequality = explanation_split[1]
+        val = explanation_split[2]
+        if inequality == "<=" and float(val) == 0:
+            if readable_text.startswith("is "):
+                readable_text = remove_is_prefix(readable_text, False)
+            else:
+                readable_text += " is zero/doesn't exist"
+        elif inequality == "<=":
+            if readable_text.startswith("is "):
+                readable_text = remove_is_prefix(readable_text, True)
+            else:
+                readable_text += " is shorter/smaller than usual"
+        else:
+            readable_text += " is longer/bigger than usual"
+    elif len(explanation_split) == 5:
+        string = explanation_split[2]
+
+        lower_bound = float(explanation_split[0])
+        lower_bound = int(lower_bound) if lower_bound.is_integer() else round(lower_bound, 2)
+        upper_bound = float(explanation_split[4])
+        upper_bound = int(upper_bound) if upper_bound.is_integer() else round(upper_bound, 2)
+
+        readable_text = pascal_case_to_text(string)
+        readable_text += f" is between {lower_bound} and {upper_bound}"
+
+    return readable_text
+
+
+def get_explanations(explainer: LimeTabularExplainer, url_data: pd.DataFrame, model: LogisticRegression, features: list, is_safe: int):
+    url_data = url_data[features].iloc[0]
+    url_data = url_data.to_numpy()
+
+    explanations = explainer.explain_instance(url_data, lambda x: model.predict_proba(pd.DataFrame(x, columns=features)), num_features=NUM_TOP_FEATURES)
+
+    explanations = explanations.as_list()
+
+    if is_safe == 1:
+        explanations = [e[0] for e in explanations if e[1] >= 0]
+    else:
+        explanations = [e[0] for e in explanations if e[1] < 0]
+
+    top_explanations = explanations[:3]
+
+    top_explanations_filtered = []
+    for explanation in top_explanations:
+        readable_text = explanation_to_text(explanation)
+        top_explanations_filtered.append(readable_text)
+
+    return top_explanations_filtered
+
+
 def model_pipeline(url: str) -> tuple[int, float] | None:
     """
     Process URL and runs model.
@@ -117,10 +202,10 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
     try:
         print(f'model_pipeline: checking URL "{url}" with whitelist')
         url_obj = preprocess_data(url)
-        df = url_obj.get_data()
+        url_data = url_obj.get_data()
 
-        domain = df["RootDomain"].iloc[0]
-        whitelist = get_whitelist(whitelist_path)
+        domain = url_data["RootDomain"].iloc[0]
+        whitelist = get_whitelist(WHITELIST_PATH)
         scores = search_whitelist(domain, whitelist)
         if (
             scores["Levenshtein"] == 1
@@ -128,16 +213,25 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
             and scores["LCS"] == 1
         ):
             print(f'model_pipeline: URL "{url}" is on whitelist')
-            return 1, 100.0
+            return 1, 100.0, ["website found on whitelist"]
 
-        df["Levenshtein"] = scores["Levenshtein"]
-        df["JaroWinkler"] = scores["JaroWinkler"]
-        df["LCS"] = scores["LCS"]
+        url_data["Levenshtein"] = scores["Levenshtein"]
+        url_data["JaroWinkler"] = scores["JaroWinkler"]
+        url_data["LCS"] = scores["LCS"]
 
         print(f'model_pipeline: checking URL "{url}" with model')
-        is_safe, confidence = run_model(df, model_path)
 
-        return is_safe, confidence
+        model_dump = joblib.load(MODEL_PATH)
+
+        features = model_dump["features"]
+        model = model_dump["model"]
+        is_safe, confidence = run_model(url_data, model, features)
+
+        X_train = joblib.load(TRAINING_DATA_PATH)
+        explainer_lime = LimeTabularExplainer(X_train.values, feature_names=features,  mode="regression", random_state=0)
+        explanations = get_explanations(explainer_lime, url_data, model, features, is_safe)
+
+        return is_safe, confidence, explanations
     except Exception as e:
         # Model pipeline error should be flagged as not safe
         print(f'model_pipeline error: "{e}"')

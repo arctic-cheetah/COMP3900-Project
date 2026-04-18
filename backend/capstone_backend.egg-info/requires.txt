@@ -12,5 +12,6 @@ joblib
 scikit-learn
 levenshtein
 pylcs
+lime
 bs4
 playwright
