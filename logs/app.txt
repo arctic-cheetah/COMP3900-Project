@@ -1025,3 +1025,9 @@ ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
 2026-04-19 22:02:32,948 - INFO - 127.0.0.1 - - [19/Apr/2026 22:02:32] "POST /scan HTTP/1.1" 200 -
 2026-04-19 22:09:48,513 - INFO - 127.0.0.1 - - [19/Apr/2026 22:09:48] "GET /scans/export HTTP/1.1" 200 -
 2026-04-19 22:13:26,765 - INFO - 127.0.0.1 - - [19/Apr/2026 22:13:26] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 23:04:58,841 - INFO - Database initialised successfully.
+2026-04-19 23:04:58,842 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 23:04:58,842 - INFO - [33mPress CTRL+C to quit[0m
