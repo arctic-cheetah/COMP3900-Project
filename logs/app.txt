@@ -1268,3 +1268,77 @@ ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
 2026-04-19 17:22:48,972 - INFO - 127.0.0.1 - - [19/Apr/2026 17:22:48] "OPTIONS /scan HTTP/1.1" 200 -
 2026-04-19 17:23:48,470 - INFO - Scan saved — id=34 is_safe=True confidence=46.3369
 2026-04-19 17:23:48,473 - INFO - 127.0.0.1 - - [19/Apr/2026 17:23:48] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:09:25,528 - INFO - 127.0.0.1 - - [19/Apr/2026 19:09:25] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:10:01,788 - INFO - Scan saved — id=35 is_safe=False confidence=97.5025
+2026-04-19 19:10:01,797 - INFO - 127.0.0.1 - - [19/Apr/2026 19:10:01] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:10:12,302 - INFO - 127.0.0.1 - - [19/Apr/2026 19:10:12] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:11:09,204 - INFO - Database initialised successfully.
+2026-04-19 19:11:09,206 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 19:11:09,206 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 19:11:10,911 - INFO - 127.0.0.1 - - [19/Apr/2026 19:11:10] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:11:30,057 - INFO - Scan saved — id=36 is_safe=True confidence=0.0000
+2026-04-19 19:11:30,062 - INFO - 127.0.0.1 - - [19/Apr/2026 19:11:30] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:11:44,233 - INFO - 127.0.0.1 - - [19/Apr/2026 19:11:44] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:12:36,495 - INFO - Scan saved — id=37 is_safe=True confidence=0.0000
+2026-04-19 19:12:36,501 - INFO - 127.0.0.1 - - [19/Apr/2026 19:12:36] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:12:47,804 - INFO - 127.0.0.1 - - [19/Apr/2026 19:12:47] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:13:03,333 - INFO - Scan saved — id=38 is_safe=True confidence=0.1524
+2026-04-19 19:13:03,339 - INFO - 127.0.0.1 - - [19/Apr/2026 19:13:03] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:13:14,610 - INFO - 127.0.0.1 - - [19/Apr/2026 19:13:14] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:13:26,309 - INFO - Scan saved — id=39 is_safe=True confidence=49.3688
+2026-04-19 19:13:26,315 - INFO - 127.0.0.1 - - [19/Apr/2026 19:13:26] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:14:10,074 - INFO - 127.0.0.1 - - [19/Apr/2026 19:14:10] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:15:11,103 - INFO - Scan saved — id=40 is_safe=False confidence=99.9917
+2026-04-19 19:15:11,108 - INFO - 127.0.0.1 - - [19/Apr/2026 19:15:11] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:15:31,007 - INFO - 127.0.0.1 - - [19/Apr/2026 19:15:31] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:15:42,333 - INFO - Scan saved — id=41 is_safe=True confidence=100.0000
+2026-04-19 19:15:42,341 - INFO - 127.0.0.1 - - [19/Apr/2026 19:15:42] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:15:56,674 - INFO - 127.0.0.1 - - [19/Apr/2026 19:15:56] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:16:27,165 - INFO - Scan saved — id=42 is_safe=True confidence=0.3423
+2026-04-19 19:16:27,170 - INFO - 127.0.0.1 - - [19/Apr/2026 19:16:27] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:21:28,055 - INFO - 127.0.0.1 - - [19/Apr/2026 19:21:28] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:21:31,084 - INFO - Scan saved — id=43 is_safe=True confidence=100.0000
+2026-04-19 19:21:31,089 - INFO - 127.0.0.1 - - [19/Apr/2026 19:21:31] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:26:13,100 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-19 19:29:24,111 - INFO - Database initialised successfully.
+2026-04-19 19:29:24,122 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 19:29:24,127 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 19:29:26,798 - INFO - 127.0.0.1 - - [19/Apr/2026 19:29:26] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:30:04,880 - INFO - Scan saved — id=76 is_safe=False confidence=99.9999
+2026-04-19 19:30:04,891 - INFO - 127.0.0.1 - - [19/Apr/2026 19:30:04] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:33:12,633 - INFO - 127.0.0.1 - - [19/Apr/2026 19:33:12] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:33:18,682 - INFO - Scan saved — id=77 is_safe=True confidence=100.0000
+2026-04-19 19:33:18,729 - INFO - 127.0.0.1 - - [19/Apr/2026 19:33:18] "POST /scan HTTP/1.1" 200 -
+2026-04-19 19:33:49,758 - INFO - 127.0.0.1 - - [19/Apr/2026 19:33:49] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:34:27,435 - INFO - Database initialised successfully.
+2026-04-19 19:34:27,443 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 19:34:27,444 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 19:34:32,992 - INFO - 127.0.0.1 - - [19/Apr/2026 19:34:32] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 19:34:38,896 - INFO - Scan saved — id=78 is_safe=True confidence=100.0000
+2026-04-19 19:34:38,905 - INFO - 127.0.0.1 - - [19/Apr/2026 19:34:38] "POST /scan HTTP/1.1" 200 -
+2026-04-19 22:53:47,179 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+2026-04-19 22:54:15,862 - INFO - Database initialised successfully.
+2026-04-19 22:54:15,864 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.31.167.174:5001
+2026-04-19 22:54:15,864 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 22:55:23,182 - INFO - 127.0.0.1 - - [19/Apr/2026 22:55:23] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 22:56:44,437 - INFO - Scan saved — id=79 is_safe=False confidence=99.9999
+2026-04-19 22:56:44,892 - INFO - 127.0.0.1 - - [19/Apr/2026 22:56:44] "POST /scan HTTP/1.1" 200 -
+2026-04-19 22:56:49,542 - INFO - 127.0.0.1 - - [19/Apr/2026 22:56:49] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 22:58:25,792 - INFO - Scan saved — id=80 is_safe=False confidence=99.9999
+2026-04-19 22:58:26,498 - INFO - 127.0.0.1 - - [19/Apr/2026 22:58:26] "POST /scan HTTP/1.1" 200 -
