@@ -10,7 +10,9 @@ from ml.preprocessor import preprocess_data
 
 # TODO: Waaah only kelly model's work and not mine after implementing XAI 😭
 WHITELIST_PATH: str = "backend/ml/data/top_100k_domains.csv"
-MODEL_PATH: str = "backend/ml/models/random_forest_model.pkl"
+# MODEL_PATH: str = "backend/ml/models/random_forest_model.pkl"
+# MODEL_PATH: str = "backend/ml/models/random_forest_model_2.pkl"
+MODEL_PATH: str = "backend/ml/models/logit_model_2.pkl"
 # MODEL_PATH: str = "backend/ml/models/logit_model.pkl"
 XAI_MODEL_PATH: str = "backend/ml/models/logit_model.joblib"
 
@@ -44,6 +46,7 @@ def run_model(
         # TODO: WHY THE ARE WE ALWAYS LOADING THE MODEL EACH TIME IT SCANS
         # A URL? JUST CACHE IT
         filtered_url_features = url_features[features]
+        tmp = model.predict(filtered_url_features)
         is_safe: int = model.predict(filtered_url_features)[0].item()
         # Model actually outputs an np array of prob
         # of confidence
@@ -243,6 +246,7 @@ def model_pipeline(url: str) -> tuple[int, float] | None:
         print(f'model_pipeline: checking URL "{url}" with model')
 
         # Use Kelly's xai model separate from my model
+        # So my model is model_predict_pkg
         model_xai_pkg = joblib.load(XAI_MODEL_PATH)
         model_predict_pkg = joblib.load(MODEL_PATH)
 
