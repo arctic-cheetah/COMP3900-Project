@@ -1006,3 +1006,22 @@ ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
 2026-04-19 17:09:44,158 - WARNING - Delete called on nonexistent scan id=999999
 2026-04-19 17:09:44,158 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "[33mDELETE /scans/999999 HTTP/1.1[0m" 404 -
 2026-04-19 17:09:44,163 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 21:37:23,759 - INFO - Database initialised successfully.
+2026-04-19 21:39:11,747 - INFO - Database initialised successfully.
+2026-04-19 21:39:11,851 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.206:5001
+2026-04-19 21:39:11,851 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 21:41:26,876 - INFO - 127.0.0.1 - - [19/Apr/2026 21:41:26] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 21:55:52,078 - INFO - Database initialised successfully.
+2026-04-19 21:55:52,183 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.206:5001
+2026-04-19 21:55:52,183 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 22:02:09,591 - INFO - 127.0.0.1 - - [19/Apr/2026 22:02:09] "OPTIONS /scan HTTP/1.1" 200 -
+2026-04-19 22:02:24,795 - INFO - Scan saved — id=3 is_safe=True confidence=100.0000
+2026-04-19 22:02:32,948 - INFO - 127.0.0.1 - - [19/Apr/2026 22:02:32] "POST /scan HTTP/1.1" 200 -
+2026-04-19 22:09:48,513 - INFO - 127.0.0.1 - - [19/Apr/2026 22:09:48] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 22:13:26,765 - INFO - 127.0.0.1 - - [19/Apr/2026 22:13:26] "GET /scans/export HTTP/1.1" 200 -

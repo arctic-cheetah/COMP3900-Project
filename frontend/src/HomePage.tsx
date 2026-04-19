@@ -78,9 +78,9 @@ export default function HomePage() {
     localStorage.setItem('scanHistory', JSON.stringify(history));
   }, [history]);
 
-  const handleDeleteScans = (scansToDelete: Scan | Scan []) => {
-      const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
-      setHistory((current: Scan[]) => current.filter((scan) => !itemsToRemove.includes(scan)));
+  const handleDeleteScans = (scansToDelete: Scan | Scan[]) => {
+    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
+    setHistory((current: Scan[]) => current.filter((scan) => !itemsToRemove.includes(scan)));
   };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -142,10 +142,10 @@ export default function HomePage() {
     try {
       const scanResult = await scanURL(urlValue);
       console.log(scanResult);
-      let { is_safe: isSafe, confidence } = scanResult;
+      let { is_safe: isSafe, confidence, explanation } = scanResult;
 
       setTimeout(() => {
-        setCurrentResult({ url: urlValue, isSafe, confidence });
+        setCurrentResult({ url: urlValue, isSafe, confidence, });
         setIsModalOpen(true);
 
         setHistory((current: Scan[]) => [
