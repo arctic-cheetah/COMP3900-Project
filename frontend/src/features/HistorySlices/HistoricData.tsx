@@ -14,7 +14,6 @@ import { useMediaQuery, useDisclosure } from "@mantine/hooks";
 import {
     useHistoryFiltering,
     useHistorySelection,
-    computeSelectionStates,
 } from "./hooks/index.js";
 import {
     DesktopHistoryView,
@@ -40,12 +39,6 @@ export default function HistoricData({
         executeBulkDelete,
     } = useHistorySelection();
 
-    // Compute selection states based on current selection and filtered data
-    const { isAllSelected, isPartiallySelected } = computeSelectionStates(
-        selection,
-        filteredData
-    );
-
     // Mobile responsive hook
     const isMobile = useMediaQuery("(max-width: 768px)");
     const [mobileModalOpened, { open: openMobileModal, close: closeMobileModal }] =
@@ -67,7 +60,7 @@ export default function HistoricData({
                 opened={mobileModalOpened}
                 onOpen={openMobileModal}
                 onClose={closeMobileModal}
-                history={history}
+                totalScans={history.length}
                 filteredData={filteredData}
                 stats={stats}
                 filter={filter}

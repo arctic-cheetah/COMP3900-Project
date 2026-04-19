@@ -21,7 +21,7 @@ interface MobileHistoryViewProps {
     opened: boolean;
     onOpen: () => void;
     onClose: () => void;
-    history: Scan[];
+    totalScans: number;
     filteredData: Scan[];
     stats: HistoryStats;
     filter: FilterType;
@@ -37,7 +37,7 @@ export function MobileHistoryView({
     opened,
     onOpen,
     onClose,
-    history,
+    totalScans,
     filteredData,
     stats,
     filter,
@@ -63,7 +63,7 @@ export function MobileHistoryView({
                 variant="light"
                 leftSection={<IconHistory size={20} />}
             >
-                View Scan History ({history.length})
+                View Scan History ({totalScans})
             </Button>
 
             {/* Modal content */}
