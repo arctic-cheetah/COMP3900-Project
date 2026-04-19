@@ -974,3 +974,35 @@ ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
 2026-04-19 00:56:13,655 - WARNING - Delete called on nonexistent scan id=999999
 2026-04-19 00:56:13,655 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "[33mDELETE /scans/999999 HTTP/1.1[0m" 404 -
 2026-04-19 00:56:13,660 - INFO - 127.0.0.1 - - [19/Apr/2026 00:56:13] "GET /scans/export HTTP/1.1" 200 -
+2026-04-19 16:59:03,908 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "phishing_db" does not exist
+
+2026-04-19 17:00:36,012 - CRITICAL - Could not connect to PostgreSQL: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "phishing_db" does not exist
+
+2026-04-19 17:07:27,683 - INFO - Database initialised successfully.
+2026-04-19 17:07:44,374 - INFO - Database initialised successfully.
+2026-04-19 17:08:21,524 - INFO - Database initialised successfully.
+2026-04-19 17:08:21,628 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.1.206:5001
+2026-04-19 17:08:21,628 - INFO - [33mPress CTRL+C to quit[0m
+2026-04-19 17:09:27,811 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:27] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 17:09:27,815 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:27] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 17:09:27,818 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:27] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-04-19 17:09:27,821 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:27] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 17:09:27,824 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:27] "[31m[1mPOST /error HTTP/1.1[0m" 400 -
+2026-04-19 17:09:35,057 - INFO - Scan saved — id=1 is_safe=True confidence=100.0000
+2026-04-19 17:09:35,059 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:35] "POST /scan HTTP/1.1" 200 -
+2026-04-19 17:09:35,065 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:35] "GET /scans HTTP/1.1" 200 -
+2026-04-19 17:09:35,070 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:35] "GET /scans HTTP/1.1" 200 -
+2026-04-19 17:09:35,076 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:35] "GET /scans?limit=2&offset=0 HTTP/1.1" 200 -
+2026-04-19 17:09:35,078 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:35] "[31m[1mGET /scans?limit=abc HTTP/1.1[0m" 400 -
+2026-04-19 17:09:44,120 - INFO - Scan saved — id=2 is_safe=True confidence=100.0000
+2026-04-19 17:09:44,137 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "POST /scan HTTP/1.1" 200 -
+2026-04-19 17:09:44,142 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "GET /scans HTTP/1.1" 200 -
+2026-04-19 17:09:44,146 - INFO - Scan deleted id=2
+2026-04-19 17:09:44,147 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "DELETE /scans/2 HTTP/1.1" 200 -
+2026-04-19 17:09:44,153 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "GET /scans HTTP/1.1" 200 -
+2026-04-19 17:09:44,158 - WARNING - Delete called on nonexistent scan id=999999
+2026-04-19 17:09:44,158 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "[33mDELETE /scans/999999 HTTP/1.1[0m" 404 -
+2026-04-19 17:09:44,163 - INFO - 127.0.0.1 - - [19/Apr/2026 17:09:44] "GET /scans/export HTTP/1.1" 200 -
