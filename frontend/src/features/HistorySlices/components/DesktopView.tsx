@@ -15,14 +15,12 @@ import {
     Checkbox,
     Button,
 } from "@mantine/core";
-import { IconFilter } from "@tabler/icons-react";
+import { IconFilter, IconDownload } from "@tabler/icons-react";
 import type { Scan, FilterType, HistoryStats } from "../types.js";
 import { StatsSection } from "./StatsSection.js";
 import { BulkActionBar } from "./BulkActionBar.js";
 import { DesktopScanRow } from "./ScanRow/index.js";
-import { computeSelectionStates } from "../hooks/index.js";
-import { IconDownload } from "@tabler/icons-react";
-import { exportScans } from "../../../api.js";
+import { computeSelectionStates, useExportScans } from "../hooks/index.js";
 
 interface DesktopHistoryViewProps {
     filteredData: Scan[];
@@ -52,22 +50,7 @@ export function DesktopHistoryView({
         filteredData
     );
 
-    const handleExportCSV = async () => {
-        try {
-            const blob = await exportScans();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "scan_history.csv";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error("Export failed:", error);
-            alert("Failed to export scans");
-        }
-    };
+    const { handleExportCSV } = useExportScans();
 
     return (
         <Paper p="xl" radius="md" withBorder shadow="sm">
