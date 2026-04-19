@@ -13,6 +13,7 @@ import {
     Table,
     ScrollArea,
     Checkbox,
+    Button,
 } from "@mantine/core";
 import { IconFilter } from "@tabler/icons-react";
 import type { Scan, FilterType, HistoryStats } from "../types.js";
@@ -20,6 +21,8 @@ import { StatsSection } from "./StatsSection.js";
 import { BulkActionBar } from "./BulkActionBar.js";
 import { DesktopScanRow } from "./ScanRow/index.js";
 import { computeSelectionStates } from "../hooks/index.js";
+import { IconDownload } from "@tabler/icons-react";
+import { exportScans } from "../../../api.js";
 
 interface DesktopHistoryViewProps {
     filteredData: Scan[];
@@ -31,7 +34,6 @@ interface DesktopHistoryViewProps {
     onToggleAll: () => void;
     onBulkDelete: () => void;
     onDeleteScan: (scan: Scan) => void;
-    onRowClick: (scan: Scan) => void;
 }
 
 export function DesktopHistoryView({
@@ -44,12 +46,28 @@ export function DesktopHistoryView({
     onToggleAll,
     onBulkDelete,
     onDeleteScan,
-    onRowClick,
 }: DesktopHistoryViewProps) {
     const { isAllSelected, isPartiallySelected } = computeSelectionStates(
         selection,
         filteredData
     );
+
+    const handleExportCSV = async () => {
+        try {
+            const blob = await exportScans();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "scan_history.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Export failed:", error);
+            alert("Failed to export scans");
+        }
+    };
 
     return (
         <Paper p="xl" radius="md" withBorder shadow="sm">
@@ -71,6 +89,13 @@ export function DesktopHistoryView({
                     value={filter}
                     onChange={(value) => onFilterChange((value as FilterType) || "all")}
                 />
+                <Button
+                    onClick={handleExportCSV}
+                    variant="light"
+                    leftSection={<IconDownload size={16} />}
+                >
+                    Export CSV
+                </Button>
             </Group>
 
             {/* Stats section */}
