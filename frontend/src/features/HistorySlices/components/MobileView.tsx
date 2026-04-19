@@ -9,13 +9,14 @@ import {
     Stack,
     ScrollArea,
     Text,
+    Group,
 } from "@mantine/core";
-import { IconHistory, IconX, IconTrash } from "@tabler/icons-react";
+import { IconHistory, IconX, IconTrash, IconDownload } from "@tabler/icons-react";
 import type { Scan, FilterType, HistoryStats } from "../types.js";
 import { StatsSection } from "./StatsSection.js";
 import { BulkActionBar } from "./BulkActionBar.js";
 import { MobileScanCard } from "./ScanRow/index.js";
-import { computeSelectionStates } from "../hooks/index.js";
+import { computeSelectionStates, useExportScans } from "../hooks/index.js";
 
 interface MobileHistoryViewProps {
     opened: boolean;
@@ -53,6 +54,8 @@ export function MobileHistoryView({
         filteredData
     );
 
+    const { handleExportCSV } = useExportScans();
+
     return (
         <>
             {/* Button to open modal */}
@@ -76,14 +79,24 @@ export function MobileHistoryView({
                 closeButtonProps={{ icon: <IconX size={18} />, color: "red" }}
             >
                 <Stack gap="md">
-                    <Button
-                        onClick={onClose}
-                        color="red"
-                        variant="light"
-                        leftSection={<IconX size={16} />}
-                    >
-                        Close
-                    </Button>
+                    <Group grow>
+                        <Button
+                            onClick={onClose}
+                            color="red"
+                            variant="light"
+                            leftSection={<IconX size={16} />}
+                        >
+                            Close
+                        </Button>
+                        <Button
+                            onClick={handleExportCSV}
+                            color="blue"
+                            variant="light"
+                            leftSection={<IconDownload size={16} />}
+                        >
+                            Export CSV
+                        </Button>
+                    </Group>
                     <StatsSection
                         stats={stats}
                         filter={filter}
