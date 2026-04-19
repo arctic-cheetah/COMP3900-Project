@@ -65,6 +65,7 @@ export function useHistorySelection(): UseHistorySelectionReturn {
 }
 
 export { useHistoryFiltering } from "./useHistoryFiltering.js";
+export { useExportScans } from "./useExportScans.js";
 
 // Helper to compute selection states
 export const computeSelectionStates = (
