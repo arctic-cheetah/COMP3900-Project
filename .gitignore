@@ -5,6 +5,6 @@ __pycache__/**
 .pytest_cache/
 backend/logs
 logs
-
+frontend/src/HomePage.jsx
 .vscode/**
 .vscode/
