@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-import { scanURL, getStoredData } from "./api.js";
+import { scanURL, getStoredData, deleteScan } from "./api.js";
 import HistoricalData, { type Scan } from "./HistoricData.js";
 import Navbar from "./Navbar.js";
 import ResultModal from "./Resultmodal.js";
@@ -47,6 +47,7 @@ interface CurrentResult {
   url: string;
   isSafe: boolean;
   confidence: number;
+  explanation: string[];
 }
 
 export default function HomePage() {
@@ -78,9 +79,14 @@ export default function HomePage() {
     localStorage.setItem('scanHistory', JSON.stringify(history));
   }, [history]);
 
-  const handleDeleteScans = (scansToDelete: Scan | Scan []) => {
-      const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
-      setHistory((current: Scan[]) => current.filter((scan) => !itemsToRemove.includes(scan)));
+  const handleDeleteScans = async (scansToDelete: Scan | Scan[]) => {
+    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
+    for (const scan of itemsToRemove) {
+      if (scan.id != null) {
+        await deleteScan(scan.id).catch((e) => console.error(e));
+      }
+    }
+    setHistory((current: Scan[]) => current.filter((scan) => !itemsToRemove.includes(scan)));
   };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -92,6 +98,7 @@ export default function HomePage() {
       url: item.url,
       isSafe: item.isSafe,
       confidence: item.confidence,
+      explanation: [],
     });
 
     setIsModalOpen(true);
@@ -108,6 +115,7 @@ export default function HomePage() {
         console.log(data)
         let scans = Array.isArray(data["scans"]) ? data["scans"] : []
         let mapped: Scan[] = scans.map((s: any) => ({
+          id: s.id,
           url: s.url,
           timestamp: s.scanned_at,
           isSafe: s.is_safe,
@@ -142,10 +150,10 @@ export default function HomePage() {
     try {
       const scanResult = await scanURL(urlValue);
       console.log(scanResult);
-      let { is_safe: isSafe, confidence } = scanResult;
+      let { is_safe: isSafe, confidence, explanation } = scanResult;
 
       setTimeout(() => {
-        setCurrentResult({ url: urlValue, isSafe, confidence });
+        setCurrentResult({ url: urlValue, isSafe, confidence, explanation });
         setIsModalOpen(true);
 
         setHistory((current: Scan[]) => [
@@ -254,7 +262,7 @@ export default function HomePage() {
         <div className='space' />
       )}
 
-      {isModalOpen && isMobile && (
+      {isModalOpen && (
         <ResultModal
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
