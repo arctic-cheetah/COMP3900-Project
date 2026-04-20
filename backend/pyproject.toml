@@ -21,7 +21,9 @@ dependencies = [
     "levenshtein",
     "pylcs",
     "bs4",
-    "playwright"
+    "playwright",
+    "lime",
+    "dill"
 ]
 
 [tool.setuptools.packages.find]
