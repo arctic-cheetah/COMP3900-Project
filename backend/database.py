@@ -116,7 +116,7 @@ def get_all_scans(limit: int = 500, offset: int = 0):
                     "is_safe": row["is_safe"],
                     "confidence": float(row["confidence"]),
                     "scanned_at": row["scanned_at"].isoformat(),
-                    "explanation": json.loads(row["explanation"]) if row["explanation"] else None,
+                    "explanation": ", ".join(json.loads(row["explanation"])) if row["explanation"] else "",
                 }
                 for row in rows
             ]
