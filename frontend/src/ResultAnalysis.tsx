@@ -13,7 +13,7 @@ type ResultModalVars = {
   onClose: () => void;
 };
 
-const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
+const ResultAnalysis: React.FC<ResultModalVars> = ({ result, onClose }) => {
   if (!result) return null;
   const theme = useMantineTheme();
 
@@ -73,7 +73,11 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
             <p className='card-url'>{result.url}</p>
           </div>
         </div>
-        <button onClick={onClose} className='close-button' style={{backgroundColor:theme.colors.blue[6]}}>
+        <button
+          onClick={onClose}
+          className='close-button'
+          style={{ backgroundColor: theme.colors.blue[6] }}
+        >
           Close
         </button>
       </div>
@@ -81,4 +85,4 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
   );
 };
 
-export default ResultModal;
+export default ResultAnalysis;

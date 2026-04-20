@@ -5,7 +5,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import { scanURL, getStoredData } from "./api.js";
 import HistoricalData, { type Scan } from "./HistoricData.js";
 import Navbar from "./Navbar.js";
-import ResultModal from "./Resultmodal.js";
+import ResultAnalysis from './ResultAnalysis.js';
 import "./App.css";
 import logoIcon from "../assets/logo.png";
 
@@ -255,7 +255,7 @@ export default function HomePage() {
       )}
 
       {isModalOpen && isMobile && (
-        <ResultModal
+        <ResultAnalysis
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
         />
