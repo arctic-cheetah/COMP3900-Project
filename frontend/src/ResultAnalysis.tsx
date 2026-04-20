@@ -68,16 +68,6 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
               : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
           </div>
 
-          <Badge color='red' w={200} fz={12}>
-            Length: 52%
-          </Badge>
-          <Badge color='red' w={200} fz={12}>
-            Something: 10%
-          </Badge>
-          <Badge color='red' w={200} fz={12}>
-            Something else: 38%
-          </Badge>
-
           <div className='result-card'>
             <p className='card-title'>Analysed URL</p>
             <p className='card-url'>{result.url}</p>
