@@ -47,6 +47,7 @@ interface CurrentResult {
   url: string;
   isSafe: boolean;
   confidence: number;
+  explanation: string[];
 }
 
 export default function HomePage() {
@@ -92,6 +93,7 @@ export default function HomePage() {
       url: item.url,
       isSafe: item.isSafe,
       confidence: item.confidence,
+      explanation: [],
     });
 
     setIsModalOpen(true);
@@ -145,7 +147,7 @@ export default function HomePage() {
       let { is_safe: isSafe, confidence, explanation } = scanResult;
 
       setTimeout(() => {
-        setCurrentResult({ url: urlValue, isSafe, confidence, });
+        setCurrentResult({ url: urlValue, isSafe, confidence, explanation });
         setIsModalOpen(true);
 
         setHistory((current: Scan[]) => [
@@ -254,7 +256,7 @@ export default function HomePage() {
         <div className='space' />
       )}
 
-      {isModalOpen && isMobile && (
+      {isModalOpen && (
         <ResultModal
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
