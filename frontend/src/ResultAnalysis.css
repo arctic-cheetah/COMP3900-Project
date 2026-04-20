@@ -82,6 +82,7 @@
   border: 1px solid #e2e6ef;
   border-radius: 10px;
   padding-left: 15px;
+  padding-bottom: 12px;
   width: 95%;
   max-width: 550px;
   text-align: center;
@@ -136,4 +137,11 @@
   border-radius: 5px;
   margin-bottom: 10px;
   margin-left: 80%;
+}
+
+.explanation-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
 }

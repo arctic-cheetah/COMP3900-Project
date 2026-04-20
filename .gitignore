@@ -3,6 +3,9 @@ node_modules/
 __pycache__/
 __pycache__/**
 .pytest_cache/
+backend/logs
+logs
+frontend/src/HomePage.jsx
 .vscode/**
 .vscode/
 backend/logs/app.txt
