@@ -4,6 +4,7 @@
  */
 
 export interface Scan {
+    id?: number;
     url: string;
     isSafe: boolean;
     timestamp: string | number | Date;
