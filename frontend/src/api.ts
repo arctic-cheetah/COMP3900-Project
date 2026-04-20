@@ -39,3 +39,8 @@ export async function exportScans(): Promise<Blob> {
     if (!response.ok) throw new Error("Failed to export scans");
     return response.blob();
 }
+
+export async function deleteScan(id: number): Promise<void> {
+    const res = await fetch(`${API_BASE}/scans/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error(`Failed to delete scan ${id}`);
+}
