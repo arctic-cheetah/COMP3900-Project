@@ -68,28 +68,28 @@ const ResultAnalysis: React.FC<ResultModalVars> = ({ result, onClose }) => {
               ? 'This URL appears to be legitimate and safe to visit.'
               : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
           </div>
+          {result.explanation && result.explanation.length > 0 && (
+            <div className='result-card'>
+              <p className='card-title'>Why this result</p>
+              <div className='explanation-badges'>
+                {result.explanation.map((point, i) => (
+                  <Badge
+                    key={i}
+                    color={result.isSafe ? 'green' : 'red'}
+                    variant='light'
+                    size='sm'
+                  >
+                    {point}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className='result-card'>
             <p className='card-title'>Analysed URL</p>
             <p className='card-url'>{result.url}</p>
           </div>
-            {result.explanation && result.explanation.length > 0 && (
-                <div className='result-card'>
-                    <p className='card-title'>Why this result</p>
-                    <div className='explanation-badges'>
-                        {result.explanation.map((point, i) => (
-                            <Badge
-                                key={i}
-                                color={result.isSafe ? 'green' : 'red'}
-                                variant='light'
-                                size='sm'
-                            >
-                                {point}
-                            </Badge>
-                        ))}
-                    </div>
-                </div>
-            )}
         </div>
         <button
           onClick={onClose}

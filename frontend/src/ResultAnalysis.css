@@ -62,7 +62,7 @@
   align-items: center;
   gap: 15px;
   padding-bottom: 30px;
-  width: 90%
+  width: 90%;
 }
 
 .confidence-result-card {
@@ -140,8 +140,8 @@
 }
 
 .explanation-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
 }
