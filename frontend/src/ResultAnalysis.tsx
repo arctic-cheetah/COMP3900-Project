@@ -68,6 +68,7 @@ const ResultAnalysis: React.FC<ResultModalVars> = ({ result, onClose }) => {
               ? 'This URL appears to be legitimate and safe to visit.'
               : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
           </div>
+
           {result.explanation && result.explanation.length > 0 && (
             <div className='result-card'>
               <p className='card-title'>Why this result</p>
