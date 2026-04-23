@@ -8,3 +8,4 @@ logs
 frontend/src/HomePage.jsx
 .vscode/**
 .vscode/
+backend/logs/app.txt

@@ -1,4 +1,4 @@
-import './ResultModal.css';
+import './ResultAnalysis.css';
 import { useMantineTheme, Badge } from '@mantine/core';
 import { IconCheck, IconAlertTriangle } from '@tabler/icons-react';
 
@@ -14,7 +14,7 @@ type ResultModalVars = {
   onClose: () => void;
 };
 
-const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
+const ResultAnalysis: React.FC<ResultModalVars> = ({ result, onClose }) => {
   if (!result) return null;
   const theme = useMantineTheme();
 
@@ -40,12 +40,6 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
           </Badge>
         </div>
 
-        <div className='result-text'>
-          {result.isSafe
-            ? 'This URL appears to be legitimate and safe to visit.'
-            : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
-        </div>
-
         <div className='result-cards'>
           <div className='confidence-result-card'>
             <p className='card-title'>Confidence Score</p>
@@ -69,29 +63,40 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
             </div>
           </div>
 
+          <div className='result-text'>
+            {result.isSafe
+              ? 'This URL appears to be legitimate and safe to visit.'
+              : 'This URL exhibits suspicious patterns commonly associated with phishing attacks.'}
+          </div>
+
+          {result.explanation && result.explanation.length > 0 && (
+            <div className='result-card'>
+              <p className='card-title'>Why this result</p>
+              <div className='explanation-badges'>
+                {result.explanation.map((point, i) => (
+                  <Badge
+                    key={i}
+                    color={result.isSafe ? 'green' : 'red'}
+                    variant='light'
+                    size='sm'
+                  >
+                    {point}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className='result-card'>
             <p className='card-title'>Analysed URL</p>
             <p className='card-url'>{result.url}</p>
           </div>
-            {result.explanation && result.explanation.length > 0 && (
-                <div className='result-card'>
-                    <p className='card-title'>Why this result</p>
-                    <div className='explanation-badges'>
-                        {result.explanation.map((point, i) => (
-                            <Badge
-                                key={i}
-                                color={result.isSafe ? 'green' : 'red'}
-                                variant='light'
-                                size='sm'
-                            >
-                                {point}
-                            </Badge>
-                        ))}
-                    </div>
-                </div>
-            )}
         </div>
-        <button onClick={onClose} className='close-button'>
+        <button
+          onClick={onClose}
+          className='close-button'
+          style={{ backgroundColor: theme.colors.blue[6] }}
+        >
           Close
         </button>
       </div>
@@ -99,4 +104,4 @@ const ResultModal: React.FC<ResultModalVars> = ({ result, onClose }) => {
   );
 };
 
-export default ResultModal;
+export default ResultAnalysis;

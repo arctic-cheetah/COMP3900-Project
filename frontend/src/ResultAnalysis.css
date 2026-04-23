@@ -42,9 +42,9 @@
 }
 
 .result-icon .mantine-Badge-root {
-  width: 150px;
-  height: 40px;
-  font-size: 1em;
+  width: 200px;
+  height: 50px;
+  font-size: 1.1em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,21 +57,22 @@
 }
 
 .result-cards {
-  margin-top: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
   padding-bottom: 30px;
-  width: 90%
+  width: 90%;
 }
 
 .confidence-result-card {
   background: #f7f9fc;
   border: 1px solid #e2e6ef;
   border-radius: 10px;
-  padding: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   width: 95%;
+  height: 80px;
   max-width: 550px;
   text-align: center;
 }
@@ -107,6 +108,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .confidence-bar {
@@ -129,7 +132,6 @@
 .close-button {
   padding: 10px 20px;
   cursor: pointer;
-  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
@@ -138,8 +140,8 @@
 }
 
 .explanation-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
 }
