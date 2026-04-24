@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach, afterEach, beforeAll } from "vitest";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, createTheme } from "@mantine/core";
 import HistoricalData, { type Scan } from "../HistoricData.js";
 
 beforeAll(() => {
@@ -27,15 +27,21 @@ beforeAll(() => {
 });
 
 vi.mock("@mantine/hooks", async (importOriginal) => {
-    const actual = await importOriginal<typeof import("@mantine/hooks")>();
+    const actual = await vi.importActual("@mantine/hooks");
     return {
         ...actual,
         useMediaQuery: () => false,
     };
 });
 
+const theme = createTheme({});
+
 const renderWithMantine = (ui: React.ReactElement) =>
-    render(<MantineProvider>{ui}</MantineProvider>);
+    render(
+        <MantineProvider theme={theme}>
+            {ui}
+        </MantineProvider>
+    );
 
 const MOCK_SCANS: Scan[] = [
     {

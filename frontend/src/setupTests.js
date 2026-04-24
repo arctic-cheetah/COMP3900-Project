@@ -22,3 +22,18 @@ const localStorageMock = (() => {
 Object.defineProperty(window, "localStorage", {
     value: localStorageMock,
 });
+
+Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: (query) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: () => { }, // deprecated but still used internally sometimes
+        removeListener: () => { },
+        addEventListener: () => { },
+        removeEventListener: () => { },
+        dispatchEvent: () => false,
+    }),
+});
+
