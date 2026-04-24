@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { Loader } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
-import { scanURL, getStoredData } from "./api.js";
+import { scanURL, getStoredData, deleteScan } from "./api.js";
 import HistoricalData, { type Scan } from "./HistoricData.js";
 import Navbar from "./Navbar.js";
-import ResultModal from "./Resultmodal.js";
+import ResultAnalysis from './ResultAnalysis.js';
 import "./App.css";
 import logoIcon from "../assets/logo.png";
 
@@ -16,30 +16,35 @@ const DUMMY_HISTORY = [
     timestamp: new Date(2026, 2, 1, 14, 30),
     isSafe: true,
     confidence: 95,
+    explanation: ['Domain is trusted', 'Valid HTTPS certificate'],
   },
   {
     url: 'http://paypa1-verify.tk/login',
     timestamp: new Date(2026, 2, 1, 12, 15),
     isSafe: false,
     confidence: 98,
+    explanation: ['Domain is not trusted', 'Invalid HTTPS certificate'],
   },
   {
     url: 'https://microsoft.com',
     timestamp: new Date(2026, 2, 1, 16, 45),
     isSafe: true,
     confidence: 99,
+    explanation: ['Domain is trusted', 'Valid HTTPS certificate'],
   },
   {
     url: 'http://amaz0n-account-verify.xyz',
     timestamp: new Date(2026, 2, 1, 10, 20),
     isSafe: false,
     confidence: 97,
+    explanation: ['Domain is not trusted', 'Invalid HTTPS certificate'],
   },
   {
     url: 'https://github.com',
     timestamp: new Date(2026, 1, 28, 13, 10),
     isSafe: true,
     confidence: 99,
+    explanation: ['Domain is trusted', 'Valid HTTPS certificate'],
   },
 ];
 
@@ -47,6 +52,7 @@ interface CurrentResult {
   url: string;
   isSafe: boolean;
   confidence: number;
+  explanation: string[];
 }
 
 export default function HomePage() {
@@ -78,9 +84,14 @@ export default function HomePage() {
     localStorage.setItem('scanHistory', JSON.stringify(history));
   }, [history]);
 
-  const handleDeleteScans = (scansToDelete: Scan | Scan []) => {
-      const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
-      setHistory((current: Scan[]) => current.filter((scan) => !itemsToRemove.includes(scan)));
+  const handleDeleteScans = async (scansToDelete: Scan | Scan[]) => {
+    const itemsToRemove = Array.isArray(scansToDelete) ? scansToDelete : [scansToDelete];
+    for (const scan of itemsToRemove) {
+      if (scan.id != null) {
+        await deleteScan(scan.id).catch((e) => console.error(e));
+      }
+    }
+    setHistory((current: Scan[]) => current.filter((scan) => !itemsToRemove.includes(scan)));
   };
 
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -92,6 +103,7 @@ export default function HomePage() {
       url: item.url,
       isSafe: item.isSafe,
       confidence: item.confidence,
+      explanation: item.explanation || [],
     });
 
     setIsModalOpen(true);
@@ -108,11 +120,13 @@ export default function HomePage() {
         console.log(data)
         let scans = Array.isArray(data["scans"]) ? data["scans"] : []
         let mapped: Scan[] = scans.map((s: any) => ({
+          id: s.id,
           url: s.url,
           timestamp: s.scanned_at,
           isSafe: s.is_safe,
-          confidence: s.confidence
-        }))
+          confidence: s.confidence,
+          explanation: s.explanation || [],
+        }));
         setHistory(mapped)
       }
       catch (e: any) {
@@ -142,10 +156,10 @@ export default function HomePage() {
     try {
       const scanResult = await scanURL(urlValue);
       console.log(scanResult);
-      let { is_safe: isSafe, confidence } = scanResult;
+      let { is_safe: isSafe, confidence, explanation } = scanResult;
 
       setTimeout(() => {
-        setCurrentResult({ url: urlValue, isSafe, confidence });
+        setCurrentResult({ url: urlValue, isSafe, confidence, explanation });
         setIsModalOpen(true);
 
         setHistory((current: Scan[]) => [
@@ -154,6 +168,7 @@ export default function HomePage() {
             timestamp: new Date(Date.now()),
             isSafe,
             confidence: Math.round(confidence * 100) / 100,
+            explanation,
           },
           ...current,
         ]);
@@ -255,7 +270,7 @@ export default function HomePage() {
       )}
 
       {isModalOpen && isMobile && (
-        <ResultModal
+        <ResultAnalysis
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
         />

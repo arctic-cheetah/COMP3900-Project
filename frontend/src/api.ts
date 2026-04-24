@@ -26,10 +26,21 @@ export const getStoredData = async (): Promise<StoredDataResponse> => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
     });
-    
+
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || "Failed to scan website url");
     }
     return res.json();
+}
+
+export async function exportScans(): Promise<Blob> {
+    const response = await fetch(`${API_BASE}/scans/export`);
+    if (!response.ok) throw new Error("Failed to export scans");
+    return response.blob();
+}
+
+export async function deleteScan(id: number): Promise<void> {
+    const res = await fetch(`${API_BASE}/scans/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error(`Failed to delete scan ${id}`);
 }
