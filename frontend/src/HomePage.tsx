@@ -269,7 +269,7 @@ export default function HomePage() {
         <div className='space' />
       )}
 
-      {isModalOpen && isMobile && (
+      {isModalOpen && (
         <ResultAnalysis
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
