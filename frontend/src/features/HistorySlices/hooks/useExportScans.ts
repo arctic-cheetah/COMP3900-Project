@@ -20,9 +20,9 @@ export function useExportScans(filteredData: Scan[]) {
                 const date = new Date(scan.timestamp).toLocaleString();
                 const result = scan.isSafe ? "Safe" : "Phishing";
                 const confidence = `${scan.confidence}%`;
-                const details = (scan.explanation || []).join("; ");
+                const explanations = (scan.explanation || []).join("; ");
 
-                return `"${scan.url}","${date}","${result}","${confidence}","${details}"`;
+                return `"${scan.url}","${date}","${result}","${confidence}","${explanations}"`;
             });
 
             const csvContent = [headers.join(","), ...csvRows].join("\n");
