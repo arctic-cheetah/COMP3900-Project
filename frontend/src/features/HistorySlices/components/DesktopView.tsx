@@ -115,7 +115,7 @@ export function DesktopHistoryView({
                             <Table.Th>URL</Table.Th>
                             <Table.Th>DATE/TIME ANALYSED</Table.Th>
                             <Table.Th>RESULT</Table.Th>
-                            <Table.Th ta="right">DETAILS</Table.Th>
+                            <Table.Th ta="right">EXPLANATIONS</Table.Th>
                         </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>
