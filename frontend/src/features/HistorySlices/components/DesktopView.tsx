@@ -50,7 +50,7 @@ export function DesktopHistoryView({
         filteredData
     );
 
-    const { handleExportCSV } = useExportScans();
+    const { handleExportCSV } = useExportScans(filteredData);
 
     return (
         <Paper p="xl" radius="md" withBorder shadow="sm">
