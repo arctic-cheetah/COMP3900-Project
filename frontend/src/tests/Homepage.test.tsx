@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { vi, describe, it, expect, beforeEach, afterEach, type Mock } from "vitest";
+import { MantineProvider } from "@mantine/core";
 import HomePage from "../HomePage.js";
 import * as api from "../api.js";
 
@@ -31,22 +32,29 @@ vi.mock("../HistoricData.js", () => ({
 vi.mock("../Resultmodal.js", () => ({
     default: ({ result }: { result: any }) => (
         <div id="modal-result">
-            {result?.isSafe ? "Verified" : "Danger"}
+            {result?.is_safe ? "Verified" : "Danger"}
         </div>
     ),
 }));
 
-vi.mock("@mantine/core", () => ({
-    Loader: () => <span>loading...</span>,
-}));
+vi.mock("@mantine/core", async () => {
+    const actual = await vi.importActual("@mantine/core");
+    return {
+        ...actual,
+        Loader: () => <span>loading...</span>,
+    };
+});
 
 vi.mock("@mantine/hooks", () => ({
     useMediaQuery: () => true,
 }));
 
+const renderWithMantine = (ui: React.ReactElement) =>
+    render(<MantineProvider>{ui}</MantineProvider>);
+
 describe("HomePage Logic", () => {
     it("handles input changes and toggles the submit button", () => {
-        render(<HomePage />);
+        renderWithMantine(<HomePage />);
 
         const urlInput = screen.getByPlaceholderText(/enter url/i) as HTMLInputElement;
         const submitBtn = screen.getByRole("button", { name: /analyse/i });
@@ -67,7 +75,7 @@ describe("HomePage Logic", () => {
             confidence: 0.99,
         });
 
-        render(<HomePage />);
+        renderWithMantine(<HomePage />);
 
         fireEvent.change(screen.getByPlaceholderText(/enter url/i), {
             target: { value: "https://fake-url.test" },
@@ -83,7 +91,7 @@ describe("HomePage Logic", () => {
     it("renders 'Verified' when API returns safe", async () => {
         (api.scanURL as Mock).mockResolvedValue({ is_safe: true });
 
-        render(<HomePage />);
+        renderWithMantine(<HomePage />);
 
         fireEvent.change(screen.getByPlaceholderText(/enter url/i), {
             target: { value: "https://fake-url.test" },
@@ -92,7 +100,11 @@ describe("HomePage Logic", () => {
         fireEvent.click(screen.getByRole("button", { name: /analyse/i }));
 
         await waitFor(() => {
-            expect(screen.getByText(/verified/i)).toBeInTheDocument();
+            const badge = screen.getByText("Safe", {
+                selector: ".mantine-Badge-label",
+            });
+
+            expect(badge).toBeInTheDocument();
         });
     });
 });
