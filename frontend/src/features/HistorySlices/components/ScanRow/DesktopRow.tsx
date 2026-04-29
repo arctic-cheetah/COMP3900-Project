@@ -162,6 +162,33 @@ export function DesktopScanRow({
                                         Delete Record
                                     </Button>
                                 </Group>
+                                <Box
+                                    p="md"
+                                    style={{
+                                        borderTop: "1px solid var(--mantine-color-gray-3)",
+                                        background: "white",
+                                        borderRadius: "8px",
+                                    }}
+                                >
+                                    <Stack gap="xs">
+                                        <Text size="xs" fw={700} c="dimmed">
+                                            WHY THIS RESULT
+                                        </Text>
+                                        <Stack gap={4}>
+                                            {scan.explanation?.length ? (
+                                                scan.explanation.map((exp, index) => (
+                                                    <Text key={index} size="sm" c="gray.7">
+                                                        • {exp}
+                                                    </Text>
+                                                ))
+                                            ) : (
+                                                <Text size="sm" c="dimmed">
+                                                    No explanation available
+                                                </Text>
+                                            )}
+                                        </Stack>
+                                    </Stack>
+                                </Box>
                             </Stack>
                         </Box>
                     </Collapse>

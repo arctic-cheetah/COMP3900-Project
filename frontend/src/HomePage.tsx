@@ -9,45 +9,6 @@ import ResultAnalysis from './ResultAnalysis.js';
 import "./App.css";
 import logoIcon from "../assets/logo.png";
 
-// --- DUMMY DATA FOR PREVIEW ---
-const DUMMY_HISTORY = [
-  {
-    url: 'https://example-bank-secure.com',
-    timestamp: new Date(2026, 2, 1, 14, 30),
-    isSafe: true,
-    confidence: 95,
-    explanation: ['Domain is trusted', 'Valid HTTPS certificate'],
-  },
-  {
-    url: 'http://paypa1-verify.tk/login',
-    timestamp: new Date(2026, 2, 1, 12, 15),
-    isSafe: false,
-    confidence: 98,
-    explanation: ['Domain is not trusted', 'Invalid HTTPS certificate'],
-  },
-  {
-    url: 'https://microsoft.com',
-    timestamp: new Date(2026, 2, 1, 16, 45),
-    isSafe: true,
-    confidence: 99,
-    explanation: ['Domain is trusted', 'Valid HTTPS certificate'],
-  },
-  {
-    url: 'http://amaz0n-account-verify.xyz',
-    timestamp: new Date(2026, 2, 1, 10, 20),
-    isSafe: false,
-    confidence: 97,
-    explanation: ['Domain is not trusted', 'Invalid HTTPS certificate'],
-  },
-  {
-    url: 'https://github.com',
-    timestamp: new Date(2026, 1, 28, 13, 10),
-    isSafe: true,
-    confidence: 99,
-    explanation: ['Domain is trusted', 'Valid HTTPS certificate'],
-  },
-];
-
 interface CurrentResult {
   url: string;
   isSafe: boolean;
@@ -69,10 +30,10 @@ export default function HomePage() {
         }));
       } catch (e) {
         console.error('Failed to parse stored history:', e);
-        return DUMMY_HISTORY;
+        return [];
       }
     }
-    return DUMMY_HISTORY;
+    return [];
   });
   const [url, setUrl] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -269,7 +230,7 @@ export default function HomePage() {
         <div className='space' />
       )}
 
-      {isModalOpen && isMobile && (
+      {isModalOpen && (
         <ResultAnalysis
           result={currentResult}
           onClose={() => setIsModalOpen(false)}
