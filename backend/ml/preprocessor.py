@@ -542,7 +542,7 @@ class preprocess_data:
         # numbers
         # Special chars
         # https://www.saffronart.com
-        # FFS it uses hostname
+        # Note it uses hostname
         # Precondition assume valid url
         hostname = urlsplit(url).hostname.lower()
         if hostname.startswith("www."):
