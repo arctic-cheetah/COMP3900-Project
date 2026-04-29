@@ -45,7 +45,7 @@ class preprocess_data:
     num_external_ref = 0
     has_title_flag: bool = False
 
-    def __init__(self, url: str):
+    def __init__(self, url: str) -> None:
         # Strip trailing slashes and cap total slashes to 2 (http:// + one path slash).
         # url = re.sub(r"/+$", "", url)
         # parts = url.split("/", NUM_SLASHES)
@@ -59,18 +59,18 @@ class preprocess_data:
     def _avoid_div_zero(self, url: str) -> int:
         return max(len(url) - 1, 1)
 
-    def get_root_domain(self, url: str):
+    def get_root_domain(self, url: str) -> str:
         ext = tldextract.extract(url)
         return ext.domain + "." + ext.suffix
 
-    def url_length(self, url: str):
+    def url_length(self, url: str) -> int:
         return len(url)
 
-    def domain_length(self, url: str):
+    def domain_length(self, url: str) -> int:
         domain = urlparse(url).netloc
         return len(domain)
 
-    def is_domain_ip(self, url: str):
+    def is_domain_ip(self, url: str) -> int | None:
         """
         Checks if domain is an IP address.
 
@@ -90,18 +90,18 @@ class preprocess_data:
         except Exception as e:
             print(f'is_domain_ip error: "{e}"')
 
-    def tld_length(self, url: str):
+    def tld_length(self, url: str) -> int:
         extracted = tldextract.extract(url)
         tld = extracted.suffix
         return len(tld)
 
-    def no_of_sub_domain(self, url: str):
+    def no_of_sub_domain(self, url: str) -> int:
         extracted = tldextract.extract(url)
         if extracted.subdomain == "":
             return 0
         return len(extracted.subdomain.split("."))
 
-    def has_obfuscation(self, url: str):
+    def has_obfuscation(self, url: str) -> int:
         # URL obfuscation according to this article
         # https://pushsecurity.com/blog/detecting-phishing-pages-using-obfuscated-url-destinations
         # is any character after the @ symbol
@@ -109,7 +109,7 @@ class preprocess_data:
         regex = r"%[0-9a-fA-F]{2}"
         return 1 if re.match(regex, url) else 0
 
-    def no_of_obfuscated_char(self, url: str):
+    def no_of_obfuscated_char(self, url: str) -> int:
         regex = r"%[0-9a-fA-F]{2}"
         found = re.findall(regex, url)
         # HTML encoding always comes in triplets
@@ -117,10 +117,10 @@ class preprocess_data:
         self.num_obfuscated_char = len(found) * 3
         return self.num_obfuscated_char
 
-    def obfuscation_ratio(self, url: str):
+    def obfuscation_ratio(self, url: str) -> float:
         return self.no_of_obfuscated_char(url) / self._avoid_div_zero(url)
 
-    def no_of_letters_in_url(self, url: str):
+    def no_of_letters_in_url(self, url: str) -> int:
         """
         Dataset behaviour
         - Count all letters in the hostname, not full url
@@ -138,29 +138,29 @@ class preprocess_data:
 
         return sum(c.isalpha() for c in host)
 
-    def letter_ratio_in_url(self, url: str):
+    def letter_ratio_in_url(self, url: str) -> float:
         return self.no_of_letters_in_url(url) / self._avoid_div_zero(url)
 
-    def no_of_digits_in_url(self, url: str):
+    def no_of_digits_in_url(self, url: str) -> int:
         return sum(c.isdigit() for c in url)
 
-    def digit_ratio_in_url(self, url: str):
+    def digit_ratio_in_url(self, url: str) -> float:
         return self.no_of_digits_in_url(url) / self._avoid_div_zero(url)
 
-    def no_of_equals_in_url(self, url: str):
+    def no_of_equals_in_url(self, url: str) -> int:
         return sum(c in "=" for c in url)
 
-    def no_of_q_mark_in_url(self, url: str):
+    def no_of_q_mark_in_url(self, url: str) -> int:
         return sum(c in "?" for c in url)
 
-    def no_of_ampersand_in_url(self, url: str):
+    def no_of_ampersand_in_url(self, url: str) -> int:
         return sum(c in "&" for c in url)
 
-    def no_of_other_special_chars_in_url(self, url: str):
+    def no_of_other_special_chars_in_url(self, url: str) -> int:
         special = "!@#$%^*()_+-[]{}|;:'\",<>~`"
         return sum(c in special for c in url)
 
-    def special_char_ratio_in_url(self, url: str):
+    def special_char_ratio_in_url(self, url: str) -> float:
         total_special = (
             self.no_of_equals_in_url(url)
             + self.no_of_q_mark_in_url(url)
@@ -170,14 +170,14 @@ class preprocess_data:
 
         return total_special / self._avoid_div_zero(url)
 
-    def is_https(self, url: str):
+    def is_https(self, url: str) -> int:
         return 1 if url.strip().lower().startswith("https://") else 0
 
     # TODO: KELLY PLZ ADD UR URL_SIMILARITY SCORE
     # def get_url_similarity_score(self, url: str):
 
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
-    def line_of_code(self, url: str):
+    def line_of_code(self, url: str) -> int:
         """
         Count lines in the html code
         Returns 0 if the page can't be fetched.
@@ -279,7 +279,7 @@ class preprocess_data:
                 context.close()
                 browser.close()
 
-    def largest_line_length(self, url: str):
+    def largest_line_length(self, url: str) -> int:
         """
         Find the line with the largest length
         otherwise, return 0
@@ -326,7 +326,7 @@ class preprocess_data:
 
         return script_tags + inline_handlers + js_protocol
 
-    def has_favicon(self, url) -> int:
+    def has_favicon(self, url: str) -> int:
         """
         Check if the site has a favicon image
         Args:
@@ -347,7 +347,7 @@ class preprocess_data:
             return 0
         return 0
 
-    def robots(self, url) -> int:
+    def robots(self, url: str) -> int:
         """
         Check if the site has a robots.txt
         Args:
@@ -367,7 +367,7 @@ class preprocess_data:
             return 0
         return 0
 
-    def ref_counts(self, url):
+    def ref_counts(self, url: str) -> None:
         """
         Use this function with the initial html feature analysis at line of code
         as a hook
@@ -423,28 +423,28 @@ class preprocess_data:
                 else:
                     self.num_external_ref += 1
 
-    def no_of_self_ref(self, url):
+    def no_of_self_ref(self, url: str) -> int:
         return self.num_self_ref
 
-    def no_of_empty_ref(self, url):
+    def no_of_empty_ref(self, url: str) -> int:
         return self.num_empty_ref
 
-    def no_of_external_ref(self, url):
+    def no_of_external_ref(self, url: str) -> int:
         return self.num_external_ref
 
-    def has_submit_button(self, url):
+    def has_submit_button(self, url: str) -> int:
         if self.html_data is None:
             return 0
         has_submit_btn = self.html_data.find("button", type="submit") is not None
         return 1 if has_submit_btn is not None else 0
 
-    def has_title(self, url) -> int:
+    def has_title(self, url: str) -> int:
         if self.html_data is None:
             return 0
         self.has_title_flag = self.html_data.find("title") is not None
         return 1 if self.has_title_flag is not None else 0
 
-    def pay(self, url):
+    def pay(self, url: str) -> int:
         # checks for financial redflag  keywords like asking for bank info
         if not hasattr(self, "page_data") or not self.page_data:
             return 0
@@ -467,7 +467,7 @@ class preprocess_data:
             return 1
         return 0
 
-    def has_hidden_fields(self, url):
+    def has_hidden_fields(self, url: str) -> int:
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
 
@@ -477,13 +477,13 @@ class preprocess_data:
         except Exception:
             return 0
 
-    def is_responsive(self, url):
+    def is_responsive(self, url: str) -> None:
         # NOTE: This code was implemented on the
         # joule-research-add-stealth-phishing-data-accuracy-save branch
         # But clearly was removed when the Merge request was made
         pass
 
-    def has_description(self, url):
+    def has_description(self, url: str) -> int:
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
 
@@ -495,7 +495,7 @@ class preprocess_data:
             pass
         return 0
 
-    def has_copyright_info(self, url):
+    def has_copyright_info(self, url: str) -> int:
         # Regex check for copyright info (symbol or word)
         if not hasattr(self, "page_data") or not self.page_data:
             return 0
@@ -509,7 +509,7 @@ class preprocess_data:
             return 1
         return 0
 
-    def has_social_net(self, url):
+    def has_social_net(self, url: str) -> int:
         # check for social links
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
@@ -536,7 +536,7 @@ class preprocess_data:
             pass
         return 0
 
-    def char_continuation_rate(self, url: str):
+    def char_continuation_rate(self, url: str) -> float:
         # Return the length of the longest congitguous sequence of:
         # alphabet
         # numbers
@@ -594,7 +594,7 @@ class preprocess_data:
             longest_alphabet[0] + longest_number[0] + longest_special_char[0]
         ) / len(hostname)
 
-    def url_title_match_score(self, url: str):
+    def url_title_match_score(self, url: str) -> float:
         """
         This function returns how much the root domain is explained by words
         from the page title
