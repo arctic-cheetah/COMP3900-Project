@@ -1,0 +1,60 @@
+graph TD
+    MAIN["main.tsx\n(React entry point)"] --> APP["App.tsx"]
+    APP --> HP["HomePage\nurl · history · isLoading\ncurrentResult · isModalOpen"]
+
+    HP --> NB["Navbar"]
+    HP --> FORM["URL Input Form"]
+    HP --> RA["ResultAnalysis Modal\n(mobile only)"]
+    HP --> HD["HistoricData\n(Orchestrator)"]
+
+    LS[("localStorage\nscanHistory cache")] <-->|"read / write"| HP
+
+    subgraph HistorySlices["HistoricData — Vertical Slice Architecture"]
+        subgraph Hooks["Custom Hooks"]
+            HF["useHistoryFiltering\nfilter · filteredData · stats"]
+            HS["useHistorySelection\nselection · toggleRow · toggleAll"]
+            HE["useExportScans\nhandleExportCSV"]
+        end
+
+        subgraph DesktopSlice["Desktop View  —  viewport > 768px"]
+            DV["DesktopHistoryView"]
+            STATS_D["StatsSection"]
+            SC_D["StatCard × 3\n(total · safe · phishing)"]
+            BAR_D["BulkActionBar"]
+            DROW["DesktopScanRow\n(per scan record)"]
+            DV --> STATS_D --> SC_D
+            DV --> BAR_D
+            DV --> DROW
+        end
+
+        subgraph MobileSlice["Mobile View  —  viewport ≤ 768px"]
+            MV["MobileHistoryView"]
+            STATS_M["StatsSection"]
+            SC_M["StatCard × 3\n(total · safe · phishing)"]
+            BAR_M["BulkActionBar"]
+            MCARD["MobileCard\n(per scan record)"]
+            MV --> STATS_M --> SC_M
+            MV --> BAR_M
+            MV --> MCARD
+        end
+    end
+
+    HD --> HF
+    HD --> HS
+    HD -->|"isMobile = false"| DV
+    HD -->|"isMobile = true"| MV
+    DV --> HE
+
+    subgraph APIClient["api.ts — API Client"]
+        A1["scanURL\nPOST /scan"]
+        A2["getStoredData\nPOST /list_scans"]
+        A3["exportScans\nGET /scans/export"]
+        A4["deleteScan\nDELETE /scans/:id"]
+    end
+
+    HP -->|"URL submitted"| A1
+    HP -->|"on mount, no cache"| A2
+    HP -->|"on record delete"| A4
+    HE -->|"Export CSV"| A3
+
+    A1 & A2 & A3 & A4 -->|"HTTP — VITE_API_URL"| BE["Flask Backend\nlocalhost:5001"]

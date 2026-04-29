@@ -1,0 +1,31 @@
+{"timestamp": "2026-04-29T09:44:08.042155", "log_type": "ERROR", "message": "127.0.0.1: Not a JSON request"}
+{"timestamp": "2026-04-29T09:44:08.045695", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T09:44:08.048709", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL scheme in \"ftp://example.com\""}
+{"timestamp": "2026-04-29T09:44:08.054378", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL \"http://\""}
+{"timestamp": "2026-04-29T09:44:08.058317", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T09:47:20.410079", "log_type": "ERROR", "message": "127.0.0.1: Not a JSON request"}
+{"timestamp": "2026-04-29T09:47:20.413743", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T09:47:20.416206", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL scheme in \"ftp://example.com\""}
+{"timestamp": "2026-04-29T09:47:20.422244", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL \"http://\""}
+{"timestamp": "2026-04-29T09:47:20.427093", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T09:59:11.119584", "log_type": "ERROR", "message": "127.0.0.1: Not a JSON request"}
+{"timestamp": "2026-04-29T09:59:11.122552", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T09:59:11.127029", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL scheme in \"ftp://example.com\""}
+{"timestamp": "2026-04-29T09:59:11.133345", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL \"http://\""}
+{"timestamp": "2026-04-29T09:59:11.137823", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T10:01:57.715815", "log_type": "ERROR", "message": "127.0.0.1: Not a JSON request"}
+{"timestamp": "2026-04-29T10:01:57.724428", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T10:01:57.728724", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL scheme in \"ftp://example.com\""}
+{"timestamp": "2026-04-29T10:01:57.731913", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL \"http://\""}
+{"timestamp": "2026-04-29T10:01:57.737462", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T10:02:25.261819", "log_type": "ERROR", "message": "127.0.0.1: Not a JSON request"}
+{"timestamp": "2026-04-29T10:02:25.266448", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T10:02:25.271422", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL scheme in \"ftp://example.com\""}
+{"timestamp": "2026-04-29T10:02:25.274569", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL \"http://\""}
+{"timestamp": "2026-04-29T10:02:25.280243", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T10:06:13.368243", "log_type": "ERROR", "message": "127.0.0.1: Not a JSON request"}
+{"timestamp": "2026-04-29T10:06:13.372227", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T10:06:13.375854", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL scheme in \"ftp://example.com\""}
+{"timestamp": "2026-04-29T10:06:13.380702", "log_type": "ERROR", "message": "127.0.0.1: Invalid URL \"http://\""}
+{"timestamp": "2026-04-29T10:06:13.383604", "log_type": "ERROR", "message": "127.0.0.1: Missing or invalid url field"}
+{"timestamp": "2026-04-29T10:06:13.414349", "log_type": "ERROR", "message": "127.0.0.1: Body is not JSON object"}

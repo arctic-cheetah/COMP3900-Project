@@ -1,0 +1,323 @@
+our Project Report should include the following.
+(1) Installation Manual (1 mark)
+
+·         Unless you have received an exception regarding the use of Docker from your tutor, your application must be dockerised (for more detail on the exceptions on the use of Docker, see the Software Quality specification). It is your responsibility to discuss this with your tutor well in advance, or else the assessment cannot be marked suitably.
+
+·         In this section, provide the steps required to run your application.
+
+o   For most projects, it will simply be docker compose up and then a URL to go to on localhost for the application e.g. localhost:1234 or 127.0.0.1:1234.
+
+o   For systems which have been granted an exception to use Docker, provide detailed, clear and correct instructions on what to install, what command(s) to run, what configuration to do, etc.
+
+·         Please also provide any environment variables and secrets.
+
+o   Please either add these into your zipped code submission or provide exact instructions for the location within your project to create .env files and what to add in them. However, ensure that secrets are not within your Github repository.
+(2) System Architecture Diagram (3 marks)
+
+·         Provide an updated system architecture diagram.
+
+·         The instructions are effectively the same as in the proposal. Make sure you take into account the feedback from your proposal, and ensure that the diagram is updated to the final system architecture of your system.
+
+·         Your diagram can be in the form of a UML diagram, but a simpler diagram containing boxes with object names and labelled arrows between them can be just as effective.
+
+·         It is essential that your diagram contains sufficient detail so that the major components and modules of your system are shown. The diagram must also show the nature of the data flow between those components and modules. It is not sufficient to merely outline the technologies that you plan to use at each layer. Thus:
+
+o   for web-development and other development focused projects, make sure your diagram clearly demonstrates:
+
+§  how different components of the backend interact with each other.
+
+§  how the backend communicates with the frontend.
+
+§  how your software communicates with external databases, APIs, and other services.
+
+o   for machine-learning, hardware based, and research projects, make sure your diagram clearly demonstrates the interactions between your models, the transfer of data to and from where it is stored, how external components such as a user interface interact with a backend that processes requests, how the backend manages different models, and the actions and logic of any applicable physical effectors.
+
+·         Some recommended websites to develop these are Draw.io (https://draw.io/) and LucidCharts (https://lucid.app/).
+(3) Design Justifications (4 marks)
+
+·         Include a list of design justifications for your solution. The focus of this section is to show how your design has evolved from your proposal. This should include:
+
+o   Explaining how your project requirements have changed over your sprints
+
+o   How you have consequently iterated on your design.
+
+·         Effective reports will do this by:
+
+o   explaining an aspect of their initial design,
+
+o   identifying what changed (your client requirements, your team realising that your design was unrealistic etc),
+
+o   outlining what you added / modified / removed in response to that, and
+
+o   justifying why your new solution is more effective.
+
+·         In a separate section, provide explanations and implementation details of complex algorithms/tools you have used. The purpose of this is to showcase the research, planning and implementation of difficult problems you have had to solve within your project. Strong reports:
+
+o   demonstrate a clear end-to-end workflow of how the system operates, and support explanations with diagrams, flowcharts, or pseudocode where appropriate.
+(4) User-Driven Evaluation of Solution (4 marks)
+
+·         In this section, you should:
+
+1.    Describe the main features of your solution. You may, for example, have a section for each functional requirement, and how your system operates for each of those functional requirements (with screenshots and written explanations).
+
+2.    Define a set of criteria that could be used to evaluate the effectiveness of your solution to your client and the target users and/or outputs of your system.
+
+3.    Evaluate the effectiveness of your solution in achieving those objectives.
+
+·         Most projects will not be successful in all of your objectives. If you believe you have satisfied every identified objective, spend some more time thinking about whether those objectives cover everything a user may want from your project. For the objectives you have not satisfied, provide brief details here and then expand within the limitations section of your report below.
+(5) Limitations and Future Work (2 marks)
+
+·         Discuss the limitations of your work. Every project will have limitations that had to be accounted for during planning and development. These can be software limitations, limitations to users or any other limitations you have encountered.
+
+·     Discuss the steps you have taken so far and are planning to take to handover the project to your client. This could include listing types of documentation, or handover meetings and the topics discussed. 
+
+o   Students are expected to include evidence of handover communication with a screenshot of an email or message sent to the client outlining the handover.
+
+o   If your handover is not yet complete at the time of submission (e.g. due to missing information or delayed client responses), you must clearly state this in your report, explain what is pending and why, and after completing the handover and provide a screenshot of the final handover communication to your tutor via email/MS Teams.
+
+·         Discuss some avenues for future work based on your project. Detail
+
+o   what resources this future work would take and
+
+o   reasons why it would be useful.
+Marking Criteria
+
+Category
+	
+
+Max Mark
+
+Report Quality & Formatting
+	
+
+1
+
+Unacceptable formatting and quality.
+	
+
+0
+
+Very poor formatting that impedes document reading.
+	
+
+0.2
+
+Poor formatting and document structure that impedes document reading.
+	
+
+0.4
+
+Acceptable formatting and structure, but at times poor judgement with respect to layout and possible padding.
+	
+
+0.6
+
+Minor issues, but overall high quality.
+	
+
+0.8
+
+Professional, easy to read and high-quality presentation (such as layout and design)
+	
+
+1
+
+Installation manual
+	
+
+1
+
+Not included or system could not be run.
+	
+
+0
+
+Substantial additional work was required by assessors, and the system only partially functions.
+	
+
+0.2
+
+Substantial additional work was required by assessors to run the system.
+	
+
+0.4
+
+Instructions could be followed, but were not clear, or some additional work was required for assessors to run the system.
+	
+
+0.6
+
+Instructions were generally clear.
+	
+
+0.8
+
+Instructions were clear and easy to follow.
+	
+
+1
+
+System Architecture Diagram
+	
+
+3
+
+Not included or very poor.
+	
+
+0
+
+Provides very vague/insufficient design and architecture.
+	
+
+0.6
+
+Provides vague/insufficient design and architecture.
+	
+
+1.2
+
+Provides the design and architecture, but has significant weaknesses or is not presented with sufficient detail.
+	
+
+1.8
+
+Provides a good overview of design and architecture with possible areas of improvement.
+	
+
+2.4
+
+Provides an excellent overview of design and architecture which is clear and easy to understand while also being sufficiently detailed.
+	
+
+3
+
+Design Justifications
+	
+
+4
+
+Not included or very poor.
+	
+
+0
+
+Does not show the any meaningful evolution of the system across the development process.
+
+ 
+
+Fails to show any non-trivial effort being put into algorithms or tools during development.
+	
+
+0.8
+
+Attempts to show the evolution of the system, but fails to convincingly justify changes in a thoughtful manner, so that the evolution appears poorly considered.
+
+ 
+
+Explanation of complex algorithms or tools is surface-level or unclear.
+	
+
+1.6
+
+Provides an adequate overview of the evolution of the design of the system, with some justifications for changes made. Overview and explanations lack depth or sufficient consideration.
+
+ 
+
+Explanation of complex algorithms or tools is adequate, but clarity, depth, or research could use significant improvement.
+	
+
+2.4
+
+Provides a good overview of the evolution of the design of the system, and good justifications for changes made, with possible areas of improvement.
+
+ 
+
+Good explanation of complex algorithms or tools, with possible areas of improvement.
+	
+
+3.2
+
+Provides an excellent overview of the evolution of the design of the system, and justifies changes made in iterations in a manner that shows thoughtful consideration of design.
+
+ 
+
+Explanation of the implementation of complex algorithms or tools is clear, easy to follow and well-researched, showing technical skill, implementation and planning.
+	
+
+4
+
+User-Driven Evaluation of System
+	
+
+4
+
+Not included or very poor.
+	
+
+0
+
+Does not describe implemented functionality, and/or does not show true effort into an evaluation of the system.
+	
+
+0.8
+
+Describes implemented functionalities. Attempts to evaluate the effectiveness of the system, but clearly deficient or highly surface level.
+	
+
+1.6
+
+Adequate summary of implemented functionalities. Objectives to evaluate effectiveness may not be defined in a way that successfully and fairly evaluates the system. Evaluation may not be linked clearly to objectives or may not fairly evaluate the system with sufficient depth.
+	
+
+2.4
+
+Clear summary of implemented functionalities. Evaluation is good, but with possible areas of improvement.
+	
+
+3.2
+
+Clear and concise summary of the implemented functionalities. Objectives to evaluate effectiveness are logical and well-reasoned. Evaluation is clearly linked to objectives and fairly assesses whether the solution is effective for the user. Any limitations or drawbacks acknowledged.
+	
+
+4
+
+Limitations and Future Work (10%)
+	
+
+2
+
+Not included or very poor.
+	
+
+0
+
+Does not show any meaningful insight into possible limitations of the system, or discussion about handover activities.
+	
+
+0.4
+
+Attempts to identify limitations and potential avenues for future work but does not show engagement and thought into qualities of the system. Includes minimal discussion about planned or completed handover activities.
+	
+
+0.8
+
+Adequate discussion of limitations and potential avenues for future work. Discussion of limitations may be surface level or fail to cover clear limitations of the system. Identified avenues for future work may be poorly justified or not reasonable. Includes some discussion about planned or completed handover activities.
+	
+
+1.2
+
+Good discussion of limitations and potential avenues for future work, with possible areas of improvement. Includes detail about planned or completed handover activities.
+	
+
+1.6
+
+Excellent discussion of limitations of the solution. Demonstrates foresight and understanding when discussing avenues for future work by justifying those avenues and assessing possible resource costs. Includes thorough detail about planned and completed handover activities.
+	
+
+2
+
+Total Mark
+	
+
+15
