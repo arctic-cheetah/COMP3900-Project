@@ -76,5 +76,5 @@ test_data.reset_index(drop=True, inplace=True)
 if "Unnamed: 0" in test_data.columns:
     test_data.drop(columns=["Unnamed: 0"], inplace=True)
 
-test_data.to_csv("backend/ml/data/url_test_data_compatible.csv", index=False)
+test_data.to_csv("backend/ml/data/url_test_data_compatible_with_model.csv", index=False)
 print(test_data)
