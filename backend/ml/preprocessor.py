@@ -43,7 +43,7 @@ class preprocess_data:
     num_self_ref = 0
     num_empty_ref = 0
     num_external_ref = 0
-    has_title: bool = False
+    has_title_flag: bool = False
 
     def __init__(self, url: str):
         # Strip trailing slashes and cap total slashes to 2 (http:// + one path slash).
@@ -81,7 +81,6 @@ class preprocess_data:
             int: Returns 1 if domain is IP, otherwise 0.
         """
         parsed_url = urlsplit(url)
-        hostname = str(parsed_url.hostname)
 
         try:
             ip_address("hostname")
@@ -178,7 +177,7 @@ class preprocess_data:
     # def get_url_similarity_score(self, url: str):
 
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
-    def LineOfCode(self, url: str):
+    def line_of_code(self, url: str):
         """
         Count lines in the html code
         Returns 0 if the page can't be fetched.
@@ -280,14 +279,14 @@ class preprocess_data:
                 context.close()
                 browser.close()
 
-    def LargestLineLength(self, url: str):
+    def largest_line_length(self, url: str):
         """
         Find the line with the largest length
         otherwise, return 0
         """
         return max((len(line) for line in self.page_data), default=0)
 
-    def NoOfJS(self, url: str) -> int:
+    def no_of_js(self, url: str) -> int:
         """
         Count the number of JavaScript "code occurrences" in the fetched HTML.
         This can be defeated if the page is behind some kind of WAF
@@ -300,9 +299,9 @@ class preprocess_data:
         Returns 0 if the page can't be fetched.
         """
         # TODO: My JS CHECKER MAY OVERCOUNT!
-        # Ensure page_data is populated (LineOfCode fetches and sets self.page_data)
+        # Ensure page_data is populated (line_of_code fetches and sets self.page_data)
         if not hasattr(self, "page_data") or self.page_data is None:
-            _ = self.LineOfCode(url)
+            _ = self.line_of_code(url)
 
         if not self.page_data:
             return 0
@@ -327,7 +326,7 @@ class preprocess_data:
 
         return script_tags + inline_handlers + js_protocol
 
-    def hasFavicon(self, url) -> int:
+    def has_favicon(self, url) -> int:
         """
         Check if the site has a favicon image
         Args:
@@ -424,26 +423,26 @@ class preprocess_data:
                 else:
                     self.num_external_ref += 1
 
-    def NoOfSelfRef(self, url):
+    def no_of_self_ref(self, url):
         return self.num_self_ref
 
-    def NoOfEmptyRef(self, url):
+    def no_of_empty_ref(self, url):
         return self.num_empty_ref
 
-    def NoOfExternalRef(self, url):
+    def no_of_external_ref(self, url):
         return self.num_external_ref
 
-    def HasSubmitButton(self, url):
+    def has_submit_button(self, url):
         if self.html_data is None:
             return 0
         has_submit_btn = self.html_data.find("button", type="submit") is not None
         return 1 if has_submit_btn is not None else 0
 
-    def HasTitle(self, url) -> int:
+    def has_title(self, url) -> int:
         if self.html_data is None:
             return 0
-        self.has_title = self.html_data.find("title") is not None
-        return 1 if self.has_title is not None else 0
+        self.has_title_flag = self.html_data.find("title") is not None
+        return 1 if self.has_title_flag is not None else 0
 
     def pay(self, url):
         # checks for financial redflag  keywords like asking for bank info
@@ -468,7 +467,7 @@ class preprocess_data:
             return 1
         return 0
 
-    def HasHiddenFields(self, url):
+    def has_hidden_fields(self, url):
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
 
@@ -478,10 +477,13 @@ class preprocess_data:
         except Exception:
             return 0
 
-    def IsResponsive(self, url):
+    def is_responsive(self, url):
+        # NOTE: This code was implemented on the
+        # joule-research-add-stealth-phishing-data-accuracy-save branch
+        # But clearly was removed when the Merge request was made
         pass
 
-    def HasDescription(self, url):
+    def has_description(self, url):
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
 
@@ -493,7 +495,7 @@ class preprocess_data:
             pass
         return 0
 
-    def HasCopyrightInfo(self, url):
+    def has_copyright_info(self, url):
         # Regex check for copyright info (symbol or word)
         if not hasattr(self, "page_data") or not self.page_data:
             return 0
@@ -507,7 +509,7 @@ class preprocess_data:
             return 1
         return 0
 
-    def HasSocialNet(self, url):
+    def has_social_net(self, url):
         # check for social links
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
@@ -534,7 +536,7 @@ class preprocess_data:
             pass
         return 0
 
-    def CharContinuationRate(self, url: str):
+    def char_continuation_rate(self, url: str):
         # Return the length of the longest congitguous sequence of:
         # alphabet
         # numbers
@@ -592,13 +594,13 @@ class preprocess_data:
             longest_alphabet[0] + longest_number[0] + longest_special_char[0]
         ) / len(hostname)
 
-    def URLTitleMatchScore(self, url: str):
+    def url_title_match_score(self, url: str):
         """
         This function returns how much the root domain is explained by words
         from the page title
         """
         # If it does not have title then BAD!
-        if not self.has_title:
+        if not self.has_title_flag:
             return 0
 
         hostname = urlsplit(url).hostname.lower()
@@ -648,7 +650,7 @@ class preprocess_data:
         (url_length, "URLLength"),
         (domain_length, "DomainLength"),
         (is_domain_ip, "IsDomainIP"),
-        (CharContinuationRate, "CharContinuationRate"),
+        (char_continuation_rate, "CharContinuationRate"),
         (tld_length, "TLDLength"),
         (no_of_sub_domain, "NoOfSubDomain"),
         (has_obfuscation, "HasObfuscation"),
@@ -664,19 +666,19 @@ class preprocess_data:
         (no_of_other_special_chars_in_url, "NoOfOtherSpecialCharsInURL"),
         (special_char_ratio_in_url, "SpecialCharRatioInURL"),
         (is_https, "IsHTTPS"),
-        (LineOfCode, "LineOfCode"),
-        (LargestLineLength, "LargestLineLength"),
-        (HasTitle, "HasTitle"),
-        (URLTitleMatchScore, "URLTitleMatchScore"),
-        (hasFavicon, "HasFavicon"),
+        (line_of_code, "LineOfCode"),
+        (largest_line_length, "LargestLineLength"),
+        (has_title, "HasTitle"),
+        (url_title_match_score, "URLTitleMatchScore"),
+        (has_favicon, "HasFavicon"),
         (robots, "Robots"),
-        (HasSocialNet, "HasSocialNet"),
-        (HasSubmitButton, "HasSubmitButton"),
-        (HasCopyrightInfo, "HasCopyrightInfo"),
-        (NoOfJS, "NoOfJS"),
-        (NoOfSelfRef, "NoOfSelfRef"),
-        (NoOfEmptyRef, "NoOfEmptyRef"),
-        (NoOfExternalRef, "NoOfExternalRef"),
+        (has_social_net, "HasSocialNet"),
+        (has_submit_button, "HasSubmitButton"),
+        (has_copyright_info, "HasCopyrightInfo"),
+        (no_of_js, "NoOfJS"),
+        (no_of_self_ref, "NoOfSelfRef"),
+        (no_of_empty_ref, "NoOfEmptyRef"),
+        (no_of_external_ref, "NoOfExternalRef"),
     ]
 
     def get_data(self) -> pd.DataFrame:
@@ -711,16 +713,3 @@ class preprocess_data:
                 data[name] = [0]
 
         return pd.DataFrame(data)
-
-
-# TODO: Gotta run the class
-# tmp_example = "wtf.com"
-# obfuscation = "https://s3.amazonaws.com/appforest_uf/f1678949673383x832048620362898600/index%20%284%29.html"
-# safe = "https://www.saffronart.com"
-# example = preprocess_data(obfuscation)
-# safeURL = preprocess_data(safe)
-# obfuscated = example.get_data()
-# s = safeURL.get_data()
-
-# print(s)
-# print(obfuscated)
