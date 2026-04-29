@@ -173,9 +173,6 @@ class preprocess_data:
     def is_https(self, url: str):
         return 1 if url.strip().lower().startswith("https://") else 0
 
-    # TODO: KELLY PLZ ADD UR URL_SIMILARITY SCORE
-    # def get_url_similarity_score(self, url: str):
-
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
     def line_of_code(self, url: str):
         """
@@ -643,7 +640,6 @@ class preprocess_data:
         return score
 
     # TODO: Add other function here AND ALSO DON'T use FEATURE VARS FROM HERE
-    # TODO: fix function convention later
     FeatureFn = Callable[["preprocess_data", str], Any]
     func_pointer: ClassVar[list[tuple[FeatureFn, str]]] = [
         (get_root_domain, "RootDomain"),
