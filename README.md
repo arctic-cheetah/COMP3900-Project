@@ -21,7 +21,6 @@ npm run dev
 ```
 
 #### Back end
-TODO: we need to discuss whether to run via
 ```bash
 python3 backend/app.py
 ```
