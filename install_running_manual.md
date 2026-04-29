@@ -4,6 +4,45 @@ Within our development team there are two ways of running the model.
 
 Docker being the most portable but the most annoying, slowest and finicky to debug is the perferred method accoridng to the university.
 
+## Repository file structure (high level)
+
+```
+.
+├── docker-compose.yml
+├── backend/
+│   ├── app.py
+│   ├── database.py
+│   ├── pyproject.toml
+│   └── ml/
+│       ├── pipeline.py
+│       └── preprocessor.py
+└── frontend/
+  ├── package.json
+  ├── vite.config.js
+  └── src/
+    ├── api.ts
+    ├── App.tsx
+    └── main.tsx
+```
+
+## High level files required to run the servers
+
+### Backend server (Flask)
+
+- [backend/app.py](backend/app.py): entrypoint for the Flask API server.
+- [backend/pyproject.toml](backend/pyproject.toml): backend dependencies and packaging.
+- [backend/database.py](backend/database.py): database configuration and connection helpers.
+- [backend/ml/pipeline.py](backend/ml/pipeline.py): model inference pipeline used by the API.
+- [backend/ml/preprocessor.py](backend/ml/preprocessor.py): feature extraction for URL scans.
+
+### Frontend server (Vite + React)
+
+- [frontend/package.json](frontend/package.json): npm scripts and frontend dependencies.
+- [frontend/vite.config.js](frontend/vite.config.js): Vite dev server and build config.
+- [frontend/src/main.tsx](frontend/src/main.tsx): app bootstrap and React root.
+- [frontend/src/App.tsx](frontend/src/App.tsx): main app component.
+- [frontend/src/api.ts](frontend/src/api.ts): API client for backend requests.
+
 ## Run with Docker (recommended)
 
 To run with docker, we suggest to start at the root repository directory
