@@ -54,7 +54,7 @@ export function MobileHistoryView({
         filteredData
     );
 
-    const { handleExportCSV } = useExportScans();
+    const { handleExportCSV } = useExportScans(filteredData);
 
     return (
         <>

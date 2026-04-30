@@ -43,7 +43,7 @@ class preprocess_data:
     num_external_ref = 0
     has_title_flag: bool = False
 
-    def __init__(self, url: str):
+    def __init__(self, url: str) -> None:
         # Strip trailing slashes and cap total slashes to 2 (http:// + one path slash).
         # url = re.sub(r"/+$", "", url)
         # parts = url.split("/", NUM_SLASHES)
@@ -104,7 +104,7 @@ class preprocess_data:
         domain = urlparse(url).netloc
         return len(domain)
 
-    def is_domain_ip(self, url: str):
+    def is_domain_ip(self, url: str) -> int | None:
         """
         Checks if domain is an IP address.
 
@@ -199,7 +199,7 @@ class preprocess_data:
         """
         return self.no_of_obfuscated_char(url) / self._avoid_div_zero(url)
 
-    def no_of_letters_in_url(self, url: str):
+    def no_of_letters_in_url(self, url: str) -> int:
         """
         Count letters in the hostname, mirroring dataset behavior.
 
@@ -342,7 +342,7 @@ class preprocess_data:
         return 1 if url.strip().lower().startswith("https://") else 0
 
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
-    def line_of_code(self, url: str):
+    def line_of_code(self, url: str) -> int:
         """
         Count lines in the html code
         Returns 0 if the page can't be fetched.
@@ -444,7 +444,7 @@ class preprocess_data:
                 context.close()
                 browser.close()
 
-    def largest_line_length(self, url: str):
+    def largest_line_length(self, url: str) -> int:
         """
         Find the line with the largest length
         otherwise, return 0
@@ -491,7 +491,7 @@ class preprocess_data:
 
         return script_tags + inline_handlers + js_protocol
 
-    def has_favicon(self, url) -> int:
+    def has_favicon(self, url: str) -> int:
         """
         Check if the site has a favicon image
         Args:
@@ -512,7 +512,7 @@ class preprocess_data:
             return 0
         return 0
 
-    def robots(self, url) -> int:
+    def robots(self, url: str) -> int:
         """
         Check if the site has a robots.txt
         Args:
@@ -532,7 +532,7 @@ class preprocess_data:
             return 0
         return 0
 
-    def ref_counts(self, url):
+    def ref_counts(self, url: str) -> None:
         """
         Use this function with the initial html feature analysis at line of code
         as a hook
@@ -866,7 +866,7 @@ class preprocess_data:
             longest_alphabet[0] + longest_number[0] + longest_special_char[0]
         ) / len(hostname)
 
-    def url_title_match_score(self, url: str):
+    def url_title_match_score(self, url: str) -> float:
         """
         This function returns how much the root domain is explained by words
         from the page title

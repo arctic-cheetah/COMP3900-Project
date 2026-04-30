@@ -15,10 +15,9 @@ sys.path.insert(0, "./backend/ml/model_training")
 
 # from model_training.preprocessor_research_paper import preprocess_data
 from preprocessor import preprocess_data
-from LCS import get_whitelist, search_whitelist, whitelist_path
+from pipeline import get_whitelist, search_whitelist, WHITELIST_PATH
 
 NUM_ROWS = 50
-# CSV_FILE = "backend/ml/data/phishing_site_urls.csv"
 CSV_FILE = "backend/ml/data/StealthPhisher2025.csv"
 
 
@@ -39,8 +38,8 @@ select_rows = df.iloc[:NUM_ROWS]
 
 
 # Run whitelist
-get_whitelist(whitelist_path)
-whitelist = get_whitelist(whitelist_path)
+get_whitelist(WHITELIST_PATH)
+whitelist = get_whitelist(WHITELIST_PATH)
 
 test_data: pd.DataFrame = pd.DataFrame()
 for idx, row_data in select_rows.iterrows():
