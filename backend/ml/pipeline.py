@@ -30,7 +30,8 @@ def run_model(url_features: pd.DataFrame, model: LogisticRegression, features: l
 
     Args:
         url_features (pd.DataFrame): Data frame containing all URL features.
-        model_path (str): Path to the saved model.
+        model (LogisticRegression): Trained model used to classify the URL.
+        features (list): Feature names required by the model.
 
     Returns:
         tuple: Returns the verdict (safe = 1, phishing = 0) and confidence score.
@@ -52,23 +53,60 @@ def run_model(url_features: pd.DataFrame, model: LogisticRegression, features: l
         return 0, 100.0
 
 
-#  Where 1 is identical and 0 is different.
-def normalised_levenshtein(a: str, b: str):
+def normalised_levenshtein(a: str, b: str) -> float:
+    """
+    Calculate the normalised Levenshtein similarity between two strings.
+
+    Args:
+        a (str): First string to compare.
+        b (str): Second string to compare.
+
+    Returns:
+        float: Similarity score between 0 and 1 where 1 is identical and 0 is different.
+    """
     return 1 - distance(a, b) / max(len(a), len(b))
 
 
-#  Where 1 is identical and 0 is different.
-def normalised_lcs(a: str, b: str):
+def normalised_lcs(a: str, b: str) -> float:
+    """
+    Calculate the normalised longest common subsequence similarity.
+
+    Args:
+        a (str): First string to compare.
+        b (str): Second string to compare.
+
+    Returns:
+        float: Similarity score between 0 and 1 where 1 is identical and 0 is different.
+    """
     return (2 * lcs_sequence_length(a, b)) / (len(a) + len(b))
 
 
-def get_whitelist(whitelist_filepath: str):
+def get_whitelist(whitelist_filepath: str) -> list[str]:
+    """
+    Load whitelist domains from a CSV file.
+
+    Args:
+        whitelist_filepath (str): Path to the whitelist CSV file.
+
+    Returns:
+        list: Returns the list of whitelisted domains.
+    """
     whitelist_df = pd.read_csv(whitelist_filepath)
     return whitelist_df["Domain"].tolist()
 
 
 # helper func to check for subdomain from whitelist
-def is_same_domain(domain: str, whitelist_domain: str):
+def is_same_domain(domain: str, whitelist_domain: str) -> bool:
+    """
+    Check whether a domain matches or is a subdomain of a whitelist domain.
+
+    Args:
+        domain (str): Domain to check.
+        whitelist_domain (str): Whitelisted domain to compare against.
+
+    Returns:
+        bool: Returns True if the domain matches the whitelist domain.
+    """
     if domain == whitelist_domain:
         return True
     elif domain.endswith("." + whitelist_domain):
@@ -77,7 +115,17 @@ def is_same_domain(domain: str, whitelist_domain: str):
         return False
 
 
-def search_whitelist(domain: str, whitelist: list[str]):
+def search_whitelist(domain: str, whitelist: list[str]) -> dict[str, float]:
+    """
+    Compare a domain against whitelisted domains using similarity metrics.
+
+    Args:
+        domain (str): Domain to compare against the whitelist.
+        whitelist (list[str]): List of whitelisted domains.
+
+    Returns:
+        dict: Returns Levenshtein, Jaro-Winkler, and LCS similarity scores.
+    """
     if domain in whitelist:
         return {
             "Levenshtein": 1,
@@ -112,7 +160,17 @@ def search_whitelist(domain: str, whitelist: list[str]):
         }
 
 
-def remove_is_prefix(string: str, does_have: bool):
+def remove_is_prefix(string: str, does_have: bool) -> str:
+    """
+    Convert an "is" feature phrase into a readable "does have" phrase.
+
+    Args:
+        string (str): Feature phrase to convert.
+        does_have (bool): Whether the phrase should be positive or negative.
+
+    Returns:
+        str: Returns the converted readable phrase.
+    """
     string = string.removeprefix("is ")
     if does_have:
         string = "does have " + string
@@ -121,7 +179,16 @@ def remove_is_prefix(string: str, does_have: bool):
 
     return string
 
-def pascal_case_to_text(string: str):
+def pascal_case_to_text(string: str) -> str:
+    """
+    Convert a PascalCase feature name into readable text.
+
+    Args:
+        string (str): PascalCase feature name.
+
+    Returns:
+        str: Returns the readable feature text.
+    """
     str_split = re.findall(r'[A-Z]+(?=[A-Z][a-z])|[A-Z][a-z]+|[A-Z]+', string)
     text = " ".join([s if s.upper() == s else s.lower() for s in str_split])
 
@@ -130,7 +197,16 @@ def pascal_case_to_text(string: str):
 
     return text
 
-def explanation_to_text(explanation: str):
+def explanation_to_text(explanation: str) -> str:
+    """
+    Convert a LIME explanation into readable text.
+
+    Args:
+        explanation (str): Raw LIME explanation text.
+
+    Returns:
+        str: Returns the readable explanation text.
+    """
     explanation_split = explanation.split(" ")
     readable_text = ""
     if len(explanation_split) == 3:
@@ -165,7 +241,20 @@ def explanation_to_text(explanation: str):
     return readable_text
 
 
-def get_explanations(explainer: LimeTabularExplainer, url_data: pd.DataFrame, model: LogisticRegression, features: list, is_safe: int):
+def get_explanations(explainer: LimeTabularExplainer, url_data: pd.DataFrame, model: LogisticRegression, features: list, is_safe: int) -> list[str]:
+    """
+    Generate readable model explanations for a URL prediction.
+
+    Args:
+        explainer (LimeTabularExplainer): LIME explainer used to explain predictions.
+        url_data (pd.DataFrame): Data frame containing URL feature values.
+        model (LogisticRegression): Trained model used to classify the URL.
+        features (list): Feature names required by the model.
+        is_safe (int): Model verdict, where safe = 1 and phishing = 0.
+
+    Returns:
+        list: Returns the top readable explanations for the prediction.
+    """
     url_data = url_data[features].iloc[0]
     url_data = url_data.to_numpy()
 
@@ -188,7 +277,7 @@ def get_explanations(explainer: LimeTabularExplainer, url_data: pd.DataFrame, mo
     return top_explanations_filtered
 
 
-def model_pipeline(url: str) -> tuple[int, float] | None:
+def model_pipeline(url: str) -> tuple[int, float, list[str]] | None:
     """
     Process URL and runs model.
 
