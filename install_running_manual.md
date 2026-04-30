@@ -204,7 +204,7 @@ stdout | src/tests/Homepage.test.tsx > HomePage Logic > renders 'Verified' when 
 
 TODO: @ccyra-unsw @caitlindang @Shadz11
 ```bash
-npm run test -- --coverage
+npm run coverage
 ```
 
 ### Troubleshooting common issues or warnings

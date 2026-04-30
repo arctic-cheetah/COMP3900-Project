@@ -66,7 +66,7 @@ class preprocess_data:
         """
         return max(len(url) - 1, 1)
 
-    def get_root_domain(self, url: str):
+    def get_root_domain(self, url: str) -> str:
         """
         Return the root domain (domain + suffix) for a URL.
 
@@ -79,7 +79,7 @@ class preprocess_data:
         ext = tldextract.extract(url)
         return ext.domain + "." + ext.suffix
 
-    def url_length(self, url: str):
+    def url_length(self, url: str) -> int:
         """
         Return the total URL length.
 
@@ -91,7 +91,7 @@ class preprocess_data:
         """
         return len(url)
 
-    def domain_length(self, url: str):
+    def domain_length(self, url: str) -> int:
         """
         Return the length of the netloc portion of the URL.
 
@@ -124,7 +124,7 @@ class preprocess_data:
         except Exception as e:
             print(f'is_domain_ip error: "{e}"')
 
-    def tld_length(self, url: str):
+    def tld_length(self, url: str) -> int:
         """
         Return the length of the URL's top-level domain (TLD).
 
@@ -138,7 +138,7 @@ class preprocess_data:
         tld = extracted.suffix
         return len(tld)
 
-    def no_of_sub_domain(self, url: str):
+    def no_of_sub_domain(self, url: str) -> int:
         """
         Return the number of subdomain labels in the URL.
 
@@ -153,7 +153,7 @@ class preprocess_data:
             return 0
         return len(extracted.subdomain.split("."))
 
-    def has_obfuscation(self, url: str):
+    def has_obfuscation(self, url: str) -> int:
         """
         Return 1 if percent-encoding is detected in the URL; else 0.
 
@@ -170,7 +170,7 @@ class preprocess_data:
         regex = r"%[0-9a-fA-F]{2}"
         return 1 if re.match(regex, url) else 0
 
-    def no_of_obfuscated_char(self, url: str):
+    def no_of_obfuscated_char(self, url: str) -> int:
         """
         Return the number of percent-encoded characters (triplets).
 
@@ -187,7 +187,7 @@ class preprocess_data:
         self.num_obfuscated_char = len(found) * 3
         return self.num_obfuscated_char
 
-    def obfuscation_ratio(self, url: str):
+    def obfuscation_ratio(self, url: str) -> float:
         """
         Return ratio of obfuscated characters to URL length.
 
@@ -225,7 +225,7 @@ class preprocess_data:
 
         return sum(c.isalpha() for c in host)
 
-    def letter_ratio_in_url(self, url: str):
+    def letter_ratio_in_url(self, url: str) -> float:
         """
         Return ratio of hostname letters to URL length.
 
@@ -237,7 +237,7 @@ class preprocess_data:
         """
         return self.no_of_letters_in_url(url) / self._avoid_div_zero(url)
 
-    def no_of_digits_in_url(self, url: str):
+    def no_of_digits_in_url(self, url: str) -> int:
         """
         Return count of digits in the full URL.
 
@@ -249,7 +249,7 @@ class preprocess_data:
         """
         return sum(c.isdigit() for c in url)
 
-    def digit_ratio_in_url(self, url: str):
+    def digit_ratio_in_url(self, url: str) -> float:
         """
         Return ratio of digits to URL length.
 
@@ -261,7 +261,7 @@ class preprocess_data:
         """
         return self.no_of_digits_in_url(url) / self._avoid_div_zero(url)
 
-    def no_of_equals_in_url(self, url: str):
+    def no_of_equals_in_url(self, url: str) -> int:
         """
         Return the count of '=' characters in the URL.
 
@@ -273,7 +273,7 @@ class preprocess_data:
         """
         return sum(c in "=" for c in url)
 
-    def no_of_q_mark_in_url(self, url: str):
+    def no_of_q_mark_in_url(self, url: str) -> int:
         """
         Return the count of '?' characters in the URL.
 
@@ -285,7 +285,7 @@ class preprocess_data:
         """
         return sum(c in "?" for c in url)
 
-    def no_of_ampersand_in_url(self, url: str):
+    def no_of_ampersand_in_url(self, url: str) -> int:
         """
         Return the count of '&' characters in the URL.
 
@@ -297,7 +297,7 @@ class preprocess_data:
         """
         return sum(c in "&" for c in url)
 
-    def no_of_other_special_chars_in_url(self, url: str):
+    def no_of_other_special_chars_in_url(self, url: str) -> int:
         """
         Return the count of non-query special characters in the URL.
 
@@ -310,7 +310,7 @@ class preprocess_data:
         special = "!@#$%^*()_+-[]{}|;:'\",<>~`"
         return sum(c in special for c in url)
 
-    def special_char_ratio_in_url(self, url: str):
+    def special_char_ratio_in_url(self, url: str) -> float:
         """
         Return ratio of special characters to URL length.
 
@@ -329,7 +329,7 @@ class preprocess_data:
 
         return total_special / self._avoid_div_zero(url)
 
-    def is_https(self, url: str):
+    def is_https(self, url: str) -> int:
         """
         Return 1 if URL uses HTTPS; else 0.
 
@@ -587,7 +587,7 @@ class preprocess_data:
                 else:
                     self.num_external_ref += 1
 
-    def no_of_self_ref(self, url):
+    def no_of_self_ref(self, url: str) -> int:
         """
         Return count of internal references found in HTML.
 
@@ -599,7 +599,7 @@ class preprocess_data:
         """
         return self.num_self_ref
 
-    def no_of_empty_ref(self, url):
+    def no_of_empty_ref(self, url: str) -> int:
         """
         Return count of empty or placeholder references found in HTML.
 
@@ -611,7 +611,7 @@ class preprocess_data:
         """
         return self.num_empty_ref
 
-    def no_of_external_ref(self, url):
+    def no_of_external_ref(self, url: str) -> int:
         """
         Return count of external references found in HTML.
 
@@ -623,7 +623,7 @@ class preprocess_data:
         """
         return self.num_external_ref
 
-    def has_submit_button(self, url):
+    def has_submit_button(self, url: str) -> int:
         """
         Return 1 if a submit button exists in the HTML; else 0.
 
@@ -653,7 +653,7 @@ class preprocess_data:
         self.has_title_flag = self.html_data.find("title") is not None
         return 1 if self.has_title_flag is not None else 0
 
-    def pay(self, url):
+    def pay(self, url: str) -> int:
         """
         Return 1 if payment-related keywords are present in page text.
 
@@ -685,7 +685,7 @@ class preprocess_data:
             return 1
         return 0
 
-    def has_hidden_fields(self, url):
+    def has_hidden_fields(self, url: str) -> int:
         """
         Return 1 if hidden input fields exist in the HTML; else 0.
 
@@ -704,7 +704,7 @@ class preprocess_data:
         except Exception:
             return 0
 
-    def is_responsive(self, url):
+    def is_responsive(self, url: str) -> None:
         """
         Placeholder for responsive design detection.
 
@@ -719,7 +719,7 @@ class preprocess_data:
         # But clearly was removed when the Merge request was made
         pass
 
-    def has_description(self, url):
+    def has_description(self, url: str) -> int:
         """
         Return 1 if a meta description tag exists in the HTML; else 0.
 
@@ -740,7 +740,7 @@ class preprocess_data:
             pass
         return 0
 
-    def has_copyright_info(self, url):
+    def has_copyright_info(self, url: str) -> int:
         """
         Return 1 if copyright text or symbol is found in HTML; else 0.
 
@@ -763,7 +763,7 @@ class preprocess_data:
             return 1
         return 0
 
-    def has_social_net(self, url):
+    def has_social_net(self, url: str) -> int:
         """
         Return 1 if common social network links are detected; else 0.
 
@@ -799,7 +799,7 @@ class preprocess_data:
             pass
         return 0
 
-    def char_continuation_rate(self, url: str):
+    def char_continuation_rate(self, url: str) -> float:
         """
         Return the longest contiguous character run ratio in hostname.
 
