@@ -1,4 +1,4 @@
-# Install and Running Manual
+# Installation and Operational Manual
 
 Within our development team there are two ways of running the model.
 
@@ -24,6 +24,11 @@ Docker being the most portable but the most annoying, slowest and finicky to deb
     ├── App.tsx
     └── main.tsx
 ```
+
+Anything else beyond these files are considered configuration, test files, research or documentation files.
+
+For example in the backend, machine learning research and dataset is labelled as the `ml` folder.
+
 
 ## High level files required to run the servers
 
