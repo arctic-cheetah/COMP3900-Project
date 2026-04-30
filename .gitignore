@@ -10,3 +10,4 @@ logs
 backend/logs/app.txt
 .env
 frontend/src/HomePage.jsx
+frontend/coverage/
