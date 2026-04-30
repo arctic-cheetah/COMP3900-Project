@@ -81,19 +81,15 @@ If the backend database schema has changed and is causing issues, try the follow
     docker compose up --build
 ```
 
-## Usage
 
-### Routes
+### Manuals:
+Please see the
+[Operational and Installation Manual](/operational-install-manual.md)
+for further information on running and installing the system
 
-```python
-POST /scan
-```
+Or for using the software please see the
+[Operational and Installation Manual](/frontend/User_Manual.md)
 
-Accepts a POST request with JSON as the payload, and the only valid key is:
-
-```
-{"url": "website_here"}
-```
 
 ## Contributing
 
