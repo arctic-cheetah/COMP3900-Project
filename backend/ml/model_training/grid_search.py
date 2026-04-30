@@ -21,7 +21,9 @@ test: List[Tuple[pd.DataFrame, pd.Series]] = []
 SPLIT_RATIO = [(4, 3, 3), (3, 1, 1), (8, 1, 1)]
 
 
-def evaluate_model(model: "DecisionTreeClassifier", data: Tuple[pd.DataFrame, pd.Series]):
+def evaluate_model(
+    model: "DecisionTreeClassifier", data: Tuple[pd.DataFrame, pd.Series]
+):
     labels = data[LABEL_VECTOR]
     features = data[FEATURE_VECTOR]
     start = time()
@@ -40,6 +42,7 @@ def evaluate_model(model: "DecisionTreeClassifier", data: Tuple[pd.DataFrame, pd
     conf = confusion_matrix(labels, pred)
     print(conf)
 
+
 def gridSearchBest(dataSet: int):
     DT_pt2 = DecisionTreeClassifier()
     parameters = {
@@ -54,4 +57,3 @@ def gridSearchBest(dataSet: int):
         f"Best hyperparameters for {SPLIT_RATIO[dataSet]} ratio are: {cv.best_params_}"
     )
     evaluate_model(cv.best_estimator_, test[0])
-    
