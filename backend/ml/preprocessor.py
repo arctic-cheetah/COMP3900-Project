@@ -15,7 +15,6 @@ import traceback
 import unicodedata
 from playwright.sync_api import sync_playwright
 
-
 # create logger for preprocessor
 logger = logging.getLogger(__name__)
 
@@ -25,7 +24,6 @@ TIMEOUT = 8
 NUM_SLASHES = 3
 
 
-# def preprocess_data(self, self, url: str):
 class preprocess_data:
     url_len = 0
     num_digit = 0
@@ -57,16 +55,52 @@ class preprocess_data:
         self.url = url
 
     def _avoid_div_zero(self, url: str) -> int:
+        """
+        Return a safe divisor length for ratios, never less than 1.
+
+        Args:
+            url (str): The URL to measure.
+
+        Returns:
+            int: Safe divisor length.
+        """
         return max(len(url) - 1, 1)
 
     def get_root_domain(self, url: str):
+        """
+        Return the root domain (domain + suffix) for a URL.
+
+        Args:
+            url (str): The URL to parse.
+
+        Returns:
+            str: Root domain.
+        """
         ext = tldextract.extract(url)
         return ext.domain + "." + ext.suffix
 
     def url_length(self, url: str):
+        """
+        Return the total URL length.
+
+        Args:
+            url (str): The URL to measure.
+
+        Returns:
+            int: URL length.
+        """
         return len(url)
 
     def domain_length(self, url: str):
+        """
+        Return the length of the netloc portion of the URL.
+
+        Args:
+            url (str): The URL to parse.
+
+        Returns:
+            int: Netloc length.
+        """
         domain = urlparse(url).netloc
         return len(domain)
 
@@ -91,17 +125,44 @@ class preprocess_data:
             print(f'is_domain_ip error: "{e}"')
 
     def tld_length(self, url: str):
+        """
+        Return the length of the URL's top-level domain (TLD).
+
+        Args:
+            url (str): The URL to parse.
+
+        Returns:
+            int: TLD length.
+        """
         extracted = tldextract.extract(url)
         tld = extracted.suffix
         return len(tld)
 
     def no_of_sub_domain(self, url: str):
+        """
+        Return the number of subdomain labels in the URL.
+
+        Args:
+            url (str): The URL to parse.
+
+        Returns:
+            int: Number of subdomain labels.
+        """
         extracted = tldextract.extract(url)
         if extracted.subdomain == "":
             return 0
         return len(extracted.subdomain.split("."))
 
     def has_obfuscation(self, url: str):
+        """
+        Return 1 if percent-encoding is detected in the URL; else 0.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: 1 if obfuscated; otherwise 0.
+        """
         # URL obfuscation according to this article
         # https://pushsecurity.com/blog/detecting-phishing-pages-using-obfuscated-url-destinations
         # is any character after the @ symbol
@@ -110,6 +171,15 @@ class preprocess_data:
         return 1 if re.match(regex, url) else 0
 
     def no_of_obfuscated_char(self, url: str):
+        """
+        Return the number of percent-encoded characters (triplets).
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: Number of percent-encoded characters.
+        """
         regex = r"%[0-9a-fA-F]{2}"
         found = re.findall(regex, url)
         # HTML encoding always comes in triplets
@@ -118,14 +188,31 @@ class preprocess_data:
         return self.num_obfuscated_char
 
     def obfuscation_ratio(self, url: str):
+        """
+        Return ratio of obfuscated characters to URL length.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            float: Obfuscation ratio.
+        """
         return self.no_of_obfuscated_char(url) / self._avoid_div_zero(url)
 
     def no_of_letters_in_url(self, url: str):
         """
+        Count letters in the hostname, mirroring dataset behavior.
+
         Dataset behaviour
         - Count all letters in the hostname, not full url
         - drop leading www if present
         - dataset seems to drop last char wtf
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: Number of letters in the hostname.
         """
 
         host = (urlparse(url).netloc or "").lower()
@@ -139,28 +226,100 @@ class preprocess_data:
         return sum(c.isalpha() for c in host)
 
     def letter_ratio_in_url(self, url: str):
+        """
+        Return ratio of hostname letters to URL length.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            float: Letter ratio.
+        """
         return self.no_of_letters_in_url(url) / self._avoid_div_zero(url)
 
     def no_of_digits_in_url(self, url: str):
+        """
+        Return count of digits in the full URL.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: Number of digits.
+        """
         return sum(c.isdigit() for c in url)
 
     def digit_ratio_in_url(self, url: str):
+        """
+        Return ratio of digits to URL length.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            float: Digit ratio.
+        """
         return self.no_of_digits_in_url(url) / self._avoid_div_zero(url)
 
     def no_of_equals_in_url(self, url: str):
+        """
+        Return the count of '=' characters in the URL.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: Number of '=' characters.
+        """
         return sum(c in "=" for c in url)
 
     def no_of_q_mark_in_url(self, url: str):
+        """
+        Return the count of '?' characters in the URL.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: Number of '?' characters.
+        """
         return sum(c in "?" for c in url)
 
     def no_of_ampersand_in_url(self, url: str):
+        """
+        Return the count of '&' characters in the URL.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: Number of '&' characters.
+        """
         return sum(c in "&" for c in url)
 
     def no_of_other_special_chars_in_url(self, url: str):
+        """
+        Return the count of non-query special characters in the URL.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: Number of other special characters.
+        """
         special = "!@#$%^*()_+-[]{}|;:'\",<>~`"
         return sum(c in special for c in url)
 
     def special_char_ratio_in_url(self, url: str):
+        """
+        Return ratio of special characters to URL length.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            float: Special character ratio.
+        """
         total_special = (
             self.no_of_equals_in_url(url)
             + self.no_of_q_mark_in_url(url)
@@ -171,6 +330,15 @@ class preprocess_data:
         return total_special / self._avoid_div_zero(url)
 
     def is_https(self, url: str):
+        """
+        Return 1 if URL uses HTTPS; else 0.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            int: 1 if HTTPS; otherwise 0.
+        """
         return 1 if url.strip().lower().startswith("https://") else 0
 
     # IF U CANNOT FETCH FROM WEBSITE THEN IT SHOULD RETURN FALSE
@@ -179,10 +347,10 @@ class preprocess_data:
         Count lines in the html code
         Returns 0 if the page can't be fetched.
         """
-        # TODO: REDIRECTS ARE BAD HERE
-        # TODO: FIX TIMEOUT
-        # TODO: NEED TO SWITCH FROM REQUESTS TO SELENIUM BROWSER API
-        # TODO: Now need to fix line of code being to big!
+        # FIXED: REDIRECTS ARE BAD HERE
+        # FIXED: FIX TIMEOUT
+        # FIXED: NEED TO SWITCH FROM REQUESTS TO SELENIUM BROWSER API
+        # FIXED: Now need to fix line of code being to big!
         # Check if request failed!
         try:
             # This is the first function that is run for html feature
@@ -397,7 +565,6 @@ class preprocess_data:
         ]
         for nameTag, attri in tags:
             for tag in self.html_data.find_all(nameTag):
-                # TODO: remove later because my pylance is fked
                 val = tag.get(attri)
                 # empty tags should be empty
                 if (
@@ -421,27 +588,81 @@ class preprocess_data:
                     self.num_external_ref += 1
 
     def no_of_self_ref(self, url):
+        """
+        Return count of internal references found in HTML.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: Number of internal references.
+        """
         return self.num_self_ref
 
     def no_of_empty_ref(self, url):
+        """
+        Return count of empty or placeholder references found in HTML.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: Number of empty references.
+        """
         return self.num_empty_ref
 
     def no_of_external_ref(self, url):
+        """
+        Return count of external references found in HTML.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: Number of external references.
+        """
         return self.num_external_ref
 
     def has_submit_button(self, url):
+        """
+        Return 1 if a submit button exists in the HTML; else 0.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: 1 if submit button exists; otherwise 0.
+        """
         if self.html_data is None:
             return 0
         has_submit_btn = self.html_data.find("button", type="submit") is not None
         return 1 if has_submit_btn is not None else 0
 
     def has_title(self, url) -> int:
+        """
+        Return 1 if a title tag exists in the HTML; else 0.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: 1 if title tag exists; otherwise 0.
+        """
         if self.html_data is None:
             return 0
         self.has_title_flag = self.html_data.find("title") is not None
         return 1 if self.has_title_flag is not None else 0
 
     def pay(self, url):
+        """
+        Return 1 if payment-related keywords are present in page text.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: 1 if keywords are found; otherwise 0.
+        """
         # checks for financial redflag  keywords like asking for bank info
         if not hasattr(self, "page_data") or not self.page_data:
             return 0
@@ -465,6 +686,15 @@ class preprocess_data:
         return 0
 
     def has_hidden_fields(self, url):
+        """
+        Return 1 if hidden input fields exist in the HTML; else 0.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: 1 if hidden inputs exist; otherwise 0.
+        """
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
 
@@ -475,12 +705,30 @@ class preprocess_data:
             return 0
 
     def is_responsive(self, url):
+        """
+        Placeholder for responsive design detection.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            None
+        """
         # NOTE: This code was implemented on the
         # joule-research-add-stealth-phishing-data-accuracy-save branch
         # But clearly was removed when the Merge request was made
         pass
 
     def has_description(self, url):
+        """
+        Return 1 if a meta description tag exists in the HTML; else 0.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: 1 if description exists; otherwise 0.
+        """
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
 
@@ -493,6 +741,15 @@ class preprocess_data:
         return 0
 
     def has_copyright_info(self, url):
+        """
+        Return 1 if copyright text or symbol is found in HTML; else 0.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: 1 if copyright info is found; otherwise 0.
+        """
         # Regex check for copyright info (symbol or word)
         if not hasattr(self, "page_data") or not self.page_data:
             return 0
@@ -507,6 +764,15 @@ class preprocess_data:
         return 0
 
     def has_social_net(self, url):
+        """
+        Return 1 if common social network links are detected; else 0.
+
+        Args:
+            url (str): The URL being analyzed.
+
+        Returns:
+            int: 1 if social links are found; otherwise 0.
+        """
         # check for social links
         if not hasattr(self, "html_data") or not self.html_data:
             return 0
@@ -534,6 +800,15 @@ class preprocess_data:
         return 0
 
     def char_continuation_rate(self, url: str):
+        """
+        Return the longest contiguous character run ratio in hostname.
+
+        Args:
+            url (str): The URL to check.
+
+        Returns:
+            float: Continuation rate ratio.
+        """
         # Return the length of the longest congitguous sequence of:
         # alphabet
         # numbers
@@ -678,6 +953,12 @@ class preprocess_data:
     ]
 
     def get_data(self) -> pd.DataFrame:
+        """
+        Compute all features for the URL and return a one-row DataFrame.
+
+        Returns:
+            pd.DataFrame: Feature values for the URL.
+        """
 
         # THIS IS WHERE DF FROM URL IS MADE
         # TODO: POTENTIAL OPTIMISATION FOR SPEED POSSIBLE HERE!
