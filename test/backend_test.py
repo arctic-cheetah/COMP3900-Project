@@ -117,3 +117,13 @@ def test_export_returns_csv():
     lines = res.text.strip().split("\n")
     assert lines[0] == "id,url,is_safe,confidence,scanned_at,explanation\r"
     print(f"exported {len(lines) - 1} rows")
+
+
+def test_scan_invalid_url_scheme():
+    res = s.post(URL + SCAN, json={"url": "ftp://example.com"})
+    assert res.status_code == 400
+
+
+def test_error_route_valid_json():
+    res = s.post(URL + ERROR, json={"info": "integration test log", "level": "ERROR"})
+    assert res.status_code == 200

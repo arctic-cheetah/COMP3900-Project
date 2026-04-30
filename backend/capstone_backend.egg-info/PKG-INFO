@@ -18,3 +18,4 @@ Requires-Dist: pylcs
 Requires-Dist: bs4
 Requires-Dist: playwright
 Requires-Dist: lime
+Requires-Dist: dill
