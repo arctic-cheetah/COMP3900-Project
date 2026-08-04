@@ -17,7 +17,6 @@ import io
 from ml.pipeline import model_pipeline
 from database import init_db, save_scan, get_all_scans, delete_scan
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -299,6 +298,8 @@ def export_scans():
 
 
 if __name__ == "__main__":
+    print("Running server at path: ")
+    print(path.cwd())
     app.logger.setLevel(logging.INFO)
     init_db()
     app.run(host="0.0.0.0", port=5001)
