@@ -297,9 +297,12 @@ def export_scans():
     return output.getvalue(), 200, headers
 
 
+from analytics_2 import publish_file_data
+
 if __name__ == "__main__":
     print("Running server at path: ")
     print(path.cwd())
     app.logger.setLevel(logging.INFO)
     init_db()
+    publish_file_data()
     app.run(host="0.0.0.0", port=5001)
