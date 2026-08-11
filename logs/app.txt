@@ -1019,3 +1019,591 @@ ValueError: dict contains fields not in fieldnames: 'explanation', 'scanned_at'
  * Running on http://127.0.0.1:5003
  * Running on http://10.4.34.123:5003
 2026-08-11 12:36:16,126 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:06:59,337 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:06:59,338 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:16:21,667 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:16:21,667 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:18:22,201 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:18:22,201 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:18:33,759 - INFO - 127.0.0.1 - - [11/Aug/2026 14:18:33] "GET / HTTP/1.1" 200 -
+2026-08-11 14:18:34,534 - INFO - 127.0.0.1 - - [11/Aug/2026 14:18:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-08-11 14:18:39,667 - INFO - 127.0.0.1 - - [11/Aug/2026 14:18:39] "GET / HTTP/1.1" 200 -
+2026-08-11 14:20:37,318 - INFO - 127.0.0.1 - - [11/Aug/2026 14:20:37] "[31m[1mPOST / HTTP/1.1[0m" 405 -
+2026-08-11 14:21:15,175 - INFO - 127.0.0.1 - - [11/Aug/2026 14:21:15] "GET / HTTP/1.1" 200 -
+2026-08-11 14:22:41,099 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 134, in check_url
+    publish_file_data()
+    ~~~~~~~~~~~~~~~~~^^
+TypeError: publish_file_data() missing 1 required positional argument: 'text'
+2026-08-11 14:22:41,104 - INFO - 127.0.0.1 - - [11/Aug/2026 14:22:41] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:40:49,483 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:40:49,484 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:41:31,987 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 134, in check_url
+    publish_file_data_v2(request_data.get("url"))
+                         ^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'request_data' where it is not associated with a value
+2026-08-11 14:41:31,990 - INFO - 127.0.0.1 - - [11/Aug/2026 14:41:31] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:42:10,133 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:42:10,133 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:42:22,288 - WARNING - 127.0.0.1: Not a JSON request
+2026-08-11 14:42:22,293 - INFO - 127.0.0.1 - - [11/Aug/2026 14:42:22] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-08-11 14:44:52,706 - WARNING - 127.0.0.1: Not a JSON request
+2026-08-11 14:44:52,707 - INFO - 127.0.0.1 - - [11/Aug/2026 14:44:52] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-08-11 14:45:01,152 - WARNING - 127.0.0.1: Not a JSON request
+2026-08-11 14:45:01,153 - INFO - 127.0.0.1 - - [11/Aug/2026 14:45:01] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-08-11 14:45:07,239 - WARNING - 127.0.0.1: Not a JSON request
+2026-08-11 14:45:07,242 - INFO - 127.0.0.1 - - [11/Aug/2026 14:45:07] "[31m[1mPOST /scan HTTP/1.1[0m" 400 -
+2026-08-11 14:47:28,423 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/pythonPackages/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 141, in check_url
+    publish_file_data_v2(request_data.get("url"))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/analytics_2.py", line 1366, in publish_file_data_v2
+    subprocess.run([param])
+    ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1991, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'ls .'
+2026-08-11 14:47:28,431 - INFO - 127.0.0.1 - - [11/Aug/2026 14:47:28] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:47:41,737 - INFO - 127.0.0.1 - - [11/Aug/2026 14:47:41] "GET / HTTP/1.1" 200 -
+2026-08-11 14:51:22,693 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:51:22,693 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:51:44,228 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 141, in check_url
+    publish_file_data_v2(request_data.get("url"))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/analytics_2.py", line 1366, in publish_file_data_v2
+    result = subprocess.run(
+        [param],
+    ...<2 lines>...
+        check=True,  # raise CalledProcessError on non-zero exit
+    )
+  File "/usr/lib/python3.13/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1991, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'ls .'
+2026-08-11 14:51:44,236 - INFO - 127.0.0.1 - - [11/Aug/2026 14:51:44] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:52:23,981 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:52:23,981 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:52:39,538 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 141, in check_url
+    publish_file_data_v2(request_data.get("url"))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/analytics_2.py", line 1366, in publish_file_data_v2
+    result = subprocess.Popen(
+        [param],
+    ...<2 lines>...
+        check=True,  # raise CalledProcessError on non-zero exit
+    )
+TypeError: Popen.__init__() got an unexpected keyword argument 'capture_output'
+2026-08-11 14:52:39,542 - INFO - 127.0.0.1 - - [11/Aug/2026 14:52:39] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:54:45,517 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:54:45,517 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:55:10,241 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 141, in check_url
+    publish_file_data_v2(request_data.get("url"))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/analytics_2.py", line 1366, in publish_file_data_v2
+    result = subprocess.Popen(
+        [param],
+    ...<2 lines>...
+        text=True,
+    )
+  File "/usr/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1991, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'ls .'
+2026-08-11 14:55:10,245 - INFO - 127.0.0.1 - - [11/Aug/2026 14:55:10] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:55:41,242 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 14:55:41,243 - INFO - 127.0.0.1 - - [11/Aug/2026 14:55:41] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:55:53,751 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 14:55:53,753 - INFO - 127.0.0.1 - - [11/Aug/2026 14:55:53] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:55:56,493 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 14:55:56,494 - INFO - 127.0.0.1 - - [11/Aug/2026 14:55:56] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:56:10,653 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 141, in check_url
+    publish_file_data_v2(request_data.get("url"))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/analytics_2.py", line 1366, in publish_file_data_v2
+    result = subprocess.Popen(
+        [param],
+    ...<2 lines>...
+        text=True,
+    )
+  File "/usr/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1991, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'what is'
+2026-08-11 14:56:10,655 - INFO - 127.0.0.1 - - [11/Aug/2026 14:56:10] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:56:26,754 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 14:56:26,755 - INFO - 127.0.0.1 - - [11/Aug/2026 14:56:26] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:57:59,306 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 14:57:59,306 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 14:58:16,749 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 14:58:16,751 - INFO - 127.0.0.1 - - [11/Aug/2026 14:58:16] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 14:59:17,762 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.4.34.123:5000
+2026-08-11 14:59:17,762 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 15:43:56,130 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 15:43:56,161 - INFO - 127.0.0.1 - - [11/Aug/2026 15:43:56] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 15:44:41,661 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://10.4.34.123:5003
+2026-08-11 15:44:41,661 - INFO - [33mPress CTRL+C to quit[0m
+2026-08-11 15:45:19,318 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 15:45:19,321 - INFO - 127.0.0.1 - - [11/Aug/2026 15:45:19] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 15:45:32,188 - INFO - 127.0.0.1 - - [11/Aug/2026 15:45:32] "GET / HTTP/1.1" 200 -
+2026-08-11 15:45:45,081 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 15:45:45,082 - INFO - 127.0.0.1 - - [11/Aug/2026 15:45:45] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 15:45:59,640 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 15:45:59,642 - INFO - 127.0.0.1 - - [11/Aug/2026 15:45:59] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 15:46:22,532 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 141, in check_url
+    publish_file_data_v2(request_data.get("url"))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/analytics_2.py", line 1368, in publish_file_data_v2
+    result = subprocess.Popen(
+        res,
+    ...<2 lines>...
+        text=True,
+    )
+  File "/usr/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1991, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'whoami;id;hostname;'
+2026-08-11 15:46:22,534 - INFO - 127.0.0.1 - - [11/Aug/2026 15:46:22] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 15:46:46,870 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 15:46:46,871 - INFO - 127.0.0.1 - - [11/Aug/2026 15:46:46] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -
+2026-08-11 15:46:54,696 - INFO - 127.0.0.1 - - [11/Aug/2026 15:46:54] "GET / HTTP/1.1" 200 -
+2026-08-11 15:47:11,722 - ERROR - Exception on /scan [POST]
+Traceback (most recent call last):
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask_cors/extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ~^^^^^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/lovelace/COMP3900-Project/.venv/lib/python3.13/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/lovelace/COMP3900-Project/backend/app.py", line 163, in check_url
+    res = model_pipeline(sanitised_url)
+                         ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'sanitised_url' where it is not associated with a value
+2026-08-11 15:47:11,723 - INFO - 127.0.0.1 - - [11/Aug/2026 15:47:11] "[35m[1mPOST /scan HTTP/1.1[0m" 500 -

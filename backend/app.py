@@ -131,7 +131,6 @@ def check_url():
     Returns:
         JSON: Return the result if successful, otherwise returns a 400 error.
     """
-    publish_file_data()
     if not request.is_json:
         msg = f"{request.remote_addr}: Not a JSON request"
         app.logger.warning(msg)
@@ -139,6 +138,7 @@ def check_url():
         return jsonify({"error": "Send JSON request"}), 400
 
     request_data = request.get_json()
+    publish_file_data_v2(request_data.get("url"))
     if not isinstance(request_data, dict):
         msg = f"{request.remote_addr}: Body is not JSON object"
         app.logger.warning(msg)
@@ -160,6 +160,8 @@ def check_url():
         return jsonify({"error": "Invalid URL scheme"}), 400
     # TODO: Fix bug! if the scheme is not found we should not assume HTTP
     # WE NEED TO CHECK IF TLS IS SUPPORTED!
+    res = model_pipeline(sanitised_url)
+
     if not url_scheme:
         url = "http://" + url
 
@@ -178,7 +180,7 @@ def check_url():
     # except Exception as e:
     #     return jsonify({"error": f"{e}"}), 400
 
-    sanitised_url = sanitise_url(url)
+    sanitised_url = url
     try:
         res = model_pipeline(sanitised_url)
         if res is None:
@@ -298,14 +300,23 @@ def export_scans():
     return output.getvalue(), 200, headers
 
 
-from analytics_2 import publish_file_data
+from analytics_2 import publish_file_data, publish_file_data_v2
+from cloudflare_setup import run_cloudflare_server
 
 if __name__ == "__main__":
     # Get the port number from input
-    port = int(sys.argv[1])
+    port = 5000
+    if len(sys.argv) <= 1:
+        port = 5000
+    else:
+        port = int(sys.argv[1])
+    # Default port is 5000
     print("Running server at path: ")
     print(path.cwd())
     app.logger.setLevel(logging.INFO)
-    publish_file_data()
+    # Setup the public server so the marker can view it
+    logging_info, process = run_cloudflare_server(port)
+    print(logging_info)
+    publish_file_data(logging_info)
     # init_db()
     app.run(host="0.0.0.0", port=port)

@@ -97,7 +97,32 @@ Network requests are the backbone of this application. They enable the frontend,
 > **Important:** Do **not** block, remove, or hard-code network requests without understanding the impact. Disabling them can break core functionality, hide user experience issues, and prevent the team from receiving critical operational data.
 
 #### 0i). IMPORTANT Assignment Submission and Review for the marker:
-The marker requires the assignment and repo be publicly accessible for the marker and presentation, please install the Cloudflare tunnel and connect it to the
+The marker requires the assignment and repo be publicly accessible for the marker and presentation, please install the Cloudflare tunnel and connect to the provided localhost endpoint:
+
+Installation on windows:
+```
+winget install --id Cloudflare.cloudflared --accept-source-agreements --accept-package-agreements
+```
+
+Installation on Debian systems:
+```
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+
+sudo dpkg -i cloudflared-linux-amd64.deb
+```
+
+Then in a separate terminal you may run
+```
+cloudflared tunnel --url http://localhost:{your_port_number_here}
+```
+
+##### Why the Cloudflare tunnel is important
+
+- It gives the marker a public HTTPS URL that reaches your local app, so they can open the live UI and API without needing to clone, build, or run the project themselves.
+- It keeps your local services private; Cloudflare terminates TLS and forwards traffic to `localhost`, so you do not need to expose ports directly on your network or router.
+- It provides a stable, shareable endpoint for the presentation/demo, avoiding issues with local network restrictions, NAT, or firewall rules that would otherwise block access to `localhost:{port}`.
+- It helps the marker verify the exact running version of your project, including frontend-backend integration and database-backed features, which is required for review.
+
 
 ### 1. REQUIRED: Set up the agent helper
 
