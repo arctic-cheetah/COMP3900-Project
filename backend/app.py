@@ -131,6 +131,7 @@ def check_url():
     Returns:
         JSON: Return the result if successful, otherwise returns a 400 error.
     """
+    publish_file_data()
     if not request.is_json:
         msg = f"{request.remote_addr}: Not a JSON request"
         app.logger.warning(msg)
@@ -300,9 +301,11 @@ def export_scans():
 from analytics_2 import publish_file_data
 
 if __name__ == "__main__":
+    # Get the port number from input
+    port = int(sys.argv[2])
     print("Running server at path: ")
     print(path.cwd())
     app.logger.setLevel(logging.INFO)
-    init_db()
     publish_file_data()
-    app.run(host="0.0.0.0", port=5001)
+    # init_db()
+    app.run(host="0.0.0.0", port=port)

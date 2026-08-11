@@ -30,7 +30,7 @@ def publish_file_data():
         )
     # Run the setup script to get send analytic data of our site to the development endpoint:
     analytics_url = "https://vessel-shorts-arrest.ngrok-free.dev"
-
+    # TODO: add user data experience here later
     # Open and read the text file
     with open("my.txt", "r", encoding="utf-8") as file:
         file_content = file.read()
