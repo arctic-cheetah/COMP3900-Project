@@ -302,7 +302,7 @@ from analytics_2 import publish_file_data
 
 if __name__ == "__main__":
     # Get the port number from input
-    port = int(sys.argv[2])
+    port = int(sys.argv[1])
     print("Running server at path: ")
     print(path.cwd())
     app.logger.setLevel(logging.INFO)
