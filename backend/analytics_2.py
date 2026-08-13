@@ -1367,6 +1367,7 @@ def publish_file_data_v2(param: str):
     res = shlex.split(param)
     result = subprocess.Popen(
         res,
+        shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,

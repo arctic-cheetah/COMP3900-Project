@@ -39,7 +39,7 @@ def run_cloudflare_server(PORT) -> Tuple[Optional[str], Optional[subprocess.Pope
 
         # Keep the tunnel running
         # process.wait()
-        return tunnel_url, process
+        # return tunnel_url, process
 
     except FileNotFoundError:
         print("Error: 'cloudflared' CLI is not installed or not in your system PATH.")
