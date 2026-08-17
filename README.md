@@ -348,7 +348,7 @@ When contributing:
 
 ## Authors
 
-Joules, Ray, Kelly, Lara, Shadab, Caitlin
+Joules, REDACTED
 
 ## License and Rights
 
